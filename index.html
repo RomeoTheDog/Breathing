@@ -304,13 +304,6 @@ function tickTotal(m){
 
 // ── Wake Lock ──────────────────────────────────
 async function acquireWakeLock(){try{if('wakeLock' in navigator)await navigator.wakeLock.request('screen');}catch(e){}}
-// Fullscreen na Android WebView
-if(document.documentElement.requestFullscreen){
-  document.addEventListener('click',()=>{
-    if(!document.fullscreenElement)
-      document.documentElement.requestFullscreen().catch(()=>{});
-  },{once:true});
-}
 acquireWakeLock();
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')acquireWakeLock();});
 
