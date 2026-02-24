@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Breath</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{--y:#e8ff00;--bg:#0a0a0a;}
+  body{background:var(--bg);color:var(--y);font-family:'Share Tech Mono',monospace;
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
+  body::before{content:'';position:fixed;inset:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(232,255,0,0.025) 2px,rgba(232,255,0,0.025) 4px);
+    pointer-events:none;z-index:10;}
+  .screen{display:none;flex-direction:column;align-items:center;justify-content:center;
+    width:100%;min-height:100vh;gap:22px;padding:30px 20px;}
+  .screen.active{display:flex;}
+  .home-top{font-size:13px;letter-spacing:0.25em;color:rgba(255,255,255,0.72);margin-bottom:4px;}
+  .home-title{font-size:10px;letter-spacing:0.5em;color:rgba(232,255,0,0.3);text-transform:uppercase;margin-bottom:10px;}
+  .home-credit{font-size:11px;letter-spacing:0.25em;color:rgba(255,255,255,0.65);margin-top:8px;}
+  .menu-btns{display:flex;flex-direction:column;gap:14px;width:240px;}
+  .mbtn{height:62px;border:1px solid rgba(232,255,0,0.22);background:#060606;color:var(--y);
+    font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:0.4em;cursor:pointer;
+    text-transform:uppercase;transition:all 0.2s;}
+  .mbtn:active{background:#0f0f00;border-color:rgba(232,255,0,0.5);}
+  .mbtn.stats-btn{border-color:rgba(232,255,0,0.12);color:rgba(232,255,0,0.45);font-size:11px;}
+  .mbtn.stats-btn:active{color:var(--y);}
+  .mode-label{font-size:10px;letter-spacing:0.5em;color:rgba(232,255,0,0.22);text-transform:uppercase;}
+  .phase-label{font-size:20px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(232,255,0,0.65);min-height:28px;}
+  .display{font-size:94px;letter-spacing:-3px;line-height:1;
+    text-shadow:0 0 28px rgba(232,255,0,0.45),0 0 55px rgba(232,255,0,0.12);
+    min-height:102px;display:flex;align-items:center;justify-content:center;}
+  .display.pulse{animation:pulseAnim 0.15s ease-out;}
+  @keyframes pulseAnim{0%{transform:scale(1)}50%{transform:scale(1.09);color:#fff;text-shadow:0 0 40px #fff}100%{transform:scale(1)}}
+  .total-time{font-size:11px;color:rgba(232,255,0,0.28);letter-spacing:0.3em;}
+  .ctrl-row{display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .pause-btn{width:160px;height:52px;border:1px solid rgba(232,255,0,0.22);background:#060606;color:var(--y);
+    font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:0.4em;cursor:pointer;
+    text-transform:uppercase;transition:all 0.2s;}
+  .pause-btn:active{background:#0f0f00;}
+  .menu-btn{width:160px;height:44px;border:1px solid rgba(232,255,0,0.12);background:#060606;
+    color:rgba(232,255,0,0.4);font-family:'Share Tech Mono',monospace;font-size:10px;
+    letter-spacing:0.35em;cursor:pointer;text-transform:uppercase;transition:all 0.2s;display:none;}
+  .menu-btn.visible{display:block;}
+  .menu-btn:active{color:var(--y);}
+  .sel-btn{width:52px;height:34px;border:1px solid rgba(232,255,0,0.2);background:#060606;
+    color:rgba(232,255,0,0.45);font-family:'Share Tech Mono',monospace;font-size:11px;
+    letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
+  .sel-btn.active{background:#0a0a00;border-color:rgba(232,255,0,0.7);color:var(--y);box-shadow:0 0 8px rgba(232,255,0,0.15);}
+  .sel-btn:active{background:#0f0f00;}
+  .co2-stopwatch{font-size:80px;letter-spacing:-2px;text-shadow:0 0 28px rgba(232,255,0,0.45);
+    line-height:1;min-height:88px;display:flex;align-items:center;justify-content:center;}
+  .bar-wrap{width:260px;height:3px;background:rgba(232,255,0,0.1);border-radius:2px;overflow:hidden;}
+  .bar{height:100%;background:var(--y);width:0%;border-radius:2px;box-shadow:0 0 8px rgba(232,255,0,0.6);}
+  .break-btn{width:200px;height:60px;border:1px solid rgba(232,255,0,0.35);background:#060606;color:var(--y);
+    font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:0.4em;cursor:pointer;
+    text-transform:uppercase;transition:all 0.15s;}
+  .break-btn:active{background:#0f0f00;}
+  .break-btn:disabled{opacity:0.2;pointer-events:none;}
+  .co2-rounds{font-size:11px;color:rgba(232,255,0,0.28);letter-spacing:0.18em;
+    text-align:center;line-height:2;min-height:44px;white-space:pre;}
+
+  /* ── STATS ── */
+  .stats-title{font-size:10px;letter-spacing:0.5em;color:rgba(232,255,0,0.3);text-transform:uppercase;margin-bottom:6px;}
+  .stats-grid{width:260px;display:flex;flex-direction:column;gap:0;}
+  .stats-row{display:flex;justify-content:space-between;align-items:baseline;
+    padding:12px 0;border-bottom:1px solid rgba(232,255,0,0.08);}
+  .stats-row:last-child{border-bottom:none;}
+  .stats-lbl{font-size:10px;letter-spacing:0.35em;color:rgba(232,255,0,0.35);text-transform:uppercase;}
+  .stats-val{font-size:22px;letter-spacing:1px;text-shadow:0 0 12px rgba(232,255,0,0.3);font-variant-numeric:tabular-nums;}
+  .stats-unit{font-size:10px;letter-spacing:0.2em;color:rgba(232,255,0,0.4);margin-left:4px;}
+  .stats-back{width:200px;height:52px;border:1px solid rgba(232,255,0,0.22);background:#060606;color:var(--y);
+    font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:0.4em;cursor:pointer;
+    text-transform:uppercase;margin-top:10px;}
+  .stats-back:active{background:#0f0f00;}
+  .stats-sessions{font-size:10px;letter-spacing:0.25em;color:rgba(232,255,0,0.2);margin-top:4px;}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="screen active" id="s-home">
+  <div class="home-top">Be present</div>
+  <div class="home-title">Breathing Training</div>
+  <div class="menu-btns">
+    <button class="mbtn" onclick="startResonant()">RESONANT</button>
+    <button class="mbtn" onclick="startRelax()">RELAX</button>
+    <button class="mbtn" onclick="startBox()">BOX</button>
+    <button class="mbtn" onclick="startCO2()">CO2</button>
+    <button class="mbtn stats-btn" onclick="showStats()">STATISTICS</button>
+  </div>
+  <div class="home-credit">by Romeo</div>
+</div>
+
+<!-- RESONANT -->
+<div class="screen" id="s-resonant">
+  <div class="mode-label">Resonant Breathing</div>
+  <div class="phase-label" id="r-phase">inhale</div>
+  <div class="display" id="r-disp">5.5</div>
+  <svg width="280" height="14" viewBox="0 0 280 14" style="overflow:visible;">
+    <defs>
+      <filter id="rGlow" x="-5%" y="-300%" width="110%" height="700%">
+        <feGaussianBlur stdDeviation="2.5" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <rect x="0" y="5" width="280" height="3" rx="1.5" fill="rgba(232,255,0,0.1)"/>
+    <rect id="r-in-fill" x="0" y="5" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#rGlow)"/>
+    <rect id="r-ex-fill" x="280" y="5" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#rGlow)"/>
+  </svg>
+  <div class="total-time" id="r-total">total: 0:00</div>
+  <div class="ctrl-row">
+    <button class="pause-btn" id="r-pause" onclick="togglePause('r')">STOP</button>
+    <button class="menu-btn"  id="r-menu"  onclick="goHome()">MAIN MENU</button>
+  </div>
+</div>
+
+<!-- RELAX -->
+<div class="screen" id="s-relax">
+  <div class="mode-label">Relax Breathing</div>
+  <div class="phase-label" id="rl-phase">inhale</div>
+  <div class="display" id="rl-disp">4.0</div>
+  <svg width="280" height="14" viewBox="0 0 280 14" style="overflow:visible;">
+    <defs>
+      <filter id="rlGlow" x="-5%" y="-300%" width="110%" height="700%">
+        <feGaussianBlur stdDeviation="2.5" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <rect x="0" y="5" width="280" height="3" rx="1.5" fill="rgba(232,255,0,0.1)"/>
+    <rect id="rl-in-fill" x="0" y="5" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#rlGlow)"/>
+    <rect id="rl-ex-fill" x="280" y="5" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#rlGlow)"/>
+  </svg>
+  <div class="total-time" id="rl-total">total: 0:00</div>
+  <div style="display:flex;gap:12px;">
+    <button class="sel-btn active" id="rl-btn-0" onclick="setRelaxRatio(4,8,0)">4:8</button>
+    <button class="sel-btn"        id="rl-btn-1" onclick="setRelaxRatio(4,6,1)">4:6</button>
+    <button class="sel-btn"        id="rl-btn-2" onclick="setRelaxRatio(3,6,2)">3:6</button>
+  </div>
+  <div class="ctrl-row">
+    <button class="pause-btn" id="rl-pause" onclick="togglePause('rl')">STOP</button>
+    <button class="menu-btn"  id="rl-menu"  onclick="goHome()">MAIN MENU</button>
+  </div>
+</div>
+
+<!-- BOX -->
+<div class="screen" id="s-box">
+  <div class="mode-label">Box Breathing</div>
+  <div class="phase-label" id="b-phase">inhale</div>
+  <svg viewBox="0 0 220 220" width="220" height="220" style="overflow:visible;">
+    <rect x="10" y="10" width="200" height="200" fill="none" stroke="rgba(232,255,0,0.12)" stroke-width="2"/>
+    <line id="bs0" x1="10" y1="210" x2="10" y2="10" stroke="#e8ff00" stroke-width="3" stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200" opacity="0"/>
+    <line id="bs1" x1="10" y1="10" x2="210" y2="10" stroke="#e8ff00" stroke-width="3" stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200" opacity="0"/>
+    <line id="bs2" x1="210" y1="10" x2="210" y2="210" stroke="#e8ff00" stroke-width="3" stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200" opacity="0"/>
+    <line id="bs3" x1="210" y1="210" x2="10" y2="210" stroke="#e8ff00" stroke-width="3" stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200" opacity="0"/>
+    <text id="b-num" x="110" y="118" text-anchor="middle" dominant-baseline="middle"
+          font-family="Share Tech Mono,monospace" font-size="58" fill="#e8ff00" filter="url(#bGlow)">4.0</text>
+    <defs>
+      <filter id="bGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="4" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+  </svg>
+  <div class="total-time" id="b-total">total: 0:00</div>
+  <div style="display:flex;gap:12px;">
+    <button class="sel-btn active" id="b-btn-0" onclick="setBoxDur(4,0)">4 <span style="font-size:8px">s</span></button>
+    <button class="sel-btn"        id="b-btn-1" onclick="setBoxDur(5,1)">5 <span style="font-size:8px">s</span></button>
+    <button class="sel-btn"        id="b-btn-2" onclick="setBoxDur(6,2)">6 <span style="font-size:8px">s</span></button>
+  </div>
+  <div class="ctrl-row">
+    <button class="pause-btn" id="b-pause" onclick="togglePause('b')">STOP</button>
+    <button class="menu-btn"  id="b-menu"  onclick="goHome()">MAIN MENU</button>
+  </div>
+</div>
+
+<!-- CO2 -->
+<div class="screen" id="s-co2">
+  <div class="mode-label">CO2 Tolerance</div>
+  <div class="phase-label" id="c-phase">exhale</div>
+  <div class="co2-stopwatch" id="c-stopwatch">2.0</div>
+  <div class="bar-wrap" id="c-bar-wrap" style="opacity:0"><div class="bar" id="c-bar"></div></div>
+  <button class="break-btn" id="c-break" onclick="co2Break()" disabled>BREAK</button>
+  <div class="co2-rounds" id="c-rounds"></div>
+  <div class="total-time" id="c-total">total: 0:00</div>
+  <div class="ctrl-row">
+    <button class="pause-btn" id="c-pause" onclick="togglePause('c')">STOP</button>
+    <button class="menu-btn"  id="c-menu"  onclick="goHome()">MAIN MENU</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="screen" id="s-stats">
+  <div class="stats-title">Statistics</div>
+  <div class="stats-grid">
+    <div class="stats-row">
+      <span class="stats-lbl">This week</span>
+      <span><span class="stats-val" id="st-week">00:00:00</span></span>
+    </div>
+    <div class="stats-row">
+      <span class="stats-lbl">This month</span>
+      <span><span class="stats-val" id="st-month">00:00:00</span></span>
+    </div>
+    <div class="stats-row">
+      <span class="stats-lbl">All time</span>
+      <span><span class="stats-val" id="st-all">00:00:00</span></span>
+    </div>
+  </div>
+  <div class="stats-sessions" id="st-sessions">0 sessions</div>
+  <button class="stats-back" onclick="goHome()">MAIN MENU</button>
+</div>
+
+<script>
+// ── Audio ──────────────────────────────────────
+let audioCtx=null;
+function getCtx(){
+  if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended') audioCtx.resume();
+  return audioCtx;
+}
+function tone(freq,dur=4.0,vol=0.22){
+  const c=getCtx(),now=c.currentTime;
+  const flt=c.createBiquadFilter();
+  flt.type='lowpass';flt.frequency.value=freq*2.2;flt.Q.value=0.3;flt.connect(c.destination);
+  const m=c.createGain();m.connect(flt);
+  m.gain.setValueAtTime(0,now);
+  m.gain.linearRampToValueAtTime(vol,now+0.003);
+  m.gain.exponentialRampToValueAtTime(vol*0.6,now+0.08);
+  m.gain.exponentialRampToValueAtTime(0.001,now+dur);
+  [{mult:1,amp:1,dec:dur},{mult:2.756,amp:0.18,dec:dur*0.3},
+   {mult:5.131,amp:0.07,dec:dur*0.15},{mult:8.917,amp:0.02,dec:dur*0.08}]
+  .forEach(p=>{
+    const o=c.createOscillator(),g=c.createGain();
+    o.connect(g);g.connect(m);o.type='sine';o.frequency.value=freq*p.mult;
+    g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(p.amp,now+0.003);
+    g.gain.exponentialRampToValueAtTime(0.0001,now+p.dec);
+    o.start(now);o.stop(now+p.dec+0.1);
+  });
+}
+const T_HIGH=440,T_MID=400,T_LOW=360;
+
+// ── Screen ─────────────────────────────────────
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function goHome(){
+  if(sessionStartMs>0) saveSession();
+  paused=true;clearLoop();co2Running=false;show('s-home');
+}
+
+// ── Loop registry ──────────────────────────────
+let activeRAFs=[],activeTimers=[];
+function clearLoop(){activeRAFs.forEach(cancelAnimationFrame);activeRAFs=[];activeTimers.forEach(clearTimeout);activeTimers=[];}
+function regRAF(id){activeRAFs.push(id);return id;}
+function regTimer(id){activeTimers.push(id);return id;}
+
+// ── Formatters ─────────────────────────────────
+function fmtMSS(ms){const s=Math.floor(Math.max(0,ms)/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function fmtDec(ms){
+  const v=Math.max(0,ms)/1000;
+  if(v<0.05) return '0.0';
+  return v.toFixed(1);
+}
+function fmtHMS(ms){
+  const s=Math.floor(Math.max(0,ms)/1000);
+  const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  if(h>=100) return String(h).padStart(3,'0')+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+}
+
+// ── Pause ──────────────────────────────────────
+let paused=false,activeMode=null;
+function togglePause(mode){
+  if(!paused){
+    paused=true;clearLoop();if(mode==='c')co2PauseAll();
+    document.getElementById(mode+'-pause').textContent='START';
+    document.getElementById(mode+'-menu').classList.add('visible');
+  } else {
+    paused=false;
+    document.getElementById(mode+'-pause').textContent='STOP';
+    document.getElementById(mode+'-menu').classList.remove('visible');
+    getCtx();
+    if(mode==='r')resumeResonant();
+    else if(mode==='rl')resumeRelax();
+    else if(mode==='b')resumeBox();
+    else if(mode==='c')co2ResumeAll();
+  }
+}
+
+// ── Total timer ────────────────────────────────
+const totals={r:{acc:0,start:null},rl:{acc:0,start:null},b:{acc:0,start:null},c:{acc:0,start:null}};
+function totalStart(m){totals[m].start=performance.now();tickTotal(m);}
+function totalResume(m){totals[m].start=performance.now();tickTotal(m);}
+function tickTotal(m){
+  if(paused)return;
+  const el=totals[m].acc+(totals[m].start?performance.now()-totals[m].start:0);
+  document.getElementById(m+'-total').textContent='total: '+fmtMSS(el);
+  regRAF(requestAnimationFrame(()=>tickTotal(m)));
+}
+
+// ── Wake Lock ──────────────────────────────────
+async function acquireWakeLock(){try{if('wakeLock' in navigator)await navigator.wakeLock.request('screen');}catch(e){}}
+acquireWakeLock();
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')acquireWakeLock();});
+
+// ── Sel-btn helpers ────────────────────────────
+function setActive(prefix,count,idx){
+  for(let i=0;i<count;i++){
+    const el=document.getElementById(prefix+i);
+    if(el) el.classList.toggle('active',i===idx);
+  }
+}
+
+// ══════════════════════════════════════════════
+// STATS STORAGE
+// ══════════════════════════════════════════════
+let sessionStartMs=0; // wall-clock ms when current session started
+let sessionActive=false;
+
+function sessionBegin(){
+  sessionStartMs=Date.now();
+  sessionActive=true;
+}
+
+function saveSession(){
+  if(!sessionActive||sessionStartMs===0)return;
+  const dur=Date.now()-sessionStartMs;
+  if(dur<5000){sessionStartMs=0;sessionActive=false;return;}
+  sessionStartMs=0;sessionActive=false;
+  try{
+    const raw=localStorage.getItem('breath_sessions');
+    const sessions=raw?JSON.parse(raw):[];
+    sessions.push({ts:Date.now(),ms:dur});
+    const cutoff=Date.now()-2*365*24*3600*1000;
+    const trimmed=sessions.filter(s=>s.ts>cutoff);
+    localStorage.setItem('breath_sessions',JSON.stringify(trimmed));
+  }catch(e){console.error('stats save error',e);}
+}
+
+function showStats(){
+  show('s-stats');
+  try{
+    const raw=localStorage.getItem('breath_sessions');
+    const sessions=raw?JSON.parse(raw):[];
+    const now=Date.now();
+    const weekAgo=now-7*24*3600*1000;
+    const monthAgo=now-30*24*3600*1000;
+    let week=0,month=0,all=0;
+    for(const s of sessions){
+      all+=s.ms;
+      if(s.ts>monthAgo)month+=s.ms;
+      if(s.ts>weekAgo)week+=s.ms;
+    }
+    document.getElementById('st-week').textContent=fmtHMS(week);
+    document.getElementById('st-month').textContent=fmtHMS(month);
+    document.getElementById('st-all').textContent=fmtHMS(all);
+    document.getElementById('st-sessions').textContent=sessions.length+' session'+(sessions.length!==1?'s':'')+' total';
+  }catch(e){
+    document.getElementById('st-week').textContent='—';
+    document.getElementById('st-month').textContent='—';
+    document.getElementById('st-all').textContent='—';
+  }
+}
+
+// ══════════════════════════════════════════════
+// RESONANT
+// ══════════════════════════════════════════════
+const R_IV=5500, R_W=280;
+let rState={phase:0,phaseElapsed:0};
+
+function rBarsOff(){
+  const fi=document.getElementById('r-in-fill'),fe=document.getElementById('r-ex-fill');
+  fi.setAttribute('width','0');fe.setAttribute('width','0');fe.setAttribute('x',String(R_W));
+}
+function startResonant(){
+  getCtx();show('s-resonant');activeMode='r';paused=false;
+  rState={phase:0,phaseElapsed:0};totals.r={acc:0,start:null};
+  document.getElementById('r-pause').textContent='STOP';
+  document.getElementById('r-menu').classList.remove('visible');
+  rBarsOff();totalStart('r');sessionBegin();runResonantPhase(0);
+}
+function runResonantPhase(startElapsed,playTone=true){
+  const ph=rState.phase;
+  if(playTone)tone(ph===0?T_HIGH:T_LOW);
+  document.getElementById('r-phase').textContent=ph===0?'inhale':'exhale';
+  const disp=document.getElementById('r-disp');
+  disp.classList.remove('pulse');void disp.offsetWidth;disp.classList.add('pulse');
+  rBarsOff();
+  const fi=document.getElementById('r-in-fill'),fe=document.getElementById('r-ex-fill');
+  const ps=performance.now()-startElapsed;
+  function anim(ts){
+    if(paused)return;
+    const e=ts-ps;rState.phaseElapsed=e;
+    const pct=Math.min(1,e/R_IV);
+    disp.textContent=fmtDec(R_IV-e);
+    if(ph===0){fi.setAttribute('width',(R_W*pct).toFixed(1));}
+    else{const w=R_W*pct;fe.setAttribute('width',w.toFixed(1));fe.setAttribute('x',(R_W-w).toFixed(1));}
+    if(e<R_IV)regRAF(requestAnimationFrame(anim));else rBarsOff();
+  }
+  regRAF(requestAnimationFrame(anim));
+  regTimer(setTimeout(()=>{if(paused)return;rState.phase=ph===0?1:0;runResonantPhase(0);},R_IV-startElapsed));
+}
+function resumeResonant(){totalResume('r');runResonantPhase(Math.min(rState.phaseElapsed,R_IV-50),false);}
+
+// ══════════════════════════════════════════════
+// RELAX
+// ══════════════════════════════════════════════
+const RL_W=280;
+let rlInDur=4000,rlExDur=8000,rlState={phase:0,phaseElapsed:0};
+
+function rlBarsOff(){
+  const fi=document.getElementById('rl-in-fill'),fe=document.getElementById('rl-ex-fill');
+  fi.setAttribute('width','0');fe.setAttribute('width','0');fe.setAttribute('x',String(RL_W));
+}
+function setRelaxRatio(ins,exs,idx){
+  rlInDur=ins*1000;rlExDur=exs*1000;
+  setActive('rl-btn-',3,idx);
+  clearLoop();rlState={phase:0,phaseElapsed:0};totals.rl={acc:0,start:null};
+  rlBarsOff();totalStart('rl');runRelaxPhase(0);
+}
+function startRelax(){
+  getCtx();show('s-relax');activeMode='rl';paused=false;
+  rlState={phase:0,phaseElapsed:0};totals.rl={acc:0,start:null};
+  document.getElementById('rl-pause').textContent='STOP';
+  document.getElementById('rl-menu').classList.remove('visible');
+  rlBarsOff();totalStart('rl');sessionBegin();runRelaxPhase(0);
+}
+function runRelaxPhase(startElapsed,playTone=true){
+  const ph=rlState.phase,dur=ph===0?rlInDur:rlExDur;
+  if(playTone)tone(ph===0?T_HIGH:T_LOW);
+  document.getElementById('rl-phase').textContent=ph===0?'inhale':'exhale';
+  const disp=document.getElementById('rl-disp');
+  disp.classList.remove('pulse');void disp.offsetWidth;disp.classList.add('pulse');
+  rlBarsOff();
+  const fi=document.getElementById('rl-in-fill'),fe=document.getElementById('rl-ex-fill');
+  const ps=performance.now()-startElapsed;
+  function anim(ts){
+    if(paused)return;
+    const e=ts-ps;rlState.phaseElapsed=e;
+    const pct=Math.min(1,e/dur);
+    disp.textContent=fmtDec(dur-e);
+    if(ph===0){fi.setAttribute('width',(RL_W*pct).toFixed(1));}
+    else{const w=RL_W*pct;fe.setAttribute('width',w.toFixed(1));fe.setAttribute('x',(RL_W-w).toFixed(1));}
+    if(e<dur)regRAF(requestAnimationFrame(anim));else rlBarsOff();
+  }
+  regRAF(requestAnimationFrame(anim));
+  regTimer(setTimeout(()=>{if(paused)return;rlState.phase=ph===0?1:0;runRelaxPhase(0);},dur-startElapsed));
+}
+function resumeRelax(){totalResume('rl');const dur=rlState.phase===0?rlInDur:rlExDur;runRelaxPhase(Math.min(rlState.phaseElapsed,dur-50),false);}
+
+// ══════════════════════════════════════════════
+// BOX
+// ══════════════════════════════════════════════
+const BOX_PHASES=[{label:'inhale',freq:T_HIGH,side:0},{label:'hold',freq:T_MID,side:1},{label:'exhale',freq:T_LOW,side:2},{label:'hold',freq:T_MID,side:3}];
+let B_DUR=4000,bState={step:0,phaseElapsed:0};
+
+function setBoxDur(sec,idx){
+  B_DUR=sec*1000;
+  setActive('b-btn-',3,idx);
+  clearLoop();bState={step:0,phaseElapsed:0};totals.b={acc:0,start:null};
+  boxResetSides();totalStart('b');runBoxPhase(0);
+}
+function boxResetSides(){for(let i=0;i<4;i++){const s=document.getElementById('bs'+i);s.setAttribute('stroke-dashoffset','200');s.setAttribute('opacity','0');s.style.filter='';}}
+function startBox(){
+  getCtx();show('s-box');activeMode='b';paused=false;
+  bState={step:0,phaseElapsed:0};totals.b={acc:0,start:null};
+  document.getElementById('b-pause').textContent='STOP';document.getElementById('b-menu').classList.remove('visible');
+  boxResetSides();totalStart('b');sessionBegin();runBoxPhase(0);
+}
+function runBoxPhase(startElapsed,playTone=true){
+  const ph=BOX_PHASES[bState.step];
+  if(playTone)tone(ph.freq);
+  document.getElementById('b-phase').textContent=ph.label;
+  const side=document.getElementById('bs'+ph.side);
+  side.setAttribute('opacity','1');side.setAttribute('stroke-dashoffset','200');
+  side.style.filter='drop-shadow(0 0 6px rgba(232,255,0,0.9))';
+  const numEl=document.getElementById('b-num'),ps=performance.now()-startElapsed;
+  const END_EARLY=30;
+  function anim(ts){
+    if(paused)return;
+    const e=ts-ps;bState.phaseElapsed=e;
+    const remaining=B_DUR-e;
+    side.setAttribute('stroke-dashoffset',(200*(1-Math.min(1,e/B_DUR))).toFixed(2));
+    numEl.textContent=remaining<=0?'0.0':fmtDec(remaining);
+    if(e<B_DUR-END_EARLY)regRAF(requestAnimationFrame(anim));else numEl.textContent='0.0';
+  }
+  regRAF(requestAnimationFrame(anim));
+  regTimer(setTimeout(()=>{
+    if(paused)return;
+    bState.step=(bState.step+1)%4;
+    if(bState.step===0){
+      for(let i=0;i<4;i++){const s=document.getElementById('bs'+i);s.setAttribute('opacity','1');s.setAttribute('stroke-dashoffset','0');s.style.filter='drop-shadow(0 0 6px rgba(232,255,0,0.9))';}
+      regTimer(setTimeout(()=>{if(!paused){boxResetSides();runBoxPhase(0);}},30));
+    } else runBoxPhase(0);
+  },B_DUR-startElapsed));
+}
+function resumeBox(){totalResume('b');runBoxPhase(Math.min(bState.phaseElapsed,B_DUR-50),false);}
+
+// ══════════════════════════════════════════════
+// CO2
+// ══════════════════════════════════════════════
+let co2Running=false,co2Phase='exhale-countdown';
+let co2HoldRunning=false,co2HoldElapsed=0,co2HoldStart=null,co2HoldRAF=null;
+let co2RestElapsed=0,co2RestStart=null,co2RestRAF=null;
+let co2ExhaleElapsed=0,co2ExhaleStart=null,co2ExhaleRAF=null;
+let co2Rounds=[];
+const REST_DUR=60000,EXHALE_CD=2000;
+
+function startCO2(){
+  getCtx();show('s-co2');activeMode='c';paused=false;co2Running=true;
+  co2Rounds=[];co2Phase='exhale-countdown';co2HoldElapsed=0;co2RestElapsed=0;co2ExhaleElapsed=0;
+  totals.c={acc:0,start:null};
+  document.getElementById('c-rounds').textContent='';
+  document.getElementById('c-bar-wrap').style.opacity='0';document.getElementById('c-bar').style.width='0%';
+  document.getElementById('c-pause').textContent='STOP';document.getElementById('c-menu').classList.remove('visible');
+  totalStart('c');sessionBegin();beginExhaleCountdown();
+}
+function beginExhaleCountdown(startElapsed=0){
+  co2Phase='exhale-countdown';co2ExhaleElapsed=startElapsed;tone(T_LOW);
+  document.getElementById('c-phase').textContent='exhale';
+  document.getElementById('c-break').disabled=true;
+  document.getElementById('c-bar-wrap').style.opacity='0';document.getElementById('c-bar').style.width='0%';
+  co2ExhaleStart=performance.now();const sw=document.getElementById('c-stopwatch');
+  function tick(ts){
+    if(paused)return;const e=(ts-co2ExhaleStart)+co2ExhaleElapsed;
+    sw.textContent=fmtDec(EXHALE_CD-e);
+    if(e<EXHALE_CD){co2ExhaleRAF=regRAF(requestAnimationFrame(tick));}else{beginHold();}
+  }
+  co2ExhaleRAF=regRAF(requestAnimationFrame(tick));
+}
+function beginHold(){
+  co2Phase='hold';co2HoldElapsed=0;tone(T_MID);
+  document.getElementById('c-phase').textContent='hold';
+  document.getElementById('c-stopwatch').textContent='0:00';
+  document.getElementById('c-break').disabled=false;startHoldTick();
+}
+function startHoldTick(){
+  co2HoldRunning=true;co2HoldStart=performance.now();const sw=document.getElementById('c-stopwatch');
+  function tick(ts){if(paused||!co2HoldRunning)return;sw.textContent=fmtMSS((ts-co2HoldStart)+co2HoldElapsed);co2HoldRAF=regRAF(requestAnimationFrame(tick));}
+  co2HoldRAF=regRAF(requestAnimationFrame(tick));
+}
+function co2Break(){
+  if(!co2Running||!co2HoldRunning||paused)return;
+  co2HoldRunning=false;cancelAnimationFrame(co2HoldRAF);
+  const held=(performance.now()-co2HoldStart)+co2HoldElapsed;co2Rounds.push(held);updateRounds();
+  tone(T_HIGH);document.getElementById('c-phase').textContent='breathing';
+  document.getElementById('c-stopwatch').textContent=fmtMSS(held);
+  document.getElementById('c-break').disabled=true;co2Phase='rest';co2RestElapsed=0;startRestTick();
+}
+function startRestTick(){
+  document.getElementById('c-bar-wrap').style.opacity='1';co2RestStart=performance.now();
+  function tick(ts){
+    if(paused)return;const e=(ts-co2RestStart)+co2RestElapsed;
+    document.getElementById('c-stopwatch').textContent=fmtDec(REST_DUR-e);
+    document.getElementById('c-bar').style.width=Math.min(100,(e/REST_DUR)*100)+'%';
+    if(e<REST_DUR){co2RestRAF=regRAF(requestAnimationFrame(tick));}
+    else{document.getElementById('c-bar').style.width='0%';beginExhaleCountdown();}
+  }
+  co2RestRAF=regRAF(requestAnimationFrame(tick));
+}
+function co2PauseAll(){
+  if(co2Phase==='exhale-countdown'){co2ExhaleElapsed+=performance.now()-co2ExhaleStart;cancelAnimationFrame(co2ExhaleRAF);}
+  else if(co2Phase==='hold'&&co2HoldRunning){co2HoldRunning=false;co2HoldElapsed+=performance.now()-co2HoldStart;cancelAnimationFrame(co2HoldRAF);}
+  else if(co2Phase==='rest'){co2RestElapsed+=performance.now()-co2RestStart;cancelAnimationFrame(co2RestRAF);}
+}
+function co2ResumeAll(){
+  totalResume('c');
+  if(co2Phase==='exhale-countdown')beginExhaleCountdown(co2ExhaleElapsed);
+  else if(co2Phase==='hold')startHoldTick();
+  else if(co2Phase==='rest')startRestTick();
+}
+function updateRounds(){document.getElementById('c-rounds').textContent=co2Rounds.map((t,i)=>`round ${i+1}: ${fmtMSS(t)}`).join('\n');}
+</script>
+</body>
+</html>
