@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0a0a0a">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Breath</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
@@ -66,6 +65,16 @@
   .co2-rounds{font-size:11px;color:rgba(232,255,0,0.28);letter-spacing:0.18em;
     text-align:center;line-height:2;min-height:44px;white-space:pre;}
 
+  /* ── Sound toggle ── */
+  .sound-btn{position:absolute;top:14px;right:14px;width:22px;height:22px;
+    background:none;border:none;cursor:pointer;padding:2px;opacity:0.35;transition:opacity 0.2s;z-index:20;}
+  .sound-btn:active{opacity:1;}
+  .sound-btn svg{width:100%;height:100%;}
+  .sound-btn .slash{display:none;}
+  .sound-btn.muted{opacity:0.6;}
+  .sound-btn.muted .slash{display:block;}
+  #s-home{position:relative;}
+
   /* ── STATS ── */
   .stats-title{font-size:10px;letter-spacing:0.5em;color:rgba(232,255,0,0.3);text-transform:uppercase;margin-bottom:6px;}
   .stats-grid{width:260px;display:flex;flex-direction:column;gap:0;}
@@ -74,7 +83,6 @@
   .stats-row:last-child{border-bottom:none;}
   .stats-lbl{font-size:10px;letter-spacing:0.35em;color:rgba(232,255,0,0.35);text-transform:uppercase;}
   .stats-val{font-size:22px;letter-spacing:1px;text-shadow:0 0 12px rgba(232,255,0,0.3);font-variant-numeric:tabular-nums;}
-  .stats-unit{font-size:10px;letter-spacing:0.2em;color:rgba(232,255,0,0.4);margin-left:4px;}
   .stats-back{width:200px;height:52px;border:1px solid rgba(232,255,0,0.22);background:#060606;color:var(--y);
     font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:0.4em;cursor:pointer;
     text-transform:uppercase;margin-top:10px;}
@@ -86,6 +94,14 @@
 
 <!-- HOME -->
 <div class="screen active" id="s-home">
+  <button class="sound-btn" id="snd-main" onclick="toggleSound(this)" title="Sound">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#e8ff00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+      <line class="slash" x1="2" y1="2" x2="22" y2="22" stroke="#e8ff00" stroke-width="1.8"/>
+    </svg>
+  </button>
   <div class="home-top">Be present</div>
   <div class="home-title">Breathing Training</div>
   <div class="menu-btns">
@@ -99,7 +115,7 @@
 </div>
 
 <!-- RESONANT -->
-<div class="screen" id="s-resonant">
+<div class="screen" id="s-resonant" style="position:relative;">
   <div class="mode-label">Resonant Breathing</div>
   <div class="phase-label" id="r-phase">inhale</div>
   <div class="display" id="r-disp">5.5</div>
@@ -122,7 +138,7 @@
 </div>
 
 <!-- RELAX -->
-<div class="screen" id="s-relax">
+<div class="screen" id="s-relax" style="position:relative;">
   <div class="mode-label">Relax Breathing</div>
   <div class="phase-label" id="rl-phase">inhale</div>
   <div class="display" id="rl-disp">4.0</div>
@@ -150,7 +166,7 @@
 </div>
 
 <!-- BOX -->
-<div class="screen" id="s-box">
+<div class="screen" id="s-box" style="position:relative;">
   <div class="mode-label">Box Breathing</div>
   <div class="phase-label" id="b-phase">inhale</div>
   <svg viewBox="0 0 220 220" width="220" height="220" style="overflow:visible;">
@@ -181,7 +197,7 @@
 </div>
 
 <!-- CO2 -->
-<div class="screen" id="s-co2">
+<div class="screen" id="s-co2" style="position:relative;">
   <div class="mode-label">CO2 Tolerance</div>
   <div class="phase-label" id="c-phase">exhale</div>
   <div class="co2-stopwatch" id="c-stopwatch">2.0</div>
@@ -219,12 +235,20 @@
 <script>
 // ── Audio ──────────────────────────────────────
 let audioCtx=null;
+let soundMuted=false;
+
+function toggleSound(btn){
+  soundMuted=!soundMuted;
+  btn.classList.toggle('muted',soundMuted);
+}
+
 function getCtx(){
   if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
   if(audioCtx.state==='suspended') audioCtx.resume();
   return audioCtx;
 }
-function tone(freq,dur=4.0,vol=0.22){
+function tone(freq,dur=9.0,vol=0.22){
+  if(soundMuted) return;
   const c=getCtx(),now=c.currentTime;
   const flt=c.createBiquadFilter();
   flt.type='lowpass';flt.frequency.value=freq*2.2;flt.Q.value=0.3;flt.connect(c.destination);
@@ -243,7 +267,7 @@ function tone(freq,dur=4.0,vol=0.22){
     o.start(now);o.stop(now+p.dec+0.1);
   });
 }
-const T_HIGH=440,T_MID=400,T_LOW=360;
+const T_HIGH=490,T_MID=415,T_LOW=349;
 
 // ── Screen ─────────────────────────────────────
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
@@ -318,7 +342,7 @@ function setActive(prefix,count,idx){
 // ══════════════════════════════════════════════
 // STATS STORAGE
 // ══════════════════════════════════════════════
-let sessionStartMs=0; // wall-clock ms when current session started
+let sessionStartMs=0;
 let sessionActive=false;
 
 function sessionBegin(){
