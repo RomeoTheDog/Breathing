@@ -372,17 +372,16 @@ function playDoneMelody(){
 
 // ── STOP AFTER fan ──────────────────────────────
 const SA_OPTIONS=[
-  {label:'5 s',   ms:5000},
   {label:'5 min', ms:300000},
   {label:'10 min',ms:600000},
   {label:'15 min',ms:900000},
   {label:'20 min',ms:1200000}
 ];
 const MODES=['r','rl','b','c','cu'];
-const saSelected={r:4,rl:4,b:4,c:4,cu:4};
+const saSelected={r:3,rl:3,b:3,c:3,cu:3};
 const fanOpen={r:false,rl:false,b:false,c:false,cu:false};
 const FAN_R=52;
-const FAN_ANGLES_DEG=[-40,-13,13,40];
+const FAN_ANGLES_DEG=[-22,0,22];
 
 function buildFans(){
   MODES.forEach(m=>{
@@ -394,7 +393,7 @@ function buildFans(){
     ctr.className='sa-center';ctr.id='sa-ctr-'+m;
     ctr.addEventListener('click',e=>{e.stopPropagation();toggleFan(m);});
     stage.appendChild(ctr);
-    for(let i=0;i<4;i++){
+    for(let i=0;i<3;i++){
       const btn=document.createElement('button');
       btn.className='sa-item';btn.id='sa-item-'+m+'-'+i;
       btn.addEventListener('click',e=>{e.stopPropagation();selectSA(m,parseInt(btn.dataset.idx));});
