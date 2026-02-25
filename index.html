@@ -318,23 +318,56 @@ const T_HIGH=490,T_MID=415,T_LOW=349;
 function playDoneMelody(){
   if(soundMuted)return;
   const c=getCtx();
-  const notes=[293.66,369.99,440,587.33,440,369.99,293.66];
-  const durs=[0.8,0.8,0.8,1.2,0.8,0.8,1.6];
-  let t=c.currentTime+0.3;
-  notes.forEach((freq,i)=>{
+  const now=c.currentTime+0.2;
+
+  // long reverb
+  const rev=c.createConvolver();
+  const len=c.sampleRate*5;
+  const buf=c.createBuffer(2,len,c.sampleRate);
+  for(let ch=0;ch<2;ch++){
+    const d=buf.getChannelData(ch);
+    for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,1.4);
+  }
+  rev.buffer=buf;
+  const revG=c.createGain();revG.gain.value=0.55;
+  rev.connect(revG);revG.connect(c.destination);
+
+  const flt=c.createBiquadFilter();flt.type='lowpass';flt.frequency.value=800;flt.Q.value=0.3;
+  flt.connect(c.destination);flt.connect(rev);
+
+  function bowl(freq, t, vol=0.35){
+    // simulate singing bowl: fast attack, very long decay with slight wobble
     const o=c.createOscillator(),g=c.createGain();
-    const delay=c.createDelay(2);delay.delayTime.value=0.25;
-    const fb=c.createGain();fb.gain.value=0.3;
-    o.type='sine';o.frequency.value=freq;
-    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.18,t+0.04);g.gain.exponentialRampToValueAtTime(0.001,t+durs[i]+0.6);
-    o.connect(g);g.connect(c.destination);g.connect(delay);delay.connect(fb);fb.connect(delay);delay.connect(c.destination);
-    o.start(t);o.stop(t+durs[i]+1);
     const o2=c.createOscillator(),g2=c.createGain();
-    o2.type='sine';o2.frequency.value=freq*2.997;
-    g2.gain.setValueAtTime(0,t);g2.gain.linearRampToValueAtTime(0.04,t+0.04);g2.gain.exponentialRampToValueAtTime(0.001,t+durs[i]*0.5);
-    o2.connect(g2);g2.connect(c.destination);o2.start(t);o2.stop(t+durs[i]+0.5);
-    t+=durs[i]*0.85;
-  });
+    const dur=4.5;
+    // slight detune for natural wobble
+    o.type='sine';o.frequency.value=freq;
+    o2.type='sine';o2.frequency.value=freq*1.0015;
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(vol,t+0.03);
+    g.gain.exponentialRampToValueAtTime(0.001,t+dur);
+    g2.gain.setValueAtTime(0,t);
+    g2.gain.linearRampToValueAtTime(vol*0.6,t+0.03);
+    g2.gain.exponentialRampToValueAtTime(0.001,t+dur*0.8);
+    o.connect(g);g.connect(flt);
+    o2.connect(g2);g2.connect(flt);
+    o.start(t);o.stop(t+dur+0.2);
+    o2.start(t);o2.stop(t+dur+0.2);
+    // upper partial (bowl overtone ~2.75x)
+    const o3=c.createOscillator(),g3=c.createGain();
+    o3.type='sine';o3.frequency.value=freq*2.756;
+    g3.gain.setValueAtTime(0,t);
+    g3.gain.linearRampToValueAtTime(vol*0.15,t+0.03);
+    g3.gain.exponentialRampToValueAtTime(0.001,t+dur*0.4);
+    o3.connect(g3);g3.connect(flt);
+    o3.start(t);o3.stop(t+dur);
+  }
+
+  // pentatonická stupnice: A3 C4 D4 E4 G4 A4
+  // pomalé OM-like sekvence
+  const seq=[220, 293.66, 440];
+  const gaps=[0, 0.6, 1.2];
+  seq.forEach((f,i)=> bowl(f, now+gaps[i], i===2?0.42:0.3));
 }
 
 // ── STOP AFTER fan ──────────────────────────────
