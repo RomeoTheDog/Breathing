@@ -497,7 +497,7 @@ function calcCuDurs(){
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function goHome(){
   if(sessionStartMs>0)saveSession();
-  paused=true;clearLoop();co2Running=false;
+  paused=true;clearLoop();co2Running=false;cancelScheduledDone();
   document.getElementById('done-overlay').classList.remove('active');
   show('s-home');
 }
@@ -526,6 +526,10 @@ let paused=false;
 function togglePause(mode){
   if(!paused){
     paused=true;clearLoop();if(mode==='c')co2PauseAll();
+    cancelScheduledDone();
+    // accumulate elapsed
+    const m=mode;
+    if(totals[m].start){totals[m].acc+=performance.now()-totals[m].start;totals[m].start=null;}
     document.getElementById(mode+'-pause').textContent='START';
   } else {
     paused=false;
@@ -540,8 +544,38 @@ function togglePause(mode){
 }
 
 const totals={r:{acc:0,start:null},rl:{acc:0,start:null},b:{acc:0,start:null},c:{acc:0,start:null},cu:{acc:0,start:null}};
-function totalStart(m){totals[m]={acc:0,start:performance.now()};tickTotal(m);}
-function totalResume(m){totals[m].start=performance.now();tickTotal(m);}
+function totalStart(m){totals[m]={acc:0,start:performance.now()};tickTotal(m);scheduleDone(m);}
+function totalResume(m){totals[m].start=performance.now();tickTotal(m);scheduleDone(m);}
+
+let scheduledDoneSource=null;
+function scheduleDone(m){
+  // cancel previous
+  if(scheduledDoneSource){try{scheduledDoneSource.stop();}catch(e){}scheduledDoneSource=null;}
+  const c=getCtx();
+  const elapsed=totals[m].acc+(totals[m].start?performance.now()-totals[m].start:0);
+  const remaining=(SA_OPTIONS[saSelected[m]].ms - elapsed)/1000;
+  if(remaining<=0)return;
+  // schedule a silent buffer as a timer — when it ends, trigger done
+  const frames=Math.floor(remaining*c.sampleRate);
+  const silBuf=c.createBuffer(1,Math.max(1,frames),c.sampleRate);
+  const src=c.createBufferSource();
+  src.buffer=silBuf;
+  src.connect(c.destination);
+  src.onended=()=>{
+    if(!paused){
+      paused=true;clearLoop();co2Running=false;
+      if(sessionStartMs>0)saveSession();
+      playDoneMelody();
+      document.getElementById('done-overlay').classList.add('active');
+    }
+  };
+  src.start(c.currentTime);
+  scheduledDoneSource=src;
+}
+
+function cancelScheduledDone(){
+  if(scheduledDoneSource){try{scheduledDoneSource.stop();}catch(e){}scheduledDoneSource=null;}
+}
 function tickTotal(m){
   if(paused)return;
   const el=totals[m].acc+(totals[m].start?performance.now()-totals[m].start:0);
