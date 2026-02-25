@@ -58,58 +58,50 @@
     color:rgba(232,255,0,0.45);font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;text-transform:uppercase;}
   .sel-btn.active{background:#0a0a00;border-color:rgba(232,255,0,0.7);color:var(--y);box-shadow:0 0 8px rgba(232,255,0,0.15);}
 
-  /* ── PŮLVĚJÍŘ ── */
-  .sa-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
-  .sa-label{font-size:10px;letter-spacing:0.3em;color:rgba(232,255,0,0.28);text-transform:uppercase;}
-
-  /* stage: dává prostor pro vějíř vlevo */
-  .sa-stage{
-    position:relative;
-    width:200px;
-    height:44px;
-  }
-
-  /* centrální tlačítko – uprostřed stage, žádný rámeček */
-  .sa-center{
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:58px; height:38px;
-    background:transparent;
-    border:none;
-    color:var(--y);
-    font-family:'Share Tech Mono',monospace;
-    font-size:10px; letter-spacing:0.2em;
-    cursor:pointer;
-    display:flex;align-items:center;justify-content:center;
-    z-index:5;
-    opacity:0.7;
-    transition:opacity .2s;
-  }
+  /* ── STOP AFTER row ── */
+  .sa-wrap{display:flex;flex-direction:row;align-items:center;gap:10px;}
+  .sa-label{font-size:10px;letter-spacing:0.3em;color:rgba(232,255,0,0.28);text-transform:uppercase;white-space:nowrap;}
+  .sa-stage{position:relative;width:70px;height:44px;overflow:visible;}
+  .sa-center{position:absolute;top:50%;left:0;transform:translateY(-50%);
+    width:58px;height:38px;background:transparent;border:none;color:var(--y);
+    font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:0.2em;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;opacity:0.7;transition:opacity .2s;}
   .sa-center:hover,.sa-center.open{opacity:1;}
-
-
-
-  /* vějířové položky */
-  .sa-item{
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:54px; height:34px;
-    background:#0a0a0a;
-    border:none;
-    color:rgba(232,255,0,0.45);
-    font-family:'Share Tech Mono',monospace;
-    font-size:9px; letter-spacing:0.12em;
-    cursor:pointer;
-    display:flex;align-items:center;justify-content:center;
-    border-radius:2px;
-    opacity:0; pointer-events:none;
-    transition:opacity .22s ease, transform .28s cubic-bezier(.34,1.4,.64,1);
-    z-index:4;
-  }
+  .sa-item{position:absolute;top:50%;left:29px;transform:translate(-50%,-50%);
+    width:54px;height:34px;background:transparent;border:none;color:rgba(232,255,0,0.6);
+    font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:0.12em;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:2px;
+    opacity:0;pointer-events:none;
+    transition:opacity .22s ease,transform .28s cubic-bezier(.34,1.4,.64,1);z-index:4;}
   .sa-item:hover{color:var(--y);}
   .sa-item.open{opacity:1;pointer-events:all;}
+
+  /* ── CUSTOM inline param pickers ── */
+  .cu-params{display:flex;gap:28px;align-items:flex-start;justify-content:center;}
+  .cu-param{display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;}
+  .cu-param-lbl{font-size:9px;letter-spacing:0.35em;color:rgba(232,255,0,0.22);text-transform:uppercase;}
+  .cu-param-val{font-size:16px;letter-spacing:0.15em;color:var(--y);cursor:pointer;
+    display:flex;align-items:center;gap:5px;opacity:0.8;transition:opacity .2s;}
+  .cu-param-val:hover{opacity:1;}
+  .cu-param-val .arr{font-size:10px;color:rgba(232,255,0,0.4);}
+  /* vertical dropdown */
+  .cu-vlist{
+    display:none;flex-direction:column;
+    position:absolute;top:calc(100% + 2px);left:50%;transform:translateX(-50%);
+    max-height:160px;overflow-y:auto;
+    background:transparent;
+    z-index:100;scrollbar-width:none;min-width:70px;
+  }
+  .cu-vlist::-webkit-scrollbar{display:none;}
+  .cu-vlist.open{display:flex;}
+  .cu-vopt{
+    padding:7px 12px;font-family:'Share Tech Mono',monospace;font-size:11px;
+    letter-spacing:0.2em;color:rgba(232,255,0,0.35);cursor:pointer;
+    text-align:center;border:none;background:#0a0a0a;white-space:nowrap;
+    transition:color .12s;
+  }
+  .cu-vopt:hover{color:rgba(232,255,0,0.7);}
+  .cu-vopt.active{color:var(--y);}
 
   .done-overlay{display:none;position:fixed;inset:0;z-index:200;
     background:rgba(10,10,10,0.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
@@ -134,23 +126,6 @@
   .stats-lbl{font-size:10px;letter-spacing:0.35em;color:rgba(232,255,0,0.35);text-transform:uppercase;}
   .stats-val{font-size:22px;letter-spacing:1px;text-shadow:0 0 12px rgba(232,255,0,0.3);font-variant-numeric:tabular-nums;}
   .stats-sessions{font-size:10px;letter-spacing:0.25em;color:rgba(232,255,0,0.2);margin-top:4px;}
-
-  .setup-grid{width:260px;display:flex;flex-direction:column;gap:26px;}
-  .setup-row{display:flex;flex-direction:column;gap:10px;align-items:center;}
-  .setup-row-lbl{font-size:10px;letter-spacing:0.5em;color:rgba(232,255,0,0.22);text-transform:uppercase;align-self:flex-start;}
-  .setup-big{font-size:52px;letter-spacing:-2px;text-shadow:0 0 28px rgba(232,255,0,0.45);}
-  .setup-sub{font-size:11px;color:rgba(232,255,0,0.28);letter-spacing:0.3em;}
-  .setup-slider{-webkit-appearance:none;appearance:none;width:240px;height:3px;
-    background:rgba(232,255,0,0.15);outline:none;border-radius:2px;}
-  .setup-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
-    width:18px;height:18px;border-radius:50%;background:var(--y);cursor:pointer;box-shadow:0 0 10px rgba(232,255,0,0.5);}
-  .setup-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--y);cursor:pointer;border:none;}
-  .ratio-display{display:flex;align-items:baseline;gap:6px;}
-  .ratio-big{font-size:42px;letter-spacing:-1px;text-shadow:0 0 20px rgba(232,255,0,0.4);}
-  .ratio-sep{font-size:20px;color:rgba(232,255,0,0.35);}
-  .setup-start{width:200px;height:52px;border:1px solid rgba(232,255,0,0.22);background:#060606;color:var(--y);
-    font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:0.4em;cursor:pointer;text-transform:uppercase;}
-  .setup-start:active{background:#0f0f00;}
 </style>
 </head>
 <body>
@@ -176,7 +151,7 @@
     <button class="mbtn" onclick="startRelax()">RELAX</button>
     <button class="mbtn" onclick="startBox()">BOX</button>
     <button class="mbtn" onclick="startCO2()">CO<sub style="font-size:0.6em;vertical-align:sub;">2</sub></button>
-    <button class="mbtn" onclick="showSetup()" style="font-size:20px;letter-spacing:0;">⚙</button>
+    <button class="mbtn" onclick="startCustom()" style="font-size:20px;letter-spacing:0;">⚙</button>
     <button class="mbtn dim" onclick="showStats()">STATISTICS</button>
   </div>
   <div class="home-credit">by Romeo</div>
@@ -267,34 +242,9 @@
   </div>
 </div>
 
-<!-- SETUP -->
-<div class="screen" id="s-setup">
-  <div class="mode-label">Custom Breathing</div>
-  <div class="setup-grid">
-    <div class="setup-row">
-      <div class="setup-row-lbl">Breaths per minute</div>
-      <div class="setup-big" id="su-bpm-val">5.5</div>
-      <div class="setup-sub">cycle: <span id="su-cycle">10.9</span> s</div>
-      <input type="range" class="setup-slider" id="su-bpm" min="1" max="7" step="0.5" value="5.5" oninput="updateSetupUI()">
-    </div>
-    <div class="setup-row">
-      <div class="setup-row-lbl">Inhale · Exhale ratio</div>
-      <div class="ratio-display">
-        <span class="ratio-big" id="su-in-r">40</span>
-        <span class="ratio-sep">:</span>
-        <span class="ratio-big" id="su-ex-r">60</span>
-      </div>
-      <div class="setup-sub">inhale <span id="su-in-s">4.4</span> s · exhale <span id="su-ex-s">6.5</span> s</div>
-      <input type="range" class="setup-slider" id="su-ratio" min="10" max="90" step="10" value="40" oninput="updateSetupUI()">
-    </div>
-  </div>
-  <button class="setup-start" onclick="startSetup()">START</button>
-  <button class="menu-btn" style="display:block;margin-top:4px;" onclick="goHome()">MAIN MENU</button>
-</div>
-
-<!-- CUSTOM RUNNING -->
+<!-- CUSTOM -->
 <div class="screen" id="s-custom">
-  <div class="mode-label" id="cu-label">Custom Breathing</div>
+  <div class="mode-label">Custom Breathing</div>
   <div class="phase-label" id="cu-phase">inhale</div>
   <div class="display" id="cu-disp">—</div>
   <svg width="280" height="14" viewBox="0 0 280 14" style="overflow:visible;">
@@ -304,6 +254,23 @@
     <rect id="cu-ex-fill" x="280" y="5" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#cuGlow)"/>
   </svg>
   <div class="total-time" id="cu-total">total: 0:00</div>
+  <!-- inline param pickers -->
+  <div class="cu-params">
+    <div class="cu-param" id="cu-bpm-wrap">
+      <div class="cu-param-lbl">breaths/min</div>
+      <div class="cu-param-val" id="cu-bpm-trigger" onclick="toggleCuDd('bpm',event)">
+        <span id="cu-bpm-val">5.5</span><span class="arr">▾</span>
+      </div>
+      <div class="cu-vlist" id="cu-bpm-list"></div>
+    </div>
+    <div class="cu-param" id="cu-ratio-wrap">
+      <div class="cu-param-lbl">ratio</div>
+      <div class="cu-param-val" id="cu-ratio-trigger" onclick="toggleCuDd('ratio',event)">
+        <span id="cu-ratio-val">40:60</span><span class="arr">▾</span>
+      </div>
+      <div class="cu-vlist" id="cu-ratio-list"></div>
+    </div>
+  </div>
   <div class="sa-wrap"><div class="sa-label">stop after</div><div id="sa-cu"></div></div>
   <div class="ctrl-row">
     <button class="pause-btn" id="cu-pause" onclick="togglePause('cu')">STOP</button>
@@ -370,21 +337,7 @@ function playDoneMelody(){
   });
 }
 
-// ──────────────────────────────────────────────
-// PŮLVĚJÍŘ – stop after
-// Vějíř se otevírá DOLEVA (záporný x = doleva, y = svisle)
-// Střed otáčení = střed centrálního tlačítka (vpravo ve stage)
-// Úhly: 0° = doleva (←), 180° = doprava – ale my chceme levý půlkruh
-// Tedy úhly měřené od OSY DOLEVA: 90°=nahoru, -90°=dolů → výsledky: vlevo-nahoru
-// Použijeme: úhly od 90° (nahoru) po 270° (dolů), tzn. levý půlkruh
-// 4 položky rovnoměrně: 108°, 144°, 180°, 216°, 252° — nebo jednoduše:
-// Pro levý půlkruh: cos(180°..0° od spoda doleva nahoru)
-// Jednodušší: pozice vůči středu ctr:
-//   dx = -cos(angle)*R  (vždy záporné = doleva)
-//   dy = -sin(angle)*R  (záporné = nahoru, kladné = dolů)
-// Úhly 0°..180° rovnoměrně pro 4 položky: 22.5°, 67.5°, 112.5°, 157.5°
-// dx = -sin(angle)*R, dy = -cos(angle)*R  → vějíř vlevo svisle
-// ──────────────────────────────────────────────
+// ── STOP AFTER fan ──────────────────────────────
 const SA_OPTIONS=[
   {label:'5 s',   ms:5000},
   {label:'5 min', ms:300000},
@@ -394,114 +347,118 @@ const SA_OPTIONS=[
 ];
 const MODES=['r','rl','b','c','cu'];
 const saSelected={r:4,rl:4,b:4,c:4,cu:4};
-const fanOpen   ={r:false,rl:false,b:false,c:false,cu:false};
-
-// Poloměr vějíře
-const FAN_R = 45;
-// Úhly v levém půlkruhu: 0° = vodorovně vlevo, 90° = nahoru, -90° = dolů
-// 4 pozice rovnoměrně v oblouku –90° až +90° (levý svislý půlkruh):
-// –67.5°, –22.5°, +22.5°, +67.5°
-const FAN_ANGLES_DEG = [-54, -18, 18, 54];
+const fanOpen={r:false,rl:false,b:false,c:false,cu:false};
+const FAN_R=52;
+const FAN_ANGLES_DEG=[-40,-13,13,40];
 
 function buildFans(){
   MODES.forEach(m=>{
     const wrap=document.getElementById('sa-'+m);
     wrap.innerHTML='';
-
-    // stage – přesně 44px vysoký, 200px široký
-    // centrální btn vpravo, vějíř se rozevírá doleva
     const stage=document.createElement('div');
-    stage.className='sa-stage';
-    stage.id='sa-stage-'+m;
-    // rozšíř stage doleva aby vějíř nebyl oříznutý
-    stage.style.overflow='visible';
-
-    // centrální tlačítko
+    stage.className='sa-stage';stage.id='sa-stage-'+m;stage.style.overflow='visible';
     const ctr=document.createElement('button');
-    ctr.className='sa-center';
-    ctr.id='sa-ctr-'+m;
+    ctr.className='sa-center';ctr.id='sa-ctr-'+m;
     ctr.addEventListener('click',e=>{e.stopPropagation();toggleFan(m);});
     stage.appendChild(ctr);
-
-    // 4 vějířové položky
     for(let i=0;i<4;i++){
       const btn=document.createElement('button');
-      btn.className='sa-item';
-      btn.id='sa-item-'+m+'-'+i;
-      btn.addEventListener('click',e=>{
-        e.stopPropagation();
-        selectSA(m, parseInt(btn.dataset.idx));
-      });
+      btn.className='sa-item';btn.id='sa-item-'+m+'-'+i;
+      btn.addEventListener('click',e=>{e.stopPropagation();selectSA(m,parseInt(btn.dataset.idx));});
       stage.appendChild(btn);
     }
-
     wrap.appendChild(stage);
     renderFan(m);
   });
-
   document.addEventListener('click',()=>MODES.forEach(m=>{if(fanOpen[m])closeFan(m);}));
 }
 
 function renderFan(m){
-  const sel=saSelected[m];
-  document.getElementById('sa-ctr-'+m).textContent=SA_OPTIONS[sel].label;
-
-  const others=SA_OPTIONS.map((o,i)=>({label:o.label,ms:o.ms,idx:i})).filter(o=>o.idx!==sel);
+  document.getElementById('sa-ctr-'+m).textContent=SA_OPTIONS[saSelected[m]].label;
+  const others=SA_OPTIONS.map((o,i)=>({label:o.label,idx:i})).filter(o=>o.idx!==saSelected[m]);
   const open=fanOpen[m];
-  const items=document.querySelectorAll('#sa-stage-'+m+' .sa-item');
-
-  items.forEach((btn,i)=>{
-    const opt=others[i];
-    btn.dataset.idx=opt.idx;
-    btn.textContent=opt.label;
-
+  document.querySelectorAll('#sa-stage-'+m+' .sa-item').forEach((btn,i)=>{
+    const opt=others[i];btn.dataset.idx=opt.idx;btn.textContent=opt.label;
     if(open){
-      // Levý půlkruh: 0°=doleva, 90°=nahoru (nad ctr), -90°=dolů (pod ctr)
-      const rad=FAN_ANGLES_DEG[i]*Math.PI/180;
-      // dx doleva (záporné v CSS right = posun doprava od right edge)
-      // Ale .sa-item má position:absolute, top:50%, right:0
-      // chceme posunout: left += -cos(angle)*R (doleva), top += -sin(angle)*R (nahoru)
-      // Přepočet: translateX(-50% - cos*R) translateY(-50% - sin*R)
-      // cos(0°)=1 → dx=–R (plně doleva), sin(0°)=0 → dy=0 (svisle středem)
-      const dx = -Math.cos(0)*0; // nechci kosinus od 0, ale od levé strany
-      // Jednodušeji: úhel 0°=nahoru, jdeme doleva od centra
-      // Použijeme: dx = -cos(angle+90°)*R = sin(angle)*R ... ne
-      // Prostě: levý půlkruh = x vždy záporný (doleva), y = sin
-      // angle 0° = vlevo vodorovně: dx=–R, dy=0
-      // angle 90° = nahoru:         dx=0,  dy=–R  ... to je horní půlkruh
-      // Chci LEVÝ půlkruh (jako dveře se otevírají doleva):
-      // x = –cos(angle)*R,  y = sin(angle)*R
-      // angle –90° (dole): dx=0, dy=–R → příliš dolů, stage to schová
-      // Raději: úhly –75°..75° (levý svislý půlkruh bez okrajů)
       const ang=FAN_ANGLES_DEG[i]*Math.PI/180;
-      const fx = -Math.cos(ang)*FAN_R;
-      const fy = -Math.sin(ang)*FAN_R;
-      btn.style.transform=`translate(calc(-50% + ${fx.toFixed(1)}px), calc(-50% + ${fy.toFixed(1)}px))`;
+      const dx=Math.cos(ang)*FAN_R,dy=-Math.sin(ang)*FAN_R;
+      btn.style.transform=`translate(calc(-50% + ${dx.toFixed(1)}px), calc(-50% + ${dy.toFixed(1)}px))`;
       btn.classList.add('open');
     } else {
-      btn.style.transform=`translate(-50%,-50%)`;
-      btn.classList.remove('open');
+      btn.style.transform='translate(-50%,-50%)';btn.classList.remove('open');
     }
   });
 }
-
 function toggleFan(m){
   if(fanOpen[m]){closeFan(m);}
-  else{
-    MODES.forEach(mm=>{if(mm!==m&&fanOpen[mm])closeFan(mm);});
-    fanOpen[m]=true;
-    document.getElementById('sa-ctr-'+m).classList.add('open');
-    renderFan(m);
+  else{MODES.forEach(mm=>{if(mm!==m&&fanOpen[mm])closeFan(mm);});fanOpen[m]=true;document.getElementById('sa-ctr-'+m).classList.add('open');renderFan(m);}
+}
+function closeFan(m){fanOpen[m]=false;document.getElementById('sa-ctr-'+m).classList.remove('open');renderFan(m);}
+function selectSA(m,idx){saSelected[m]=idx;closeFan(m);}
+
+// ── Custom param dropdowns ──────────────────────
+const CU_BPM_OPTS=[];
+for(let v=1;v<=7;v+=0.5) CU_BPM_OPTS.push(v);
+const CU_RATIO_OPTS=[{in:10,ex:90},{in:20,ex:80},{in:30,ex:70},{in:40,ex:60},{in:50,ex:50}];
+let cuBpm=5.5,cuRatioIdx=3;
+const cuDdOpen={bpm:false,ratio:false};
+
+function buildCuDds(){
+  const bl=document.getElementById('cu-bpm-list');
+  CU_BPM_OPTS.forEach(v=>{
+    const b=document.createElement('button');b.className='cu-vopt';
+    b.textContent=v%1===0?v+'.0':v.toFixed(1);b.dataset.val=v;
+    if(v===cuBpm)b.classList.add('active');
+    b.onclick=e=>{e.stopPropagation();cuBpm=v;closeCuDd('bpm');applyCuParams();};
+    bl.appendChild(b);
+  });
+  const rl=document.getElementById('cu-ratio-list');
+  CU_RATIO_OPTS.forEach((r,i)=>{
+    const b=document.createElement('button');b.className='cu-vopt';
+    b.textContent=r.in+':'+r.ex;b.dataset.idx=i;
+    if(i===cuRatioIdx)b.classList.add('active');
+    b.onclick=e=>{e.stopPropagation();cuRatioIdx=i;closeCuDd('ratio');applyCuParams();};
+    rl.appendChild(b);
+  });
+}
+
+function toggleCuDd(id,e){
+  e.stopPropagation();
+  const was=cuDdOpen[id];
+  closeCuDd('bpm');closeCuDd('ratio');
+  if(!was){
+    cuDdOpen[id]=true;
+    document.getElementById('cu-'+id+'-list').classList.add('open');
+    const active=document.querySelector('#cu-'+id+'-list .cu-vopt.active');
+    if(active)setTimeout(()=>active.scrollIntoView({block:'nearest'}),10);
   }
 }
-function closeFan(m){
-  fanOpen[m]=false;
-  document.getElementById('sa-ctr-'+m).classList.remove('open');
-  renderFan(m);
+function closeCuDd(id){
+  cuDdOpen[id]=false;
+  document.getElementById('cu-'+id+'-list').classList.remove('open');
 }
-function selectSA(m,idx){
-  saSelected[m]=idx;
-  closeFan(m);
+document.addEventListener('click',()=>{closeCuDd('bpm');closeCuDd('ratio');});
+
+function updateCuLabels(){
+  const r=CU_RATIO_OPTS[cuRatioIdx];
+  document.getElementById('cu-bpm-val').textContent=cuBpm%1===0?cuBpm+'.0':cuBpm.toFixed(1);
+  document.getElementById('cu-ratio-val').textContent=r.in+':'+r.ex;
+  document.querySelectorAll('#cu-bpm-list .cu-vopt').forEach(b=>b.classList.toggle('active',parseFloat(b.dataset.val)===cuBpm));
+  document.querySelectorAll('#cu-ratio-list .cu-vopt').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.idx)===cuRatioIdx));
+}
+
+function applyCuParams(){
+  // recalc durations and restart phase from beginning
+  calcCuDurs();updateCuLabels();
+  clearLoop();cuState={phase:0,phaseElapsed:0};
+  cuBarsOff();runCustomPhase(0);
+}
+
+function calcCuDurs(){
+  const cycle=60/cuBpm;
+  const r=CU_RATIO_OPTS[cuRatioIdx];
+  cuInDur=Math.round(cycle*r.in/100*1000);
+  cuExDur=Math.round(cycle*r.ex/100*1000);
 }
 
 // ── Screen ─────────────────────────────────────
@@ -533,7 +490,7 @@ function triggerDone(){
 }
 function closeDone(){document.getElementById('done-overlay').classList.remove('active');show('s-home');}
 
-let paused=false,activeMode=null;
+let paused=false;
 function togglePause(mode){
   if(!paused){
     paused=true;clearLoop();if(mode==='c')co2PauseAll();
@@ -596,37 +553,22 @@ function showStats(){
   }catch(e){}
 }
 
-function updateSetupUI(){
-  const bpm=parseFloat(document.getElementById('su-bpm').value);
-  const inR=parseInt(document.getElementById('su-ratio').value);
-  const cycle=60/bpm;
-  document.getElementById('su-bpm-val').textContent=bpm.toFixed(1);
-  document.getElementById('su-cycle').textContent=cycle.toFixed(1);
-  document.getElementById('su-in-r').textContent=inR;
-  document.getElementById('su-ex-r').textContent=100-inR;
-  document.getElementById('su-in-s').textContent=(cycle*inR/100).toFixed(1);
-  document.getElementById('su-ex-s').textContent=(cycle*(100-inR)/100).toFixed(1);
-}
-function showSetup(){show('s-setup');updateSetupUI();}
-
+// ── Custom breathing ───────────────────────────
 let cuInDur=0,cuExDur=0,cuState={phase:0,phaseElapsed:0};
 const CU_W=280;
 function cuBarsOff(){
   document.getElementById('cu-in-fill').setAttribute('width','0');
   const fe=document.getElementById('cu-ex-fill');fe.setAttribute('width','0');fe.setAttribute('x',String(CU_W));
 }
-function startSetup(){
-  const bpm=parseFloat(document.getElementById('su-bpm').value);
-  const inR=parseInt(document.getElementById('su-ratio').value);
-  const cycle=60/bpm;
-  cuInDur=Math.round(cycle*inR/100*1000);
-  cuExDur=Math.round(cycle*(100-inR)/100*1000);
-  document.getElementById('cu-label').textContent=bpm.toFixed(1)+' bpm · '+inR+':'+(100-inR);
-  getCtx();show('s-custom');activeMode='cu';paused=false;
+
+function startCustom(){
+  calcCuDurs();updateCuLabels();
+  getCtx();show('s-custom');paused=false;
   cuState={phase:0,phaseElapsed:0};totals.cu={acc:0,start:null};
   document.getElementById('cu-pause').textContent='STOP';
   cuBarsOff();totalStart('cu');sessionBegin();runCustomPhase(0);
 }
+
 function runCustomPhase(startElapsed,playTone=true){
   const ph=cuState.phase,dur=ph===0?cuInDur:cuExDur;
   if(playTone)tone(ph===0?T_HIGH:T_LOW);
@@ -650,6 +592,7 @@ function runCustomPhase(startElapsed,playTone=true){
 }
 function resumeCustom(){totalResume('cu');const dur=cuState.phase===0?cuInDur:cuExDur;runCustomPhase(Math.min(cuState.phaseElapsed,dur-50),false);}
 
+// ── Resonant ───────────────────────────────────
 const R_IV=5500,R_W=280;
 let rState={phase:0,phaseElapsed:0};
 function rBarsOff(){
@@ -657,7 +600,7 @@ function rBarsOff(){
   const fe=document.getElementById('r-ex-fill');fe.setAttribute('width','0');fe.setAttribute('x',String(R_W));
 }
 function startResonant(){
-  getCtx();show('s-resonant');activeMode='r';paused=false;
+  getCtx();show('s-resonant');paused=false;
   rState={phase:0,phaseElapsed:0};totals.r={acc:0,start:null};
   document.getElementById('r-pause').textContent='STOP';
   rBarsOff();totalStart('r');sessionBegin();runResonantPhase(0);
@@ -685,6 +628,7 @@ function runResonantPhase(startElapsed,playTone=true){
 }
 function resumeResonant(){totalResume('r');runResonantPhase(Math.min(rState.phaseElapsed,R_IV-50),false);}
 
+// ── Relax ──────────────────────────────────────
 const RL_W=280;
 let rlInDur=4000,rlExDur=8000,rlState={phase:0,phaseElapsed:0};
 function rlBarsOff(){
@@ -697,7 +641,7 @@ function setRelaxRatio(ins,exs,idx){
   rlBarsOff();totalStart('rl');runRelaxPhase(0);
 }
 function startRelax(){
-  getCtx();show('s-relax');activeMode='rl';paused=false;
+  getCtx();show('s-relax');paused=false;
   rlState={phase:0,phaseElapsed:0};totals.rl={acc:0,start:null};
   document.getElementById('rl-pause').textContent='STOP';
   rlBarsOff();totalStart('rl');sessionBegin();runRelaxPhase(0);
@@ -725,6 +669,7 @@ function runRelaxPhase(startElapsed,playTone=true){
 }
 function resumeRelax(){totalResume('rl');const dur=rlState.phase===0?rlInDur:rlExDur;runRelaxPhase(Math.min(rlState.phaseElapsed,dur-50),false);}
 
+// ── Box ────────────────────────────────────────
 const BOX_PHASES=[{label:'inhale',freq:T_HIGH,side:0},{label:'hold',freq:T_MID,side:1},{label:'exhale',freq:T_LOW,side:2},{label:'hold',freq:T_MID,side:3}];
 let B_DUR=4000,bState={step:0,phaseElapsed:0};
 function setBoxDur(sec,idx){
@@ -734,7 +679,7 @@ function setBoxDur(sec,idx){
 }
 function boxResetSides(){for(let i=0;i<4;i++){const s=document.getElementById('bs'+i);s.setAttribute('stroke-dashoffset','200');s.setAttribute('opacity','0');s.style.filter='';}}
 function startBox(){
-  getCtx();show('s-box');activeMode='b';paused=false;
+  getCtx();show('s-box');paused=false;
   bState={step:0,phaseElapsed:0};totals.b={acc:0,start:null};
   document.getElementById('b-pause').textContent='STOP';
   boxResetSides();totalStart('b');sessionBegin();runBoxPhase(0);
@@ -767,6 +712,7 @@ function runBoxPhase(startElapsed,playTone=true){
 }
 function resumeBox(){totalResume('b');runBoxPhase(Math.min(bState.phaseElapsed,B_DUR-50),false);}
 
+// ── CO2 ────────────────────────────────────────
 let co2Running=false,co2Phase='exhale-countdown';
 let co2HoldRunning=false,co2HoldElapsed=0,co2HoldStart=null,co2HoldRAF=null;
 let co2RestElapsed=0,co2RestStart=null,co2RestRAF=null;
@@ -774,7 +720,7 @@ let co2ExhaleElapsed=0,co2ExhaleStart=null,co2ExhaleRAF=null;
 let co2Rounds=[];
 const REST_DUR=60000,EXHALE_CD=2000;
 function startCO2(){
-  getCtx();show('s-co2');activeMode='c';paused=false;co2Running=true;
+  getCtx();show('s-co2');paused=false;co2Running=true;
   co2Rounds=[];co2Phase='exhale-countdown';co2HoldElapsed=0;co2RestElapsed=0;co2ExhaleElapsed=0;
   totals.c={acc:0,start:null};
   document.getElementById('c-rounds').textContent='';
@@ -839,6 +785,7 @@ function co2ResumeAll(){
 function updateRounds(){document.getElementById('c-rounds').textContent=co2Rounds.map((t,i)=>`round ${i+1}: ${fmtMSS(t)}`).join('\n');}
 
 buildFans();
+buildCuDds();
 </script>
 </body>
 </html>
