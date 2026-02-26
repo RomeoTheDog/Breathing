@@ -272,7 +272,7 @@
 
 <script>
 // ── Audio ──────────────────────────────────────
-let audioCtx=null, soundMuted=false;
+let audioCtx=null,soundMuted=false;
 function toggleSound(btn){soundMuted=!soundMuted;btn.classList.toggle('muted',soundMuted);}
 function getCtx(){
   if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
@@ -295,21 +295,14 @@ function tone(freq,dur=9.0,vol=0.22){
 }
 const T_HIGH=490,T_MID=415,T_LOW=349;
 
-// ── Done melody ────────────────────────────────
-// Plays immediately when called – no pre-scheduling.
-// Web Audio currentTime is reliable even when screen is locked;
-// the key is we call it at the moment the setTimeout fires,
-// NOT by calculating a future Web Audio timestamp in advance.
 function bowlAt(c,flt,freq,t,vol){
   const dur=4.5;
   [[freq,vol],[freq*1.0015,vol*0.6],[freq*2.756,vol*0.15]].forEach(([f,v],i)=>{
     const o=c.createOscillator(),g=c.createGain();
     o.type='sine';o.frequency.value=f;
-    g.gain.setValueAtTime(0,t);
-    g.gain.linearRampToValueAtTime(v,t+0.03);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+0.03);
     g.gain.exponentialRampToValueAtTime(0.001,t+(i===2?dur*0.4:i===1?dur*0.8:dur));
-    o.connect(g);g.connect(flt);
-    o.start(t);o.stop(t+dur+0.2);
+    o.connect(g);g.connect(flt);o.start(t);o.stop(t+dur+0.2);
   });
 }
 function playDoneMelody(){
@@ -328,16 +321,12 @@ function playDoneMelody(){
 }
 
 // ── Background audio keep-alive ────────────────
-// We use a looping silence track so the AudioContext stays alive
-// and setTimeout/setInterval keep firing even with screen locked.
 let bgAudio=null;
 function startBgAudio(){
   if(bgAudio&&!bgAudio.paused)return;
   if(!bgAudio){
     const silence='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
-    bgAudio=new Audio(silence);
-    bgAudio.loop=true;
-    bgAudio.volume=0.001;
+    bgAudio=new Audio(silence);bgAudio.loop=true;bgAudio.volume=0.001;
     if('mediaSession' in navigator){
       navigator.mediaSession.metadata=new MediaMetadata({title:'Breathing'});
       navigator.mediaSession.setActionHandler('play',()=>bgAudio.play());
@@ -350,16 +339,15 @@ function stopBgAudio(){if(bgAudio){bgAudio.pause();bgAudio.currentTime=0;}}
 
 // ── Stop after ─────────────────────────────────
 const SA_OPTIONS=[
-  {label:'9 s',   ms:9000},
-  {label:'10 min',ms:600000},
+  {label:'20 min',ms:1200000},
   {label:'15 min',ms:900000},
-  {label:'20 min',ms:1200000}
+  {label:'10 min',ms:600000},
+  {label:'10 s',  ms:10000}
 ];
 const MODES=['r','rl','b','c','cu'];
-const saSelected={r:3,rl:3,b:3,c:3,cu:3};
+const saSelected={r:0,rl:0,b:0,c:0,cu:0};
 const fanOpen={r:false,rl:false,b:false,c:false,cu:false};
-const FAN_R=52;
-const FAN_ANGLES_DEG=[-22,0,22];
+const FAN_R=52,FAN_ANGLES_DEG=[22,0,-22];
 
 function buildFans(){
   MODES.forEach(m=>{
@@ -383,23 +371,46 @@ function renderFan(m){
   document.querySelectorAll('#sa-stage-'+m+' .sa-item').forEach((btn,i)=>{
     const opt=others[i];btn.dataset.idx=opt.idx;btn.textContent=opt.label;
     if(open){
-      const ang=FAN_ANGLES_DEG[i]*Math.PI/180;
-      const dx=Math.cos(ang)*FAN_R,dy=-Math.sin(ang)*FAN_R;
+      const ang=FAN_ANGLES_DEG[i]*Math.PI/180,dx=Math.cos(ang)*FAN_R,dy=-Math.sin(ang)*FAN_R;
       btn.style.transform=`translate(calc(-50% + ${dx.toFixed(1)}px), calc(-50% + ${dy.toFixed(1)}px))`;
       btn.classList.add('open');
     } else {btn.style.transform='translate(-50%,-50%)';btn.classList.remove('open');}
   });
 }
 function toggleFan(m){
-  if(fanOpen[m]){closeFan(m);}
+  if(fanOpen[m])closeFan(m);
   else{MODES.forEach(mm=>{if(mm!==m&&fanOpen[mm])closeFan(mm);});fanOpen[m]=true;document.getElementById('sa-ctr-'+m).classList.add('open');renderFan(m);}
 }
 function closeFan(m){fanOpen[m]=false;document.getElementById('sa-ctr-'+m).classList.remove('open');renderFan(m);}
-function selectSA(m,idx){saSelected[m]=idx;closeFan(m);}
+function selectSA(m,idx){
+  saSelected[m]=idx;
+  closeFan(m);
+  // restart watchdog with new duration if session is running
+  if(watchdogMode===m&&!paused){
+    const elapsed=totals[m].acc+(totals[m].start?performance.now()-totals[m].start:0);
+    const remaining=SA_OPTIONS[saSelected[m]].ms-elapsed;
+    stopWatchdog();
+    doneFired=false;
+    watchdogMode=m;
+    watchdogEndAt=Date.now()+Math.max(0,remaining);
+    watchdogInterval=setInterval(()=>{
+      const now=Date.now();
+      const rem=watchdogEndAt-now;
+      const dbg=document.getElementById('r-debug');
+      if(dbg)dbg.textContent='debug: ends in '+(rem/1000).toFixed(1)+'s paused='+paused+' fired='+doneFired;
+      if(paused)return;
+      if(now>=watchdogEndAt)triggerDone();
+      if(watchdogMode){
+        const el=totals[watchdogMode].acc+(totals[watchdogMode].start?performance.now()-totals[watchdogMode].start:0);
+        const el2=document.getElementById(watchdogMode+'-total');
+        if(el2)el2.textContent='total: '+fmtMSS(el);
+      }
+    },500);
+  }
+}
 
-// ── Custom param dropdowns ─────────────────────
-const CU_BPM_OPTS=[];
-for(let v=1;v<=7;v+=0.5)CU_BPM_OPTS.push(v);
+// ── Custom dropdowns ───────────────────────────
+const CU_BPM_OPTS=[];for(let v=1;v<=7;v+=0.5)CU_BPM_OPTS.push(v);
 const CU_RATIO_OPTS=[{in:10,ex:90},{in:20,ex:80},{in:30,ex:70},{in:40,ex:60},{in:50,ex:50}];
 let cuBpm=5.5,cuRatioIdx=3;
 const cuDdOpen={bpm:false,ratio:false};
@@ -422,8 +433,7 @@ function buildCuDds(){
   });
 }
 function toggleCuDd(id,e){
-  e.stopPropagation();
-  const was=cuDdOpen[id];closeCuDd('bpm');closeCuDd('ratio');
+  e.stopPropagation();const was=cuDdOpen[id];closeCuDd('bpm');closeCuDd('ratio');
   if(!was){cuDdOpen[id]=true;document.getElementById('cu-'+id+'-list').classList.add('open');
     const active=document.querySelector('#cu-'+id+'-list .cu-vopt.active');
     if(active)setTimeout(()=>active.scrollIntoView({block:'nearest'}),10);}
@@ -447,11 +457,13 @@ function calcCuDurs(){
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function goHome(){
   if(sessionStartMs>0)saveSession();
-  paused=true;clearLoop();co2Running=false;cancelScheduledDone();stopBgAudio();
+  paused=true;clearLoop();co2Running=false;stopWatchdog();stopBgAudio();
   document.getElementById('done-overlay').classList.remove('active');
   show('s-home');
 }
 
+// activeRAFs / activeTimers – for breathing phase loops ONLY
+// The watchdog interval is managed separately and never put here.
 let activeRAFs=[],activeTimers=[];
 function clearLoop(){activeRAFs.forEach(cancelAnimationFrame);activeRAFs=[];activeTimers.forEach(clearTimeout);activeTimers=[];}
 function regRAF(id){activeRAFs.push(id);return id;}
@@ -465,47 +477,74 @@ function fmtHMS(ms){
 }
 
 function triggerDone(){
-  paused=true;clearLoop();co2Running=false;cancelScheduledDone();stopBgAudio();
+  if(doneFired)return; // guard against double-fire
+  doneFired=true;
+  paused=true;clearLoop();co2Running=false;stopWatchdog();stopBgAudio();
   if(sessionStartMs>0)saveSession();
   playDoneMelody();
   document.getElementById('done-overlay').classList.add('active');
 }
 function closeDone(){document.getElementById('done-overlay').classList.remove('active');show('s-home');}
 
-// ── Totals & scheduled done ────────────────────
-// KEY CHANGE: We use a single reliable setTimeout (not RAF) for the
-// "stop after" trigger. setTimeout keeps firing on Android even with
-// screen locked, as long as bgAudio is playing (keeps CPU awake).
+// ── Watchdog (setInterval) – the ONLY thing that checks done ──
+// Runs every 500 ms. Never cancelled by clearLoop().
+// Uses wall-clock Date.now() so it's immune to performance.now() drift
+// when the screen is locked.
+let watchdogInterval=null,watchdogMode=null,watchdogEndAt=0,doneFired=false;
+
+function startWatchdog(m){
+  stopWatchdog();
+  doneFired=false;
+  watchdogMode=m;
+  watchdogEndAt=Date.now()+SA_OPTIONS[saSelected[m]].ms;
+      watchdogInterval=setInterval(()=>{
+    const now=Date.now();
+    const remaining=watchdogEndAt-now;
+    // debug display on resonant screen
+    const dbg=document.getElementById('r-debug');
+    if(dbg)dbg.textContent='debug: ends in '+(remaining/1000).toFixed(1)+'s paused='+paused+' fired='+doneFired;
+    if(paused)return;
+    if(now>=watchdogEndAt)triggerDone();
+    if(watchdogMode){
+      const el=totals[watchdogMode].acc+(totals[watchdogMode].start?performance.now()-totals[watchdogMode].start:0);
+      const el2=document.getElementById(watchdogMode+'-total');
+      if(el2)el2.textContent='total: '+fmtMSS(el);
+    }
+  },500);
+}
+function stopWatchdog(){
+  if(watchdogInterval!==null){clearInterval(watchdogInterval);watchdogInterval=null;}
+  watchdogMode=null;
+}
+function pauseWatchdog(){
+  // when paused, shift the end time forward so elapsed pause time is excluded
+  if(watchdogInterval!==null)watchdogPausedAt=Date.now();
+}
+let watchdogPausedAt=0;
+function resumeWatchdog(m){
+  if(watchdogPausedAt>0){
+    watchdogEndAt+=Date.now()-watchdogPausedAt;
+    watchdogPausedAt=0;
+  }
+  // restart interval in case it was cleared
+  if(watchdogInterval===null){
+    watchdogInterval=setInterval(()=>{
+      if(paused)return;
+      if(Date.now()>=watchdogEndAt)triggerDone();
+      if(watchdogMode){
+        const el=totals[watchdogMode].acc+(totals[watchdogMode].start?performance.now()-totals[watchdogMode].start:0);
+        const el2=document.getElementById(watchdogMode+'-total');
+        if(el2)el2.textContent='total: '+fmtMSS(el);
+      }
+    },500);
+  }
+}
+
+// ── Totals ─────────────────────────────────────
 const totals={r:{acc:0,start:null},rl:{acc:0,start:null},b:{acc:0,start:null},c:{acc:0,start:null},cu:{acc:0,start:null}};
 
-let scheduledDoneTimer=null;
-function scheduleDone(m){
-  cancelScheduledDone();
-  const elapsed=totals[m].acc+(totals[m].start?performance.now()-totals[m].start:0);
-  const remaining=SA_OPTIONS[saSelected[m]].ms-elapsed;
-  if(remaining<=0)return;
-  scheduledDoneTimer=setTimeout(()=>{
-    // At this exact moment we play the melody – no future scheduling needed.
-    triggerDone();
-  },remaining);
-}
-function cancelScheduledDone(){
-  if(scheduledDoneTimer!==null){clearTimeout(scheduledDoneTimer);scheduledDoneTimer=null;}
-}
-
-function totalStart(m){totals[m]={acc:0,start:performance.now()};startBgAudio();tickTotal(m);scheduleDone(m);}
-function totalResume(m){totals[m].start=performance.now();startBgAudio();tickTotal(m);scheduleDone(m);}
-
-// tickTotal uses setTimeout instead of RAF so the display keeps
-// updating even when the page is in the background (visible on
-// lock-screen notification area). If the page is hidden, updates
-// are invisible anyway – and the done melody fires via the timer above.
-function tickTotal(m){
-  if(paused)return;
-  const el=totals[m].acc+(totals[m].start?performance.now()-totals[m].start:0);
-  document.getElementById(m+'-total').textContent='total: '+fmtMSS(el);
-  regTimer(setTimeout(()=>tickTotal(m),500));
-}
+function totalStart(m){totals[m]={acc:0,start:performance.now()};startBgAudio();startWatchdog(m);}
+function totalResume(m){totals[m].start=performance.now();startBgAudio();resumeWatchdog(m);}
 
 async function acquireWakeLock(){try{if('wakeLock' in navigator)await navigator.wakeLock.request('screen');}catch(e){}}
 acquireWakeLock();
@@ -537,7 +576,7 @@ function showStats(){
     document.getElementById('st-week').textContent=fmtHMS(wk);
     document.getElementById('st-month').textContent=fmtHMS(mo);
     document.getElementById('st-all').textContent=fmtHMS(al);
-    document.getElementById('st-sessions').textContent=sessions.length+' session'+(sessions.length!==1?'s':'')+' total';
+    document.getElementById('st-sessions').textContent=sessions.length+' session'+(sessions.length!==1?'s':'');
   }catch(e){}
 }
 
@@ -545,7 +584,7 @@ let paused=false;
 function togglePause(mode){
   if(!paused){
     paused=true;clearLoop();if(mode==='c')co2PauseAll();
-    cancelScheduledDone();
+    pauseWatchdog();
     const m=mode;
     if(totals[m].start){totals[m].acc+=performance.now()-totals[m].start;totals[m].start=null;}
     document.getElementById(mode+'-pause').textContent='START';
@@ -587,7 +626,7 @@ function runCustomPhase(startElapsed,playTone=true){
   function anim(ts){
     if(paused)return;const e=ts-ps;cuState.phaseElapsed=e;
     const pct=Math.min(1,e/dur);disp.textContent=fmtDec(dur-e);
-    if(ph===0){fi.setAttribute('width',(CU_W*pct).toFixed(1));}
+    if(ph===0)fi.setAttribute('width',(CU_W*pct).toFixed(1));
     else{const w=CU_W*pct;fe.setAttribute('width',w.toFixed(1));fe.setAttribute('x',(CU_W-w).toFixed(1));}
     if(e<dur)regRAF(requestAnimationFrame(anim));else cuBarsOff();
   }
@@ -621,7 +660,7 @@ function runResonantPhase(startElapsed,playTone=true){
   function anim(ts){
     if(paused)return;const e=ts-ps;rState.phaseElapsed=e;
     const pct=Math.min(1,e/R_IV);disp.textContent=fmtDec(R_IV-e);
-    if(ph===0){fi.setAttribute('width',(R_W*pct).toFixed(1));}
+    if(ph===0)fi.setAttribute('width',(R_W*pct).toFixed(1));
     else{const w=R_W*pct;fe.setAttribute('width',w.toFixed(1));fe.setAttribute('x',(R_W-w).toFixed(1));}
     if(e<R_IV)regRAF(requestAnimationFrame(anim));else rBarsOff();
   }
@@ -660,7 +699,7 @@ function runRelaxPhase(startElapsed,playTone=true){
   function anim(ts){
     if(paused)return;const e=ts-ps;rlState.phaseElapsed=e;
     const pct=Math.min(1,e/dur);disp.textContent=fmtDec(dur-e);
-    if(ph===0){fi.setAttribute('width',(RL_W*pct).toFixed(1));}
+    if(ph===0)fi.setAttribute('width',(RL_W*pct).toFixed(1));
     else{const w=RL_W*pct;fe.setAttribute('width',w.toFixed(1));fe.setAttribute('x',(RL_W-w).toFixed(1));}
     if(e<dur)regRAF(requestAnimationFrame(anim));else rlBarsOff();
   }
