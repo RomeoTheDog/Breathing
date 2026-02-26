@@ -428,7 +428,18 @@ function toggleFan(m){
 function closeFan(m){fanOpen[m]=false;document.getElementById('sa-ctr-'+m).classList.remove('open');renderFan(m);}
 function selectSA(m,idx){saSelected[m]=idx;closeFan(m);}
 
-// ── Custom param dropdowns ──────────────────────
+// nepřetržitý tichý oscillator — udržuje AudioContext aktivní v background
+let silentNode=null;
+function startSilentKeepAlive(){
+  if(silentNode)return;
+  const c=getCtx();
+  const o=c.createOscillator();
+  const g=c.createGain();
+  g.gain.value=0.001; // prakticky neslyšitelný
+  o.connect(g);g.connect(c.destination);
+  o.start();
+  silentNode=o;
+}
 const CU_BPM_OPTS=[];
 for(let v=1;v<=7;v+=0.5) CU_BPM_OPTS.push(v);
 const CU_RATIO_OPTS=[{in:10,ex:90},{in:20,ex:80},{in:30,ex:70},{in:40,ex:60},{in:50,ex:50}];
@@ -497,7 +508,7 @@ function calcCuDurs(){
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function goHome(){
   if(sessionStartMs>0)saveSession();
-  paused=true;clearLoop();co2Running=false;cancelScheduledDone();
+  paused=true;clearLoop();co2Running=false;cancelScheduledDone();stopBgAudio();
   document.getElementById('done-overlay').classList.remove('active');
   show('s-home');
 }
@@ -544,8 +555,28 @@ function togglePause(mode){
 }
 
 const totals={r:{acc:0,start:null},rl:{acc:0,start:null},b:{acc:0,start:null},c:{acc:0,start:null},cu:{acc:0,start:null}};
-function totalStart(m){totals[m]={acc:0,start:performance.now()};tickTotal(m);scheduleDone(m);}
-function totalResume(m){totals[m].start=performance.now();tickTotal(m);scheduleDone(m);}
+// ── Background audio keep-alive via MediaSession ──
+let bgAudio=null;
+function initMediaSession(){
+  if(bgAudio)return;
+  // tichý MP3 loop jako data URI (44 bajtů — nejkratší validní MP3)
+  const silence='data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA//////////////////////////////////////////////////////////////////8AAAAATGF2YzU4LjU0AAAAAAAAAAAAAAAAJAAAAAAAAAAAAnHSAGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+  bgAudio=new Audio(silence);
+  bgAudio.loop=true;
+  bgAudio.volume=0.001;
+  if('mediaSession' in navigator){
+    navigator.mediaSession.metadata=new MediaMetadata({title:'Breathing'});
+    navigator.mediaSession.setActionHandler('play',()=>bgAudio.play());
+    navigator.mediaSession.setActionHandler('pause',()=>{});
+  }
+}
+function startBgAudio(){
+  initMediaSession();
+  bgAudio.play().catch(()=>{});
+}
+function stopBgAudio(){
+  if(bgAudio){bgAudio.pause();bgAudio.currentTime=0;}
+}
 
 let scheduledDoneSource=null;
 function scheduleDone(m){
