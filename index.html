@@ -295,7 +295,11 @@ function tone(freq,dur=9.0,vol=0.22){
 }
 const T_HIGH=490,T_MID=415,T_LOW=349;
 
-// ── Done melody (bowl simulation) ─────────────
+// ── Done melody ────────────────────────────────
+// Plays immediately when called – no pre-scheduling.
+// Web Audio currentTime is reliable even when screen is locked;
+// the key is we call it at the moment the setTimeout fires,
+// NOT by calculating a future Web Audio timestamp in advance.
 function bowlAt(c,flt,freq,t,vol){
   const dur=4.5;
   [[freq,vol],[freq*1.0015,vol*0.6],[freq*2.756,vol*0.15]].forEach(([f,v],i)=>{
@@ -308,7 +312,7 @@ function bowlAt(c,flt,freq,t,vol){
     o.start(t);o.stop(t+dur+0.2);
   });
 }
-function scheduleDoneMelody(startAt){
+function playDoneMelody(){
   if(soundMuted)return;
   const c=getCtx();
   const rev=c.createConvolver();
@@ -319,16 +323,17 @@ function scheduleDoneMelody(startAt){
   const revG=c.createGain();revG.gain.value=0.55;rev.connect(revG);revG.connect(c.destination);
   const flt=c.createBiquadFilter();flt.type='lowpass';flt.frequency.value=800;flt.Q.value=0.3;
   flt.connect(c.destination);flt.connect(rev);
-  [220,293.66,440].forEach((f,i)=>bowlAt(c,flt,f,startAt+i*0.6,i===2?0.42:0.3));
+  const now=c.currentTime;
+  [220,293.66,440].forEach((f,i)=>bowlAt(c,flt,f,now+i*0.6,i===2?0.42:0.3));
 }
-function playDoneMelody(){scheduleDoneMelody(getCtx().currentTime+0.1);}
 
-// ── Background audio keep-alive (MediaSession) ─
+// ── Background audio keep-alive ────────────────
+// We use a looping silence track so the AudioContext stays alive
+// and setTimeout/setInterval keep firing even with screen locked.
 let bgAudio=null;
 function startBgAudio(){
   if(bgAudio&&!bgAudio.paused)return;
   if(!bgAudio){
-    // minimal silent mp3
     const silence='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
     bgAudio=new Audio(silence);
     bgAudio.loop=true;
@@ -345,7 +350,7 @@ function stopBgAudio(){if(bgAudio){bgAudio.pause();bgAudio.currentTime=0;}}
 
 // ── Stop after ─────────────────────────────────
 const SA_OPTIONS=[
-  {label:'10 s',  ms:10000},
+  {label:'9 s',   ms:9000},
   {label:'10 min',ms:600000},
   {label:'15 min',ms:900000},
   {label:'20 min',ms:1200000}
@@ -468,46 +473,38 @@ function triggerDone(){
 function closeDone(){document.getElementById('done-overlay').classList.remove('active');show('s-home');}
 
 // ── Totals & scheduled done ────────────────────
+// KEY CHANGE: We use a single reliable setTimeout (not RAF) for the
+// "stop after" trigger. setTimeout keeps firing on Android even with
+// screen locked, as long as bgAudio is playing (keeps CPU awake).
 const totals={r:{acc:0,start:null},rl:{acc:0,start:null},b:{acc:0,start:null},c:{acc:0,start:null},cu:{acc:0,start:null}};
 
-let scheduledDoneSource=null;
+let scheduledDoneTimer=null;
 function scheduleDone(m){
   cancelScheduledDone();
-  const c=getCtx();
   const elapsed=totals[m].acc+(totals[m].start?performance.now()-totals[m].start:0);
-  const remaining=(SA_OPTIONS[saSelected[m]].ms-elapsed)/1000;
+  const remaining=SA_OPTIONS[saSelected[m]].ms-elapsed;
   if(remaining<=0)return;
-  const startAt=c.currentTime+remaining;
-  // schedule melody directly in Web Audio graph
-  scheduleDoneMelody(startAt);
-  // silent buffer to cancel if needed
-  const frames=Math.max(1,Math.floor(remaining*c.sampleRate));
-  const silBuf=c.createBuffer(1,frames,c.sampleRate);
-  const src=c.createBufferSource();
-  src.buffer=silBuf;src.connect(c.destination);
-  src.onended=()=>{clearLoop();};
-  src.start(c.currentTime);
-  scheduledDoneSource=src;
+  scheduledDoneTimer=setTimeout(()=>{
+    // At this exact moment we play the melody – no future scheduling needed.
+    triggerDone();
+  },remaining);
 }
 function cancelScheduledDone(){
-  if(scheduledDoneSource){try{scheduledDoneSource.stop();}catch(e){}scheduledDoneSource=null;}
+  if(scheduledDoneTimer!==null){clearTimeout(scheduledDoneTimer);scheduledDoneTimer=null;}
 }
 
 function totalStart(m){totals[m]={acc:0,start:performance.now()};startBgAudio();tickTotal(m);scheduleDone(m);}
 function totalResume(m){totals[m].start=performance.now();startBgAudio();tickTotal(m);scheduleDone(m);}
 
+// tickTotal uses setTimeout instead of RAF so the display keeps
+// updating even when the page is in the background (visible on
+// lock-screen notification area). If the page is hidden, updates
+// are invisible anyway – and the done melody fires via the timer above.
 function tickTotal(m){
   if(paused)return;
   const el=totals[m].acc+(totals[m].start?performance.now()-totals[m].start:0);
   document.getElementById(m+'-total').textContent='total: '+fmtMSS(el);
-  const lim=SA_OPTIONS[saSelected[m]].ms;
-  if(el>=lim){
-    paused=true;clearLoop();co2Running=false;cancelScheduledDone();stopBgAudio();
-    if(sessionStartMs>0)saveSession();
-    document.getElementById('done-overlay').classList.add('active');
-    return;
-  }
-  regRAF(requestAnimationFrame(()=>tickTotal(m)));
+  regTimer(setTimeout(()=>tickTotal(m),500));
 }
 
 async function acquireWakeLock(){try{if('wakeLock' in navigator)await navigator.wakeLock.request('screen');}catch(e){}}
