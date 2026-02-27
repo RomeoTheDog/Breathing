@@ -19,6 +19,7 @@
     pointer-events:none;z-index:10;}
   .screen{display:none;flex-direction:column;align-items:center;justify-content:center;
     width:100%;min-height:100vh;gap:22px;padding:30px 20px;position:relative;}
+  #s-stats{gap:4px;}
   .screen.active{display:flex;}
   .home-top{font-size:13px;letter-spacing:0.25em;color:rgba(255,255,255,0.72);margin-bottom:4px;}
   .home-title{font-size:10px;letter-spacing:0.5em;color:rgba(232,255,0,0.3);text-transform:uppercase;margin-bottom:10px;}
@@ -101,22 +102,24 @@
   .break-btn:active{background:#0f0f00;}
   .break-btn:disabled{opacity:0.2;pointer-events:none;}
   .co2-rounds{font-size:11px;color:rgba(232,255,0,0.28);letter-spacing:0.18em;text-align:center;line-height:2;min-height:44px;white-space:pre;}
-  .stats-grid{width:260px;display:flex;flex-direction:column;}
-  .stats-row{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px solid rgba(232,255,0,0.08);}
+  .stats-grid{width:260px;display:flex;flex-direction:column;margin-top:4px;}
+  .stats-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid rgba(232,255,0,0.08);}
   .stats-row:last-child{border-bottom:none;}
   .stats-lbl{font-size:10px;letter-spacing:0.35em;color:rgba(232,255,0,0.35);text-transform:uppercase;}
-  .stats-val{font-size:22px;letter-spacing:1px;text-shadow:0 0 12px rgba(232,255,0,0.3);font-variant-numeric:tabular-nums;}
-  .stats-sessions{font-size:10px;letter-spacing:0.25em;color:rgba(232,255,0,0.2);margin-top:4px;}
-  .stats-section-title{font-size:9px;letter-spacing:0.5em;color:rgba(232,255,0,0.18);text-transform:uppercase;margin-top:18px;margin-bottom:2px;width:260px;text-align:left;}
+  .stats-val{font-size:22px;letter-spacing:1px;text-shadow:0 0 12px rgba(232,255,0,0.3);font-variant-numeric:tabular-nums;display:inline-block;width:110px;text-align:right;}
+  .stats-sessions{font-size:10px;letter-spacing:0.25em;color:rgba(255,255,255,0.45);margin-top:2px;white-space:nowrap;}
+  .stats-section-title{font-size:9px;letter-spacing:0.5em;color:rgba(232,255,0,0.18);text-transform:uppercase;margin-top:10px;margin-bottom:0;width:260px;text-align:left;}
   .stats-mode-grid{width:260px;display:flex;flex-direction:column;}
-  .stats-mode-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid rgba(232,255,0,0.05);}
+  .stats-mode-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid rgba(232,255,0,0.05);}
   .stats-mode-row:last-child{border-bottom:none;}
   .stats-mode-lbl{font-size:10px;letter-spacing:0.25em;color:rgba(232,255,0,0.28);text-transform:uppercase;}
   .stats-mode-right{display:flex;align-items:baseline;gap:6px;}
-  .stats-mode-cnt{font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.45);white-space:nowrap;display:inline-block;width:28px;text-align:right;font-variant-numeric:tabular-nums;}
-  .stats-mode-val{font-size:14px;letter-spacing:1px;color:rgba(232,255,0,0.6);font-variant-numeric:tabular-nums;text-align:right;}
-  /* scrollable stats screen */
-  #s-stats{justify-content:flex-start;padding-top:40px;padding-bottom:40px;overflow-y:auto;overflow-x:hidden;}
+  .stats-mode-cnt{font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.45);white-space:nowrap;display:inline-block;width:36px;text-align:right;font-variant-numeric:tabular-nums;}
+  .stats-mode-val{font-size:14px;letter-spacing:1px;color:rgba(232,255,0,0.6);font-variant-numeric:tabular-nums;text-align:right;display:inline-block;width:72px;}
+
+  /* relax 478 layout */
+  #rl-478-wrap{display:none;flex-direction:column;align-items:center;gap:6px;width:100%;}
+  #rl-478-wrap.visible{display:flex;}
 </style>
 </head>
 <body>
@@ -171,18 +174,52 @@
 <div class="screen" id="s-relax">
   <div class="mode-label">Relax Breathing</div>
   <div class="phase-label" id="rl-phase">inhale</div>
-  <div class="display" id="rl-disp">4.0</div>
-  <svg width="280" height="14" viewBox="0 0 280 14" style="overflow:visible;">
+
+  <!-- number display -->
+  <div class="display" id="rl-disp" style="min-height:0;transition:font-size 0.2s;">4.0</div>
+
+  <!-- normal bar (2-phase modes) -->
+  <svg id="rl-bar-svg" width="280" height="14" viewBox="0 0 280 14" style="overflow:visible;">
     <defs><filter id="rlGlow" x="-5%" y="-300%" width="110%" height="700%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
     <rect x="0" y="5" width="280" height="3" rx="1.5" fill="rgba(232,255,0,0.1)"/>
     <rect id="rl-in-fill" x="0" y="5" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#rlGlow)"/>
     <rect id="rl-ex-fill" x="280" y="5" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#rlGlow)"/>
   </svg>
+
+  <!-- 4:7:8 triangle — centered, right angle bottom-left -->
+  <!-- inhale = left vertical (120px up), hold = hypotenuse top→bottom-right (268px), exhale = bottom right→left (240px) -->
+  <!-- SVG 280 wide: bottom line from x=20 to x=260 = 240px centered. Top point x=20, y=10. -->
+  <div id="rl-478-wrap">
+    <svg width="280" height="150" viewBox="0 0 280 150" style="display:block;">
+      <defs>
+        <filter id="triGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- bg triangle: right angle at (20,140), top at (20,20), right at (260,140) -->
+      <polygon points="20,20 20,140 260,140" fill="none" stroke="rgba(232,255,0,0.15)" stroke-width="1.5" stroke-linejoin="round"/>
+      <!-- A: inhale bottom→top, vertical left, length=120 -->
+      <line id="tri-a" x1="20" y1="140" x2="20" y2="20"
+        stroke="#e8ff00" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="120" stroke-dashoffset="120" opacity="0"/>
+      <!-- B: hold top→bottom-right, hypotenuse, length=268 -->
+      <line id="tri-b" x1="20" y1="20" x2="260" y2="140"
+        stroke="#e8ff00" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="268" stroke-dashoffset="268" opacity="0"/>
+      <!-- C: exhale right→left, bottom, length=240 -->
+      <line id="tri-c" x1="260" y1="140" x2="20" y2="140"
+        stroke="#e8ff00" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="240" stroke-dashoffset="240" opacity="0"/>
+    </svg>
+  </div>
+
   <div class="total-time" id="rl-total">total: 0:00</div>
-  <div style="display:flex;gap:12px;">
-    <button class="sel-btn active" id="rl-btn-0" onclick="setRelaxRatio(4,8,0)">4:8</button>
-    <button class="sel-btn" id="rl-btn-1" onclick="setRelaxRatio(4,6,1)">4:6</button>
-    <button class="sel-btn" id="rl-btn-2" onclick="setRelaxRatio(3,6,2)">3:6</button>
+  <div style="display:flex;gap:10px;">
+    <button class="sel-btn active" id="rl-btn-0" onclick="setRelaxMode(0)">4:8</button>
+    <button class="sel-btn" id="rl-btn-1" onclick="setRelaxMode(1)">4:6</button>
+    <button class="sel-btn" id="rl-btn-2" onclick="setRelaxMode(2)">3:6</button>
+    <button class="sel-btn" id="rl-btn-3" onclick="setRelaxMode(3)" style="width:56px;font-size:10px;">4:7:8</button>
   </div>
   <div class="sa-wrap"><div class="sa-label">stop after</div><div id="sa-rl"></div></div>
   <div class="ctrl-row">
@@ -270,25 +307,25 @@
 
 <!-- STATS -->
 <div class="screen" id="s-stats">
-  <div class="mode-label" style="margin-bottom:4px;">Statistics</div>
-  <div class="stats-grid">
+  <div class="mode-label" style="display:block;text-align:center;margin-bottom:4px;">STATISTICS</div>
+  <div class="stats-grid" style="margin:0 auto;">
     <div class="stats-row"><span class="stats-lbl">This week</span><span class="stats-val" id="st-week">00:00:00</span></div>
     <div class="stats-row"><span class="stats-lbl">This month</span><span class="stats-val" id="st-month">00:00:00</span></div>
     <div class="stats-row"><span class="stats-lbl">All time</span><span class="stats-val" id="st-all">00:00:00</span></div>
   </div>
-  <div class="stats-sessions" id="st-sessions">0 sessions</div>
-
-  <div class="stats-section-title">by exercise — all time</div>
-  <div class="stats-mode-grid">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;width:260px;margin:10px auto 0;">
+    <div class="stats-section-title" style="margin:0;">by exercise</div>
+    <div class="stats-sessions" id="st-sessions" style="margin:0;">0 sessions</div>
+  </div>
+  <div class="stats-mode-grid" style="margin:0 auto;">
     <div class="stats-mode-row"><span class="stats-mode-lbl">Resonant</span><span class="stats-mode-right"><span class="stats-mode-val" id="st-m-resonant">00:00:00</span><span class="stats-mode-cnt" id="st-n-resonant">0</span></span></div>
     <div class="stats-mode-row"><span class="stats-mode-lbl">Relax</span><span class="stats-mode-right"><span class="stats-mode-val" id="st-m-relax">00:00:00</span><span class="stats-mode-cnt" id="st-n-relax">0</span></span></div>
     <div class="stats-mode-row"><span class="stats-mode-lbl">Box</span><span class="stats-mode-right"><span class="stats-mode-val" id="st-m-box">00:00:00</span><span class="stats-mode-cnt" id="st-n-box">0</span></span></div>
     <div class="stats-mode-row"><span class="stats-mode-lbl">CO₂</span><span class="stats-mode-right"><span class="stats-mode-val" id="st-m-co2">00:00:00</span><span class="stats-mode-cnt" id="st-n-co2">0</span></span></div>
-    <div class="stats-mode-row"><span class="stats-mode-lbl">Custom</span><span class="stats-mode-right"><span class="stats-mode-val" id="st-m-custom">00:00:00</span><span class="stats-mode-cnt" id="st-n-custom">0</span></span></div>
+    <div class="stats-mode-row"><span class="stats-mode-lbl">⚙</span><span class="stats-mode-right"><span class="stats-mode-val" id="st-m-custom">00:00:00</span><span class="stats-mode-cnt" id="st-n-custom">0</span></span></div>
   </div>
-
-  <button class="menu-btn" style="display:block;margin-top:20px;" onclick="exportCSV()">EXPORT CSV</button>
-  <button class="menu-btn" style="display:block;margin-top:8px;" onclick="goHome()">MAIN MENU</button>
+  <button class="menu-btn" style="display:block;margin:16px auto 0;" onclick="exportCSV()">EXPORT CSV</button>
+  <button class="menu-btn" style="display:block;margin:8px auto 0;" onclick="goHome()">MAIN MENU</button>
 </div>
 
 <script>
@@ -341,7 +378,6 @@ function playDoneMelody(){
   [220,293.66,440].forEach((f,i)=>bowlAt(c,flt,f,now+i*0.6,i===2?0.42:0.3));
 }
 
-// ── Background audio keep-alive ────────────────
 let bgAudio=null;
 function startBgAudio(){
   if(bgAudio&&!bgAudio.paused)return;
@@ -359,17 +395,11 @@ function startBgAudio(){
 function stopBgAudio(){if(bgAudio){bgAudio.pause();bgAudio.currentTime=0;}}
 
 // ── Stop after ─────────────────────────────────
-const SA_OPTIONS=[
-  {label:'20 min',ms:1200000},
-  {label:'15 min',ms:900000},
-  {label:'10 min',ms:600000},
-  {label:'5 min', ms:300000}
-];
+const SA_OPTIONS=[{label:'20 min',ms:1200000},{label:'15 min',ms:900000},{label:'10 min',ms:600000},{label:'5 min',ms:300000}];
 const MODES=['r','rl','b','c','cu'];
 const saSelected={r:0,rl:0,b:0,c:0,cu:0};
 const fanOpen={r:false,rl:false,b:false,c:false,cu:false};
 const FAN_R=52,FAN_ANGLES_DEG=[22,0,-22];
-
 function buildFans(){
   MODES.forEach(m=>{
     const wrap=document.getElementById('sa-'+m);wrap.innerHTML='';
@@ -466,22 +496,18 @@ function goHome(){
   document.getElementById('done-overlay').classList.remove('active');
   show('s-home');
 }
-
 let activeRAFs=[],activeTimers=[];
 function clearLoop(){activeRAFs.forEach(cancelAnimationFrame);activeRAFs=[];activeTimers.forEach(clearTimeout);activeTimers=[];}
 function regRAF(id){activeRAFs.push(id);return id;}
 function regTimer(id){activeTimers.push(id);return id;}
-
 function fmtMSS(ms){const s=Math.floor(Math.max(0,ms)/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
 function fmtDec(ms){const v=Math.max(0,ms)/1000;return v<0.05?'0.0':v.toFixed(1);}
 function fmtHMS(ms){
   const s=Math.floor(Math.max(0,ms)/1000),h=Math.floor(s/3600),mn=Math.floor((s%3600)/60),sc=s%60;
   return String(h).padStart(2,'0')+':'+String(mn).padStart(2,'0')+':'+String(sc).padStart(2,'0');
 }
-
 function triggerDone(){
-  if(doneFired)return;
-  doneFired=true;
+  if(doneFired)return;doneFired=true;
   paused=true;clearLoop();co2Running=false;stopWatchdog();stopBgAudio();
   if(sessionStartMs>0)saveSession();
   playDoneMelody();
@@ -491,7 +517,6 @@ function closeDone(){document.getElementById('done-overlay').classList.remove('a
 
 // ── Watchdog ───────────────────────────────────
 let watchdogInterval=null,watchdogMode=null,watchdogEndAt=0,doneFired=false,watchdogPausedAt=0;
-
 function startWatchdogInterval(){
   if(watchdogInterval)clearInterval(watchdogInterval);
   watchdogInterval=setInterval(()=>{
@@ -504,22 +529,11 @@ function startWatchdogInterval(){
     }
   },500);
 }
-function startWatchdog(m){
-  stopWatchdog();doneFired=false;watchdogMode=m;
-  watchdogEndAt=Date.now()+SA_OPTIONS[saSelected[m]].ms;
-  startWatchdogInterval();
-}
-function stopWatchdog(){
-  if(watchdogInterval){clearInterval(watchdogInterval);watchdogInterval=null;}
-  watchdogMode=null;
-}
+function startWatchdog(m){stopWatchdog();doneFired=false;watchdogMode=m;watchdogEndAt=Date.now()+SA_OPTIONS[saSelected[m]].ms;startWatchdogInterval();}
+function stopWatchdog(){if(watchdogInterval){clearInterval(watchdogInterval);watchdogInterval=null;}watchdogMode=null;}
 function pauseWatchdog(){watchdogPausedAt=Date.now();}
-function resumeWatchdog(m){
-  if(watchdogPausedAt>0){watchdogEndAt+=Date.now()-watchdogPausedAt;watchdogPausedAt=0;}
-  startWatchdogInterval();
-}
+function resumeWatchdog(m){if(watchdogPausedAt>0){watchdogEndAt+=Date.now()-watchdogPausedAt;watchdogPausedAt=0;}startWatchdogInterval();}
 
-// ── Totals ─────────────────────────────────────
 const totals={r:{acc:0,start:null},rl:{acc:0,start:null},b:{acc:0,start:null},c:{acc:0,start:null},cu:{acc:0,start:null}};
 function totalStart(m){totals[m]={acc:0,start:performance.now()};startBgAudio();startWatchdog(m);}
 function totalResume(m){totals[m].start=performance.now();startBgAudio();resumeWatchdog(m);}
@@ -527,10 +541,8 @@ function totalResume(m){totals[m].start=performance.now();startBgAudio();resumeW
 async function acquireWakeLock(){try{if('wakeLock' in navigator)await navigator.wakeLock.request('screen');}catch(e){}}
 acquireWakeLock();
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')acquireWakeLock();});
-
 function setActive(prefix,count,idx){for(let i=0;i<count;i++){const el=document.getElementById(prefix+i);if(el)el.classList.toggle('active',i===idx);}}
 
-// ── Session tracking (with mode) ───────────────
 let sessionStartMs=0,sessionActive=false,sessionMode='';
 function sessionBegin(mode){sessionStartMs=Date.now();sessionActive=true;sessionMode=mode||'';}
 function saveSession(){
@@ -545,9 +557,6 @@ function saveSession(){
     localStorage.setItem('breath_sessions',JSON.stringify(sessions.filter(s=>s.ts>cutoff)));
   }catch(e){}
 }
-
-// ── Stats display ──────────────────────────────
-const MODE_KEY_MAP={r:'resonant',rl:'relax',b:'box',c:'co2',cu:'custom'};
 function showStats(){
   show('s-stats');
   try{
@@ -557,9 +566,7 @@ function showStats(){
     const byMode={resonant:0,relax:0,box:0,co2:0,custom:0};
     const cntMode={resonant:0,relax:0,box:0,co2:0,custom:0};
     sessions.forEach(s=>{
-      al+=s.ms;
-      if(s.ts>ma)mo+=s.ms;
-      if(s.ts>wa)wk+=s.ms;
+      al+=s.ms;if(s.ts>ma)mo+=s.ms;if(s.ts>wa)wk+=s.ms;
       if(s.mode&&byMode.hasOwnProperty(s.mode)){byMode[s.mode]+=s.ms;cntMode[s.mode]++;}
     });
     document.getElementById('st-week').textContent=fmtHMS(wk);
@@ -567,14 +574,11 @@ function showStats(){
     document.getElementById('st-all').textContent=fmtHMS(al);
     document.getElementById('st-sessions').textContent=sessions.length+' session'+(sessions.length!==1?'s':'');
     Object.keys(byMode).forEach(k=>{
-      const el=document.getElementById('st-m-'+k);
-      if(el)el.textContent=fmtHMS(byMode[k]);
-      const cn=document.getElementById('st-n-'+k);
-      if(cn)cn.textContent=cntMode[k];
+      const el=document.getElementById('st-m-'+k);if(el)el.textContent=fmtHMS(byMode[k]);
+      const cn=document.getElementById('st-n-'+k);if(cn)cn.textContent=cntMode[k];
     });
   }catch(e){}
 }
-
 function exportCSV(){
   try{
     const sessions=JSON.parse(localStorage.getItem('breath_sessions')||'[]');
@@ -588,10 +592,8 @@ function exportCSV(){
     });
     const blob=new Blob([rows.join('\n')],{type:'text/csv'});
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url;a.download='breath_sessions.csv';
-    document.body.appendChild(a);a.click();
-    document.body.removeChild(a);URL.revokeObjectURL(url);
+    const a=document.createElement('a');a.href=url;a.download='breath_sessions.csv';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
   }catch(e){alert('Export failed.');}
 }
 
@@ -613,6 +615,120 @@ function togglePause(mode){
     else if(mode==='c')co2ResumeAll();
     else if(mode==='cu')resumeCustom();
   }
+}
+
+// ── Relax ──────────────────────────────────────
+const RELAX_MODES=[
+  {in:4000,hold:0,ex:8000},
+  {in:4000,hold:0,ex:6000},
+  {in:3000,hold:0,ex:6000},
+  {in:4000,hold:7000,ex:8000}
+];
+let rlModeIdx=0,rlState={phase:0,phaseElapsed:0};
+const RL_W=280;
+// Triangle line lengths (pixels): A=vertical 120, B=hypotenuse sqrt(240²+120²)=268, C=horizontal 240
+const TRI=[120,268,240];
+
+function rlBarsOff(){
+  document.getElementById('rl-in-fill').setAttribute('width','0');
+  const fe=document.getElementById('rl-ex-fill');fe.setAttribute('width','0');fe.setAttribute('x',String(RL_W));
+}
+function triReset(){
+  ['a','b','c'].forEach((id,i)=>{
+    const el=document.getElementById('tri-'+id);
+    el.setAttribute('stroke-dashoffset',String(TRI[i]));
+    el.setAttribute('opacity','0');
+  });
+}
+function rlShowVisual(is478){
+  document.getElementById('rl-bar-svg').style.display=is478?'none':'block';
+  document.getElementById('rl-478-wrap').classList.toggle('visible',is478);
+}
+
+function setRelaxMode(idx){
+  rlModeIdx=idx;setActive('rl-btn-',4,idx);
+  clearLoop();rlState={phase:0,phaseElapsed:0};totals.rl={acc:0,start:null};
+  const is478=idx===3;
+  const disp=document.getElementById('rl-disp');
+  disp.style.minHeight=is478?'0':'';
+  disp.style.marginBottom=is478?'-16px':'0';
+  rlBarsOff();triReset();rlShowVisual(is478);
+  totalStart('rl');runRelaxPhase(0);
+}
+function startRelax(){
+  getCtx();show('s-relax');paused=false;rlModeIdx=0;
+  rlState={phase:0,phaseElapsed:0};totals.rl={acc:0,start:null};
+  document.getElementById('rl-pause').textContent='STOP';
+  setActive('rl-btn-',4,0);
+  const disp0=document.getElementById('rl-disp');
+  disp0.style.fontSize='';disp0.style.minHeight='';disp0.style.marginBottom='0';
+  rlBarsOff();triReset();rlShowVisual(false);
+  totalStart('rl');sessionBegin('relax');runRelaxPhase(0);
+}
+function rlPhaseDur(ph){
+  const m=RELAX_MODES[rlModeIdx];
+  return [m.in,m.hold,m.ex][ph];
+}
+function rlPhaseLabel(ph){return['inhale','hold','exhale'][ph];}
+function rlNextPhase(ph){
+  if(rlModeIdx===3)return(ph+1)%3;
+  return ph===0?2:0;
+}
+function rlToneForPhase(ph){return[T_HIGH,T_MID,T_LOW][ph];}
+
+function runRelaxPhase(startElapsed,playTone=true){
+  const ph=rlState.phase;
+  const dur=rlPhaseDur(ph);
+  if(playTone)tone(rlToneForPhase(ph));
+  document.getElementById('rl-phase').textContent=rlPhaseLabel(ph);
+  const disp=document.getElementById('rl-disp');
+  disp.classList.remove('pulse');void disp.offsetWidth;disp.classList.add('pulse');
+
+  if(rlModeIdx!==3){
+    // normal bar animation
+    rlBarsOff();
+    const fi=document.getElementById('rl-in-fill'),fe=document.getElementById('rl-ex-fill');
+    const ps=performance.now()-startElapsed;
+    function animBar(ts){
+      if(paused)return;const e=ts-ps;rlState.phaseElapsed=e;
+      const pct=Math.min(1,e/dur);disp.textContent=fmtDec(dur-e);
+      if(ph===0)fi.setAttribute('width',(RL_W*pct).toFixed(1));
+      else{const w=RL_W*pct;fe.setAttribute('width',w.toFixed(1));fe.setAttribute('x',(RL_W-w).toFixed(1));}
+      if(e<dur)regRAF(requestAnimationFrame(animBar));else rlBarsOff();
+    }
+    regRAF(requestAnimationFrame(animBar));
+  } else {
+    // triangle: animate only current side using dashoffset, same pattern as BOX
+    const ids=['a','b','c'];
+    const sideEl=document.getElementById('tri-'+ids[ph]);
+    const sideLen=TRI[ph];
+    sideEl.setAttribute('opacity','1');
+    sideEl.setAttribute('stroke-dashoffset',String(sideLen));
+    sideEl.style.filter='drop-shadow(0 0 6px rgba(232,255,0,0.9))';
+    const ps=performance.now()-startElapsed;
+    function animTri(ts){
+      if(paused)return;
+      const e=ts-ps;rlState.phaseElapsed=e;
+      sideEl.setAttribute('stroke-dashoffset',(sideLen*(1-Math.min(1,e/dur))).toFixed(2));
+      disp.textContent=fmtDec(dur-e);
+      if(e<dur-30)regRAF(requestAnimationFrame(animTri));
+      else sideEl.setAttribute('stroke-dashoffset','0');
+    }
+    regRAF(requestAnimationFrame(animTri));
+  }
+
+  regTimer(setTimeout(()=>{
+    if(paused)return;
+    const next=rlNextPhase(ph);
+    if(rlModeIdx===3&&next===0)triReset();
+    rlState.phase=next;
+    runRelaxPhase(0);
+  },dur-startElapsed));
+}
+function resumeRelax(){
+  totalResume('rl');
+  const dur=rlPhaseDur(rlState.phase);
+  runRelaxPhase(Math.min(rlState.phaseElapsed,dur-50),false);
 }
 
 // ── Custom ─────────────────────────────────────
@@ -682,45 +798,6 @@ function runResonantPhase(startElapsed,playTone=true){
   regTimer(setTimeout(()=>{if(paused)return;rState.phase=ph===0?1:0;runResonantPhase(0);},R_IV-startElapsed));
 }
 function resumeResonant(){totalResume('r');runResonantPhase(Math.min(rState.phaseElapsed,R_IV-50),false);}
-
-// ── Relax ──────────────────────────────────────
-const RL_W=280;
-let rlInDur=4000,rlExDur=8000,rlState={phase:0,phaseElapsed:0};
-function rlBarsOff(){
-  document.getElementById('rl-in-fill').setAttribute('width','0');
-  const fe=document.getElementById('rl-ex-fill');fe.setAttribute('width','0');fe.setAttribute('x',String(RL_W));
-}
-function setRelaxRatio(ins,exs,idx){
-  rlInDur=ins*1000;rlExDur=exs*1000;setActive('rl-btn-',3,idx);
-  clearLoop();rlState={phase:0,phaseElapsed:0};totals.rl={acc:0,start:null};
-  rlBarsOff();totalStart('rl');runRelaxPhase(0);
-}
-function startRelax(){
-  getCtx();show('s-relax');paused=false;
-  rlState={phase:0,phaseElapsed:0};totals.rl={acc:0,start:null};
-  document.getElementById('rl-pause').textContent='STOP';
-  rlBarsOff();totalStart('rl');sessionBegin('relax');runRelaxPhase(0);
-}
-function runRelaxPhase(startElapsed,playTone=true){
-  const ph=rlState.phase,dur=ph===0?rlInDur:rlExDur;
-  if(playTone)tone(ph===0?T_HIGH:T_LOW);
-  document.getElementById('rl-phase').textContent=ph===0?'inhale':'exhale';
-  const disp=document.getElementById('rl-disp');
-  disp.classList.remove('pulse');void disp.offsetWidth;disp.classList.add('pulse');
-  rlBarsOff();
-  const fi=document.getElementById('rl-in-fill'),fe=document.getElementById('rl-ex-fill');
-  const ps=performance.now()-startElapsed;
-  function anim(ts){
-    if(paused)return;const e=ts-ps;rlState.phaseElapsed=e;
-    const pct=Math.min(1,e/dur);disp.textContent=fmtDec(dur-e);
-    if(ph===0)fi.setAttribute('width',(RL_W*pct).toFixed(1));
-    else{const w=RL_W*pct;fe.setAttribute('width',w.toFixed(1));fe.setAttribute('x',(RL_W-w).toFixed(1));}
-    if(e<dur)regRAF(requestAnimationFrame(anim));else rlBarsOff();
-  }
-  regRAF(requestAnimationFrame(anim));
-  regTimer(setTimeout(()=>{if(paused)return;rlState.phase=ph===0?1:0;runRelaxPhase(0);},dur-startElapsed));
-}
-function resumeRelax(){totalResume('rl');const dur=rlState.phase===0?rlInDur:rlExDur;runRelaxPhase(Math.min(rlState.phaseElapsed,dur-50),false);}
 
 // ── Box ────────────────────────────────────────
 const BOX_PHASES=[{label:'inhale',freq:T_HIGH,side:0},{label:'hold',freq:T_MID,side:1},{label:'exhale',freq:T_LOW,side:2},{label:'hold',freq:T_MID,side:3}];
