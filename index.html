@@ -877,6 +877,7 @@ function startCO2(){
   document.getElementById('c-bar').style.width='0%';
   document.getElementById('c-pause').textContent='STOP';
   totalStart('c');startWatchdog('c');sessionBegin('co2');
+  sessionCo2RestMs+=REST_DUR; // první hold nemá předchozí minutu — připočteme ji
   beginExhaleCountdown();
 }
 
