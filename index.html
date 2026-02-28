@@ -719,7 +719,8 @@ function showStats(){
     var avgCp=allCpHolds.length?Math.round(allCpHolds.reduce(function(a,b){return a+b;},0)/allCpHolds.length):0;
     document.getElementById('co2-avg-cp').textContent=avgCp?fmtMSS(avgCp):'—';
     document.getElementById('co2-avg-cp-cnt').textContent='';
-    buildCpTrend(allCpHolds);
+    var trendData=allCpHolds.concat(allCo2Holds);
+    buildCpTrend(trendData);
   }catch(e){}
 }
 
