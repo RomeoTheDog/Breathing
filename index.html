@@ -124,31 +124,27 @@
   .break-btn:disabled{opacity:0.2;pointer-events:none;}
   .co2-rounds{font-size:11px;color:rgba(232,255,0,0.28);letter-spacing:0.18em;text-align:center;line-height:2;min-height:44px;white-space:pre;}
   .stats-grid{width:260px;display:flex;flex-direction:column;margin-top:4px;}
-  .stats-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid rgba(232,255,0,0.08);}
+  .stats-row{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;border-bottom:1px solid rgba(232,255,0,0.08);}
   .stats-row:last-child{border-bottom:none;}
   .stats-lbl{font-size:10px;letter-spacing:0.35em;color:rgba(232,255,0,0.35);text-transform:uppercase;}
   .stats-val{font-size:22px;letter-spacing:1px;text-shadow:0 0 12px rgba(232,255,0,0.3);font-variant-numeric:tabular-nums;display:inline-block;width:110px;text-align:right;}
   .stats-sessions{font-size:10px;letter-spacing:0.25em;color:rgba(255,255,255,0.45);margin-top:2px;white-space:nowrap;}
   .stats-section-title{font-size:9px;letter-spacing:0.5em;color:rgba(232,255,0,0.18);text-transform:uppercase;margin-top:10px;margin-bottom:0;width:260px;text-align:left;}
   .stats-mode-grid{width:260px;display:flex;flex-direction:column;}
-  .stats-mode-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid rgba(232,255,0,0.05);}
+  .stats-mode-row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0;border-bottom:1px solid rgba(232,255,0,0.05);}
   .stats-mode-row:last-child{border-bottom:none;}
   .stats-mode-lbl{font-size:10px;letter-spacing:0.25em;color:rgba(232,255,0,0.28);text-transform:uppercase;}
-  .stats-mode-right{display:flex;align-items:baseline;gap:6px;}
-  .stats-mode-cnt{font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.45);white-space:nowrap;display:inline-block;width:36px;text-align:right;font-variant-numeric:tabular-nums;}
-  .stats-mode-val{font-size:14px;letter-spacing:1px;color:rgba(232,255,0,0.6);font-variant-numeric:tabular-nums;text-align:right;display:inline-block;width:72px;}
+  .stats-mode-right{display:flex;align-items:baseline;}
+  .stats-mode-cnt{font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.45);white-space:nowrap;display:inline-block;width:46px;text-align:center;font-variant-numeric:tabular-nums;}
+  .stats-mode-val{font-size:14px;letter-spacing:1px;color:rgba(232,255,0,0.6);font-variant-numeric:tabular-nums;text-align:center;display:inline-block;width:80px;}
   .breath-circle-wrap{display:none;position:relative;width:220px;height:220px;align-items:center;justify-content:center;margin-top:-10px;}
   .breath-circle-wrap.visible{display:flex;}
   .breath-circle-wrap .bc-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     font-family:'Share Tech Mono',monospace;font-size:48px;letter-spacing:-2px;color:var(--y);
     text-shadow:0 0 22px rgba(232,255,0,0.5);pointer-events:none;font-variant-numeric:tabular-nums;transition:opacity 0.3s;}
   .bc-svg{position:absolute;top:0;left:0;width:220px;height:220px;}
-  /* 4:7:8 triangle */
-  .rl-triangle-wrap{display:none;position:relative;width:220px;height:210px;align-items:center;justify-content:center;margin-top:-4px;}
-  .rl-triangle-wrap.visible{display:flex;}
-  .rl-tri-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-40%);
-    font-family:'Share Tech Mono',monospace;font-size:48px;letter-spacing:-2px;color:var(--y);
-    text-shadow:0 0 22px rgba(232,255,0,0.5);pointer-events:none;font-variant-numeric:tabular-nums;transition:opacity 0.3s;}
+  .tri-wrap{display:none;position:relative;width:220px;height:210px;align-items:center;justify-content:center;margin-top:-4px;}
+  .tri-wrap.visible{display:flex;}
   .wh-big{font-size:72px;letter-spacing:-2px;text-shadow:0 0 28px rgba(232,255,0,0.5);line-height:1;
     min-height:80px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;}
   .wh-sub{font-size:12px;letter-spacing:0.35em;color:rgba(232,255,0,0.4);text-transform:uppercase;text-align:center;}
@@ -169,9 +165,9 @@
     color:rgba(232,255,0,0.45);font-family:'Share Tech Mono',monospace;font-size:10px;
     letter-spacing:0.25em;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
   .bt-mode-btn.active{border-color:rgba(232,255,0,0.7);color:var(--y);background:#0a0a00;}
-  .streak-section{width:260px;margin-top:6px;}
-  .streak-title{font-size:9px;letter-spacing:0.5em;color:rgba(232,255,0,0.18);text-transform:uppercase;margin-bottom:8px;}
-  .streak-grid{display:flex;gap:3px;flex-wrap:wrap;width:260px;}
+  .streak-section{width:260px;margin-top:4px;}
+  .streak-title{font-size:9px;letter-spacing:0.5em;color:rgba(232,255,0,0.18);text-transform:uppercase;margin-bottom:5px;}
+  .streak-grid{display:flex;gap:2px;flex-wrap:wrap;width:260px;}
   .streak-cell{width:14px;height:14px;border-radius:2px;background:rgba(232,255,0,0.06);}
   .streak-cell.s1{background:rgba(232,255,0,0.20);}
   .streak-cell.s2{background:rgba(232,255,0,0.45);}
@@ -179,9 +175,17 @@
   .streak-cell.s4{background:rgba(232,255,0,1);box-shadow:0 0 4px rgba(232,255,0,0.5);}
   .streak-cell.today{outline:1px solid rgba(232,255,0,0.6);outline-offset:1px;}
   .avg-section{width:260px;margin-top:6px;}
-  .avg-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;}
+  .avg-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;}
   .avg-lbl{font-size:10px;letter-spacing:0.35em;color:rgba(232,255,0,0.28);text-transform:uppercase;}
   .avg-val{font-size:14px;letter-spacing:1px;color:rgba(232,255,0,0.6);font-variant-numeric:tabular-nums;}
+  /* CO2 stats sub-section */
+  .co2-stats-grid{width:260px;display:flex;flex-direction:column;margin-top:2px;}
+  .co2-stats-row{display:flex;justify-content:space-between;align-items:baseline;padding:2px 0;border-bottom:1px solid rgba(232,255,0,0.05);}
+  .co2-stats-row:last-child{border-bottom:none;}
+  .co2-stats-lbl{font-size:10px;letter-spacing:0.25em;color:rgba(232,255,0,0.28);text-transform:uppercase;}
+  .co2-stats-right{display:flex;align-items:baseline;}
+  .co2-stats-val{font-size:14px;letter-spacing:1px;color:rgba(232,255,0,0.6);font-variant-numeric:tabular-nums;text-align:center;display:inline-block;width:80px;}
+  .co2-stats-den{font-size:12px;letter-spacing:1px;color:rgba(255,255,255,0.45);font-variant-numeric:tabular-nums;text-align:center;display:inline-block;width:46px;}
 </style>
 </head>
 <body>
@@ -213,8 +217,8 @@
     <button class="mbtn" onclick="startRelax()">RELAX</button>
     <button class="mbtn" onclick="startBox()">BOX</button>
     <button class="mbtn" onclick="startCO2()">CO<sub style="font-size:0.6em;vertical-align:sub;">2</sub></button>
-    <button class="mbtn" onclick="startWimHof()">WIM HOF</button>
     <button class="mbtn" onclick="startButeyko()">BUTEYKO</button>
+    <button class="mbtn" onclick="startWimHof()">WIM HOF</button>
     <button class="mbtn" onclick="startCustom()">CUSTOM</button>
     <button class="mbtn dim" onclick="showStats()">STATISTICS</button>
   </div>
@@ -285,33 +289,14 @@
     <svg class="bc-svg" id="rl-bc-svg" viewBox="0 0 220 220"></svg>
     <span class="bc-num" id="rl-bc-num">4.0</span>
   </div>
-  <!-- 4:7:8 triangle visualisation -->
-  <div class="rl-triangle-wrap" id="rl-tri-wrap">
-    <svg id="rl-tri-svg" viewBox="0 0 220 210" width="220" height="210" style="overflow:visible;">
-      <defs>
-        <filter id="triGlow" x="-10%" y="-10%" width="120%" height="120%">
-          <feGaussianBlur stdDeviation="3" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-      <!-- static dim triangle outline -->
+  <div class="tri-wrap" id="rl-tri-wrap">
+    <svg viewBox="0 0 220 210" width="220" height="210" style="overflow:visible;">
+      <defs><filter id="rlTriGlow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
       <polygon points="110,12 210,192 10,192" fill="none" stroke="rgba(232,255,0,0.10)" stroke-width="2" stroke-linejoin="round"/>
-      <!-- animated sides: inhale=left, hold=right, exhale=bottom -->
-      <!-- left side: bottom-left (10,192) -> top (110,12) -->
-      <line id="tri-s0" x1="10" y1="192" x2="110" y2="12"
-        stroke="#e8ff00" stroke-width="3" stroke-linecap="round"
-        stroke-dasharray="210" stroke-dashoffset="210" opacity="0" filter="url(#triGlow)"/>
-      <!-- right side: top (110,12) -> bottom-right (210,192) -->
-      <line id="tri-s1" x1="110" y1="12" x2="210" y2="192"
-        stroke="#e8ff00" stroke-width="3" stroke-linecap="round"
-        stroke-dasharray="210" stroke-dashoffset="210" opacity="0" filter="url(#triGlow)"/>
-      <!-- bottom side: bottom-right (210,192) -> bottom-left (10,192) -->
-      <line id="tri-s2" x1="210" y1="192" x2="10" y2="192"
-        stroke="#e8ff00" stroke-width="3" stroke-linecap="round"
-        stroke-dasharray="200" stroke-dashoffset="200" opacity="0" filter="url(#triGlow)"/>
-      <!-- number in center -->
-      <text id="rl-tri-num" x="110" y="130" text-anchor="middle" dominant-baseline="middle"
-        font-family="Share Tech Mono,monospace" font-size="52" fill="#e8ff00" filter="url(#triGlow)">4.0</text>
+      <line id="rl-tri-s0" x1="10" y1="192" x2="110" y2="12" stroke="#e8ff00" stroke-width="3" stroke-linecap="round" stroke-dasharray="210" stroke-dashoffset="210" opacity="0" filter="url(#rlTriGlow)"/>
+      <line id="rl-tri-s1" x1="110" y1="12" x2="210" y2="192" stroke="#e8ff00" stroke-width="3" stroke-linecap="round" stroke-dasharray="210" stroke-dashoffset="210" opacity="0" filter="url(#rlTriGlow)"/>
+      <line id="rl-tri-s2" x1="210" y1="192" x2="10" y2="192" stroke="#e8ff00" stroke-width="3" stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200" opacity="0" filter="url(#rlTriGlow)"/>
+      <text id="rl-tri-num" x="110" y="130" text-anchor="middle" dominant-baseline="middle" font-family="Share Tech Mono,monospace" font-size="52" fill="#e8ff00" filter="url(#rlTriGlow)">4.0</text>
     </svg>
   </div>
   <div class="total-time" id="rl-total">total: 0:00</div>
@@ -409,15 +394,49 @@
     <button class="bt-mode-btn" id="bt-m-1" onclick="setBtMode(1)">CP TEST</button>
   </div>
   <div class="phase-label" id="bt-phase">nasal inhale</div>
-  <div class="bt-timer" id="bt-timer">—</div>
-  <div class="bt-progress-bar" style="position:relative;">
-    <svg width="260" height="3" viewBox="0 0 260 3" style="display:block;overflow:visible;">
-      <defs><filter id="btGlow" x="-5%" y="-300%" width="110%" height="700%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-      <rect x="0" y="0" width="260" height="3" rx="1.5" fill="rgba(232,255,0,0.1)"/>
-      <rect id="bt-fill-in" x="0" y="0" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#btGlow)"/>
-      <rect id="bt-fill-ex" x="260" y="0" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#btGlow)"/>
+
+  <div class="breath-circle-wrap" id="bt-circ-wrap">
+    <svg class="bc-svg" id="bt-bc-svg" viewBox="0 0 220 220"></svg>
+    <span class="bc-num" id="bt-bc-num">—</span>
+  </div>
+  <div class="tri-wrap" id="bt-tri-wrap">
+    <svg viewBox="0 0 220 210" width="220" height="210" style="overflow:visible;">
+      <defs>
+        <filter id="btTriGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <polygon points="110,12 210,192 10,192" fill="none" stroke="rgba(232,255,0,0.10)" stroke-width="2" stroke-linejoin="round"/>
+      <line id="bt-s0" x1="10"  y1="192" x2="110" y2="12"
+        stroke="#e8ff00" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="206" stroke-dashoffset="206"
+        opacity="0" filter="url(#btTriGlow)"/>
+      <line id="bt-s1" x1="110" y1="12"  x2="210" y2="192"
+        stroke="#e8ff00" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="206" stroke-dashoffset="206"
+        opacity="0" filter="url(#btTriGlow)"/>
+      <line id="bt-s2" x1="210" y1="192" x2="10"  y2="192"
+        stroke="#e8ff00" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="201" stroke-dashoffset="201"
+        opacity="0" filter="url(#btTriGlow)"/>
+      <text id="bt-tri-num"
+        x="110" y="130" text-anchor="middle" dominant-baseline="middle"
+        font-family="Share Tech Mono,monospace" font-size="52"
+        fill="#e8ff00" filter="url(#btTriGlow)">—</text>
     </svg>
   </div>
+
+  <div id="bt-bar-wrap" style="display:none;width:260px;">
+    <svg width="260" height="3" viewBox="0 0 260 3" style="display:block;overflow:visible;">
+      <defs><filter id="btBarGlow" x="-5%" y="-300%" width="110%" height="700%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect x="0" y="0" width="260" height="3" rx="1.5" fill="rgba(232,255,0,0.1)"/>
+      <rect id="bt-fill-in" x="0" y="0" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#btBarGlow)"/>
+      <rect id="bt-fill-ex" x="260" y="0" width="0" height="3" rx="1.5" fill="#e8ff00" filter="url(#btBarGlow)"/>
+    </svg>
+  </div>
+  <div class="bt-timer" id="bt-timer" style="display:none;">—</div>
+
   <div class="bt-info" id="bt-info"></div>
   <div class="total-time" id="bt-total">total: 0:00</div>
   <div class="sa-wrap" style="margin-top:-4px;"><div class="sa-label">stop after</div><div id="sa-bt"></div></div>
@@ -446,16 +465,12 @@
   <div class="cu-params" style="margin-top:-4px;">
     <div class="cu-param">
       <div class="cu-param-lbl">breaths/min</div>
-      <div class="cu-param-val" onclick="toggleCuDd('bpm',event)">
-        <span id="cu-bpm-val">5.5</span><span class="arr">&#9662;</span>
-      </div>
+      <div class="cu-param-val" onclick="toggleCuDd('bpm',event)"><span id="cu-bpm-val">5.5</span><span class="arr">&#9662;</span></div>
       <div class="cu-vlist" id="cu-bpm-list"></div>
     </div>
     <div class="cu-param">
       <div class="cu-param-lbl">ratio</div>
-      <div class="cu-param-val" onclick="toggleCuDd('ratio',event)">
-        <span id="cu-ratio-val">40:60</span><span class="arr">&#9662;</span>
-      </div>
+      <div class="cu-param-val" onclick="toggleCuDd('ratio',event)"><span id="cu-ratio-val">40:60</span><span class="arr">&#9662;</span></div>
       <div class="cu-vlist" id="cu-ratio-list"></div>
     </div>
   </div>
@@ -469,10 +484,7 @@
 <!-- STATS -->
 <div class="screen" id="s-stats">
   <div class="mode-label" style="display:block;text-align:center;margin-bottom:4px;">STATISTICS</div>
-  <div class="streak-section">
-    <div class="streak-title">30-day streak</div>
-    <div class="streak-grid" id="streak-grid"></div>
-  </div>
+  <div class="streak-section"><div class="streak-title">30-day streak</div><div class="streak-grid" id="streak-grid"></div></div>
   <div class="avg-section">
     <div class="stats-section-title" style="margin-bottom:4px;">averages</div>
     <div class="avg-row"><span class="avg-lbl">Avg session</span><span class="avg-val" id="st-avg">--:--</span></div>
@@ -483,9 +495,12 @@
     <div class="stats-row"><span class="stats-lbl">This month</span><span class="stats-val" id="st-month">00:00:00</span></div>
     <div class="stats-row"><span class="stats-lbl">All time</span><span class="stats-val" id="st-all">00:00:00</span></div>
   </div>
-  <div style="display:flex;justify-content:space-between;align-items:baseline;width:260px;margin:10px auto 0;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;width:260px;margin:6px auto 0;">
     <div class="stats-section-title" style="margin:0;">by exercise</div>
-    <div class="stats-sessions" id="st-sessions" style="margin:0;">0 sessions</div>
+    <div style="display:flex;align-items:baseline;">
+      <span style="font-size:9px;letter-spacing:0.3em;color:rgba(232,255,0,0.18);text-transform:uppercase;display:inline-block;width:80px;text-align:center;">time</span>
+      <span id="st-sessions" style="font-size:9px;letter-spacing:0.3em;color:rgba(232,255,0,0.18);display:inline-block;width:46px;text-align:center;">0</span>
+    </div>
   </div>
   <div class="stats-mode-grid" style="margin:0 auto;">
     <div class="stats-mode-row"><span class="stats-mode-lbl">Resonant</span><span class="stats-mode-right"><span class="stats-mode-val" id="st-m-resonant">00:00:00</span><span class="stats-mode-cnt" id="st-n-resonant">0</span></span></div>
@@ -496,6 +511,39 @@
     <div class="stats-mode-row"><span class="stats-mode-lbl">Buteyko</span><span class="stats-mode-right"><span class="stats-mode-val" id="st-m-buteyko">00:00:00</span><span class="stats-mode-cnt" id="st-n-buteyko">0</span></span></div>
     <div class="stats-mode-row"><span class="stats-mode-lbl">Custom</span><span class="stats-mode-right"><span class="stats-mode-val" id="st-m-custom">00:00:00</span><span class="stats-mode-cnt" id="st-n-custom">0</span></span></div>
   </div>
+
+  <!-- CO2 section -->
+  <div style="width:260px;margin:6px auto 2px;display:flex;justify-content:space-between;align-items:baseline;">
+    <div class="stats-section-title" style="margin:0;">CO<sub style="font-size:0.7em">2</sub> metrics</div>
+    <div style="display:flex;align-items:baseline;">
+      <span style="font-size:9px;letter-spacing:0.3em;color:rgba(232,255,0,0.18);text-transform:uppercase;display:inline-block;width:80px;text-align:center;">time</span>
+      <span style="font-size:9px;letter-spacing:0.3em;color:rgba(232,255,0,0.18);text-transform:uppercase;display:inline-block;width:46px;text-align:center;">dens</span>
+    </div>
+  </div>
+  <div class="co2-stats-grid" style="margin:0 auto;">
+    <div class="co2-stats-row">
+      <span class="co2-stats-lbl">week</span>
+      <div class="co2-stats-right">
+        <span class="co2-stats-val" id="co2-time-week">00:00:00</span>
+        <span class="co2-stats-den" id="co2-den-week">—</span>
+      </div>
+    </div>
+    <div class="co2-stats-row">
+      <span class="co2-stats-lbl">month</span>
+      <div class="co2-stats-right">
+        <span class="co2-stats-val" id="co2-time-month">00:00:00</span>
+        <span class="co2-stats-den" id="co2-den-month">—</span>
+      </div>
+    </div>
+    <div class="co2-stats-row">
+      <span class="co2-stats-lbl">all time</span>
+      <div class="co2-stats-right">
+        <span class="co2-stats-val" id="co2-time-all">00:00:00</span>
+        <span class="co2-stats-den" id="co2-den-all">—</span>
+      </div>
+    </div>
+  </div>
+
   <button class="menu-btn" style="display:block;margin:16px auto 0;" onclick="exportCSV()">EXPORT CSV</button>
   <button class="menu-btn" style="display:block;margin:8px auto 0;" onclick="goHome()">MAIN MENU</button>
 </div>
@@ -508,63 +556,41 @@ function setNumbers(on){showNumbers=on;try{localStorage.setItem('breath_nums',on
 try{var sv=localStorage.getItem('breath_vis');if(sv)setVis(sv);}catch(e){}
 try{var sn=localStorage.getItem('breath_nums');if(sn==='0')setNumbers(false);}catch(e){}
 function showSettings(){show('s-settings');}
-
 function applyVis(prefix){var bar=document.getElementById(prefix+'-bar-svg'),circ=document.getElementById(prefix+'-circ-wrap'),disp=document.getElementById(prefix+'-disp'),useCirc=visMode==='circle';if(bar)bar.style.display=useCirc?'none':'block';if(circ)circ.classList.toggle('visible',useCirc);if(disp)disp.style.display=useCirc?'none':'flex';applyNumsToCircle(prefix);}
-
-function rlShowVisual(){
-  var is478=rlModeIdx===3,useCirc=visMode==='circle';
-  // bar: hide if circle mode or 478
-  document.getElementById('rl-bar-svg').style.display=(useCirc||is478)?'none':'block';
-  // number display: hide if circle mode or 478
-  document.getElementById('rl-disp').style.display=(useCirc||is478)?'none':'flex';
-  // circle: show if circle mode (including 478 in circle mode)
-  document.getElementById('rl-circ-wrap').classList.toggle('visible',useCirc);
-  // triangle: show only for 478 in line mode
-  document.getElementById('rl-tri-wrap').classList.toggle('visible',is478&&!useCirc);
-  applyNumsToCircle('rl');
-  // triangle number visibility
-  var tnum=document.getElementById('rl-tri-num');
-  if(tnum)tnum.style.opacity=(showNumbers&&is478&&!useCirc)?'1':'0';
-}
-
+function rlShowVisual(){var is478=rlModeIdx===3,useCirc=visMode==='circle';document.getElementById('rl-bar-svg').style.display=(useCirc||is478)?'none':'block';document.getElementById('rl-disp').style.display=(useCirc||is478)?'none':'flex';document.getElementById('rl-circ-wrap').classList.toggle('visible',useCirc);document.getElementById('rl-tri-wrap').classList.toggle('visible',is478&&!useCirc);applyNumsToCircle('rl');var tnum=document.getElementById('rl-tri-num');if(tnum)tnum.style.opacity=(showNumbers&&is478&&!useCirc)?'1':'0';}
 function applyVisBox(){var useCirc=visMode==='circle';document.getElementById('b-box-svg').style.display=useCirc?'none':'block';document.getElementById('b-circ-wrap').classList.toggle('visible',useCirc);applyNumsToCircle('b');var bnum=document.getElementById('b-num');if(bnum)bnum.style.display=(!useCirc&&showNumbers)?'block':'none';}
+function applyVisBt(){
+  var useCirc=visMode==='circle';
+  var isCp=btModeIdx===1;
+  document.getElementById('bt-tri-wrap').classList.toggle('visible',!useCirc&&!isCp);
+  document.getElementById('bt-circ-wrap').classList.toggle('visible',useCirc);
+  var bcNum=document.getElementById('bt-bc-num');
+  if(bcNum)bcNum.style.opacity=(useCirc&&!isCp&&showNumbers)?'1':'0';
+  document.getElementById('bt-bar-wrap').style.display=(!useCirc&&isCp)?'block':'none';
+  document.getElementById('bt-timer').style.display=isCp?'flex':'none';
+}
 function applyNumsToCircle(prefix){var numEl=document.getElementById(prefix+'-bc-num');if(numEl)numEl.style.opacity=(showNumbers&&visMode==='circle')?'1':'0';}
 function refreshAllNums(){['r','rl','b','cu'].forEach(function(p){applyNumsToCircle(p);});var bnum=document.getElementById('b-num');if(bnum)bnum.style.display=(visMode==='line'&&showNumbers)?'block':'none';['r','rl','cu'].forEach(function(p){var d=document.getElementById(p+'-disp');if(d&&d.style.display!=='none')d.style.visibility=showNumbers?'visible':'hidden';});}
 
-// ── Triangle (4:7:8) helpers ───────────────────
-// sides: 0=left(inhale), 1=right(hold), 2=bottom(exhale)
-// lengths: left≈210, right≈210, bottom=200
-var TRI_LEN=[210,210,200];
-function triResetSides(){
-  for(var i=0;i<3;i++){
-    var s=document.getElementById('tri-s'+i);
-    s.setAttribute('stroke-dashoffset',TRI_LEN[i]);
-    s.setAttribute('opacity','0');
-    s.style.filter='';
-  }
-}
-function triActivateSide(idx){
-  for(var i=0;i<3;i++){
-    var s=document.getElementById('tri-s'+i);
-    if(i===idx){s.setAttribute('opacity','1');s.style.filter='drop-shadow(0 0 5px rgba(232,255,0,0.9))';}
-    else{/* keep previous sides visible but dim */}
-  }
-}
-function triSetProgress(idx,raw){
-  var s=document.getElementById('tri-s'+idx);
-  var len=TRI_LEN[idx];
-  s.setAttribute('stroke-dashoffset',(len*(1-raw)).toFixed(2));
-}
-function triMarkComplete(idx){
-  var s=document.getElementById('tri-s'+idx);
-  s.setAttribute('stroke-dashoffset','0');
-}
+// ── Relax triangle (4:7:8) ─────────────────────
+var RL_TRI_LEN=[210,210,200];
+function rlTriReset(){for(var i=0;i<3;i++){var s=document.getElementById('rl-tri-s'+i);s.setAttribute('stroke-dashoffset',RL_TRI_LEN[i]);s.setAttribute('opacity','0');}}
+function rlTriActivate(idx){var s=document.getElementById('rl-tri-s'+idx);s.setAttribute('opacity','1');s.setAttribute('stroke-dashoffset',RL_TRI_LEN[idx]);}
+function rlTriProgress(idx,raw){document.getElementById('rl-tri-s'+idx).setAttribute('stroke-dashoffset',(RL_TRI_LEN[idx]*(1-raw)).toFixed(2));}
+function rlTriComplete(idx){document.getElementById('rl-tri-s'+idx).setAttribute('stroke-dashoffset','0');}
+
+// ── Buteyko triangle helpers ──
+var BT_LENS=[206,206,201];
+function btTriReset(){for(var i=0;i<3;i++){var s=document.getElementById('bt-s'+i);s.setAttribute('stroke-dashoffset',BT_LENS[i]);s.setAttribute('opacity','0');}}
+function btTriActivate(idx){var s=document.getElementById('bt-s'+idx);s.setAttribute('opacity','1');s.setAttribute('stroke-dashoffset',BT_LENS[idx]);}
+function btTriProgress(idx,raw){document.getElementById('bt-s'+idx).setAttribute('stroke-dashoffset',(BT_LENS[idx]*(1-raw)).toFixed(1));}
+function btTriComplete(idx){document.getElementById('bt-s'+idx).setAttribute('stroke-dashoffset','0');}
 
 // ── Circle SVG ─────────────────────────────────
 function buildCircleSVG(svgId){var svg=document.getElementById(svgId);if(!svg)return;svg.innerHTML='<defs><filter id="bcGlow_'+svgId+'" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><circle id="'+svgId+'_bc" cx="110" cy="110" r="30" fill="rgba(232,255,0,0.10)" stroke="none" filter="url(#bcGlow_'+svgId+')"/>';}
-['r-bc-svg','rl-bc-svg','b-bc-svg','cu-bc-svg'].forEach(buildCircleSVG);
+['r-bc-svg','rl-bc-svg','b-bc-svg','cu-bc-svg','bt-bc-svg'].forEach(buildCircleSVG);
 var BC_MIN=22,BC_MAX=96;
-function setCircle(svgId,pct){var el=document.getElementById(svgId+'_bc');if(!el)return;var r=BC_MIN+(BC_MAX-BC_MIN)*pct;el.setAttribute('r',r.toFixed(2));el.setAttribute('fill','rgba(232,255,0,'+(0.18+0.22*pct).toFixed(3)+')');el.setAttribute('stroke','none');}
+function setCircle(svgId,pct){var el=document.getElementById(svgId+'_bc');if(!el)return;var r=BC_MIN+(BC_MAX-BC_MIN)*pct;el.setAttribute('r',r.toFixed(2));el.setAttribute('fill','rgba(232,255,0,'+(0.18+0.22*pct).toFixed(3)+')');}
 
 // ── Audio ──────────────────────────────────────
 var audioCtx=null,soundMuted=false;
@@ -575,7 +601,7 @@ var T_HIGH=490,T_MID=415,T_LOW=349;
 function bowlAt(c,flt,freq,t,vol){var dur=4.5;[[freq,vol],[freq*1.0015,vol*0.6],[freq*2.756,vol*0.15]].forEach(function(fv,i){var o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=fv[0];g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(fv[1],t+0.03);g.gain.exponentialRampToValueAtTime(0.001,t+(i===2?dur*0.4:i===1?dur*0.8:dur));o.connect(g);g.connect(flt);o.start(t);o.stop(t+dur+0.2);});}
 function playDoneMelody(){if(soundMuted)return;var c=getCtx();var rev=c.createConvolver(),len=c.sampleRate*5,buf=c.createBuffer(2,len,c.sampleRate);for(var ch=0;ch<2;ch++){var d=buf.getChannelData(ch);for(var i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,1.4);}rev.buffer=buf;var revG=c.createGain();revG.gain.value=0.55;rev.connect(revG);revG.connect(c.destination);var flt=c.createBiquadFilter();flt.type='lowpass';flt.frequency.value=800;flt.Q.value=0.3;flt.connect(c.destination);flt.connect(rev);var now=c.currentTime;[220,293.66,440].forEach(function(f,i){bowlAt(c,flt,f,now+i*0.6,i===2?0.42:0.3);});}
 var bgAudio=null;
-function startBgAudio(){if(bgAudio&&!bgAudio.paused)return;if(!bgAudio){var silence='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';bgAudio=new Audio(silence);bgAudio.loop=true;bgAudio.volume=0.001;if('mediaSession' in navigator){navigator.mediaSession.metadata=new MediaMetadata({title:'Breathing'});navigator.mediaSession.setActionHandler('play',function(){bgAudio.play();});navigator.mediaSession.setActionHandler('pause',function(){});}}bgAudio.play().catch(function(){});}
+function startBgAudio(){if(bgAudio&&!bgAudio.paused)return;if(!bgAudio){var silence='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';bgAudio=new Audio(silence);bgAudio.loop=true;bgAudio.volume=0.001;}bgAudio.play().catch(function(){});}
 function stopBgAudio(){if(bgAudio){bgAudio.pause();bgAudio.currentTime=0;}}
 
 // ── Stop after ─────────────────────────────────
@@ -633,15 +659,103 @@ document.addEventListener('visibilitychange',function(){if(document.visibilitySt
 function setActive(pref,cnt,idx){for(var i=0;i<cnt;i++){var el=document.getElementById(pref+i);if(el)el.classList.toggle('active',i===idx);}}
 
 // ── Session storage ────────────────────────────
+// Session object: {ts, ms, mode, co2HoldMs?, co2RestMs?, cpHoldMs?}
+// co2HoldMs  = sum of hold times in CO2 Tolerance (for time + density)
+// co2RestMs  = sum of rest times in CO2 Tolerance (for density denominator)
+// cpHoldMs   = sum of CP hold times in Buteyko CP TEST (for time only)
 var sessionStartMs=0,sessionActive=false,sessionMode='';
-function sessionBegin(mode){sessionStartMs=Date.now();sessionActive=true;sessionMode=mode||'';}
-function saveSession(){if(!sessionActive||sessionStartMs===0)return;var dur=Date.now()-sessionStartMs;sessionStartMs=0;sessionActive=false;if(dur<5000)return;try{var raw=localStorage.getItem('breath_sessions');var sessions=raw?JSON.parse(raw):[];sessions.push({ts:Date.now(),ms:dur,mode:sessionMode});var cutoff=Date.now()-2*365*24*3600*1000;localStorage.setItem('breath_sessions',JSON.stringify(sessions.filter(function(s){return s.ts>cutoff;})));}catch(e){}}
+// live accumulators for current session
+var sessionCo2HoldMs=0,sessionCo2RestMs=0,sessionCpHoldMs=0;
+
+function sessionBegin(mode){
+  sessionStartMs=Date.now();sessionActive=true;sessionMode=mode||'';
+  sessionCo2HoldMs=0;sessionCo2RestMs=0;sessionCpHoldMs=0;
+}
+function saveSession(){
+  if(!sessionActive||sessionStartMs===0)return;
+  var dur=Date.now()-sessionStartMs;
+  sessionStartMs=0;sessionActive=false;
+  if(dur<5000)return;
+  try{
+    var raw=localStorage.getItem('breath_sessions');
+    var sessions=raw?JSON.parse(raw):[];
+    var entry={ts:Date.now(),ms:dur,mode:sessionMode};
+    if(sessionMode==='co2'){entry.co2HoldMs=sessionCo2HoldMs;entry.co2RestMs=sessionCo2RestMs;}
+    if(sessionMode==='buteyko'){entry.cpHoldMs=sessionCpHoldMs;}
+    sessions.push(entry);
+    var cutoff=Date.now()-2*365*24*3600*1000;
+    localStorage.setItem('breath_sessions',JSON.stringify(sessions.filter(function(s){return s.ts>cutoff;})));
+  }catch(e){}
+}
 
 // ── Statistics ─────────────────────────────────
 function buildStreakGrid(sessions){var grid=document.getElementById('streak-grid');grid.innerHTML='';var today=new Date();today.setHours(0,0,0,0);var cells=30,actMap={};sessions.forEach(function(s){var d=new Date(s.ts);d.setHours(0,0,0,0);var diff=Math.round((today-d)/86400000);if(diff>=0&&diff<cells){actMap[diff]=(actMap[diff]||0)+s.ms;}});for(var i=cells-1;i>=0;i--){var cell=document.createElement('div');cell.className='streak-cell';if(i===0)cell.classList.add('today');var ms=actMap[i]||0;if(ms>0){if(ms<600000)cell.classList.add('s1');else if(ms<1200000)cell.classList.add('s2');else if(ms<2400000)cell.classList.add('s3');else cell.classList.add('s4');}grid.appendChild(cell);}}
 function calcStreak(sessions){var today=new Date();today.setHours(0,0,0,0);var days=new Set(sessions.map(function(s){var d=new Date(s.ts);d.setHours(0,0,0,0);return d.getTime();}));var streak=0,cur=today.getTime();while(days.has(cur)){streak++;cur-=86400000;}return streak;}
-function showStats(){show('s-stats');try{var sessions=JSON.parse(localStorage.getItem('breath_sessions')||'[]');var now=Date.now(),wa=now-7*24*3600*1000,ma=now-30*24*3600*1000;var wk=0,mo=0,al=0;var byMode={resonant:0,relax:0,box:0,co2:0,wimhof:0,buteyko:0,custom:0};var cntMode={resonant:0,relax:0,box:0,co2:0,wimhof:0,buteyko:0,custom:0};sessions.forEach(function(s){al+=s.ms;if(s.ts>ma)mo+=s.ms;if(s.ts>wa)wk+=s.ms;if(s.mode&&byMode.hasOwnProperty(s.mode)){byMode[s.mode]+=s.ms;cntMode[s.mode]++;}});document.getElementById('st-week').textContent=fmtHMS(wk);document.getElementById('st-month').textContent=fmtHMS(mo);document.getElementById('st-all').textContent=fmtHMS(al);document.getElementById('st-sessions').textContent=sessions.length+' session'+(sessions.length!==1?'s':'');var avgMs=sessions.length?Math.round(al/sessions.length):0;document.getElementById('st-avg').textContent=avgMs?fmtMSS(avgMs):'--:--';document.getElementById('st-streak').textContent=calcStreak(sessions)+' days';Object.keys(byMode).forEach(function(k){var el=document.getElementById('st-m-'+k);if(el)el.textContent=fmtHMS(byMode[k]);var cn=document.getElementById('st-n-'+k);if(cn)cn.textContent=cntMode[k];});buildStreakGrid(sessions);}catch(e){}}
-function exportCSV(){try{var sessions=JSON.parse(localStorage.getItem('breath_sessions')||'[]');if(sessions.length===0){alert('No sessions to export.');return;}var rows=['date,time,duration_seconds,mode'];sessions.forEach(function(s){var d=new Date(s.ts);var date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');var time=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0');rows.push(date+','+time+','+Math.round(s.ms/1000)+','+(s.mode||''));});var blob=new Blob([rows.join('\n')],{type:'text/csv'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='breath_sessions.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}catch(e){alert('Export failed.');}}
+
+function fmtDensity(holdMs,restMs){
+  if(!restMs||restMs===0)return '—';
+  var pct=Math.round(holdMs/restMs*100);
+  return pct+'%';
+}
+
+function showStats(){
+  show('s-stats');
+  try{
+    var sessions=JSON.parse(localStorage.getItem('breath_sessions')||'[]');
+    var now=Date.now(),wa=now-7*24*3600*1000,ma=now-30*24*3600*1000;
+    var wk=0,mo=0,al=0;
+    var byMode={resonant:0,relax:0,box:0,co2:0,wimhof:0,buteyko:0,custom:0};
+    var cntMode={resonant:0,relax:0,box:0,co2:0,wimhof:0,buteyko:0,custom:0};
+    // CO2 accumulators: hold time (co2 + cp), density (co2 hold / co2 rest)
+    var co2TimeW=0,co2TimeM=0,co2TimeA=0;
+    var co2HoldW=0,co2HoldM=0,co2HoldA=0; // for density — CO2 Tolerance only
+    var co2RestW=0,co2RestM=0,co2RestA=0;  // for density denominator
+
+    sessions.forEach(function(s){
+      al+=s.ms;
+      if(s.ts>ma)mo+=s.ms;
+      if(s.ts>wa)wk+=s.ms;
+      if(s.mode&&byMode.hasOwnProperty(s.mode)){byMode[s.mode]+=s.ms;cntMode[s.mode]++;}
+
+      // CO2 time = hold from CO2 Tolerance + hold from CP TEST
+      var holdCo2=s.co2HoldMs||0;
+      var holdCp=s.cpHoldMs||0;
+      var totalHold=holdCo2+holdCp;
+      co2TimeA+=totalHold;
+      if(s.ts>ma)co2TimeM+=totalHold;
+      if(s.ts>wa)co2TimeW+=totalHold;
+
+      // CO2 density — only from CO2 Tolerance
+      var restCo2=s.co2RestMs||0;
+      co2HoldA+=holdCo2;co2RestA+=restCo2;
+      if(s.ts>ma){co2HoldM+=holdCo2;co2RestM+=restCo2;}
+      if(s.ts>wa){co2HoldW+=holdCo2;co2RestW+=restCo2;}
+    });
+
+    document.getElementById('st-week').textContent=fmtHMS(wk);
+    document.getElementById('st-month').textContent=fmtHMS(mo);
+    document.getElementById('st-all').textContent=fmtHMS(al);
+    document.getElementById('st-sessions').textContent=sessions.length;
+    var avgMs=sessions.length?Math.round(al/sessions.length):0;
+    document.getElementById('st-avg').textContent=avgMs?fmtMSS(avgMs):'--:--';
+    document.getElementById('st-streak').textContent=calcStreak(sessions)+' days';
+    Object.keys(byMode).forEach(function(k){
+      var el=document.getElementById('st-m-'+k);if(el)el.textContent=fmtHMS(byMode[k]);
+      var cn=document.getElementById('st-n-'+k);if(cn)cn.textContent=cntMode[k];
+    });
+    buildStreakGrid(sessions);
+
+    // CO2 metrics
+    document.getElementById('co2-time-week').textContent=fmtHMS(co2TimeW);
+    document.getElementById('co2-time-month').textContent=fmtHMS(co2TimeM);
+    document.getElementById('co2-time-all').textContent=fmtHMS(co2TimeA);
+    document.getElementById('co2-den-week').textContent=fmtDensity(co2HoldW,co2RestW);
+    document.getElementById('co2-den-month').textContent=fmtDensity(co2HoldM,co2RestM);
+    document.getElementById('co2-den-all').textContent=fmtDensity(co2HoldA,co2RestA);
+  }catch(e){}
+}
+
+function exportCSV(){try{var sessions=JSON.parse(localStorage.getItem('breath_sessions')||'[]');if(sessions.length===0){alert('No sessions to export.');return;}var rows=['date,time,duration_seconds,mode,co2_hold_seconds,co2_rest_seconds,cp_hold_seconds'];sessions.forEach(function(s){var d=new Date(s.ts);var date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');var time=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0');rows.push(date+','+time+','+Math.round(s.ms/1000)+','+(s.mode||'')+','+(s.co2HoldMs?Math.round(s.co2HoldMs/1000):'')+','+(s.co2RestMs?Math.round(s.co2RestMs/1000):'')+','+(s.cpHoldMs?Math.round(s.cpHoldMs/1000):''));});var blob=new Blob([rows.join('\n')],{type:'text/csv'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='breath_sessions.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}catch(e){alert('Export failed.');}}
 
 // ── Pause/Resume ───────────────────────────────
 var paused=false;
@@ -650,7 +764,9 @@ function togglePause(mode){
     if(mode==='bt'&&btModeIdx===1&&btPhase==='hold'&&btCpRunning){
       btCpRunning=false;cancelAnimationFrame(btCpRAF);clearLoop();
       var held=(performance.now()-btCpStart)+btCpElapsed;
-      btCpResults.push(held);btPhase='result';btShowCpResult(held);paused=true;
+      btCpResults.push(held);
+      sessionCpHoldMs+=held; // record CP hold
+      btPhase='result';btShowCpResult(held);paused=true;
       if(totals.bt.start){totals.bt.acc+=performance.now()-totals.bt.start;totals.bt.start=null;}
       if(whBtInterval){clearInterval(whBtInterval);whBtInterval=null;}
       pauseWatchdog();document.getElementById('bt-pause').textContent='START';return;
@@ -658,9 +774,9 @@ function togglePause(mode){
     paused=true;clearLoop();
     if(mode==='c')co2PauseAll();
     if(mode==='wh')whPause();
-    if(mode==='bt')btPause();
+    if(mode==='bt'){if(totals.bt.start){totals.bt.acc+=performance.now()-totals.bt.start;totals.bt.start=null;}if(whBtInterval){clearInterval(whBtInterval);whBtInterval=null;}}
     if(SA_MODES.indexOf(mode)>=0)pauseWatchdog();
-    if(totals[mode]&&totals[mode].start){totals[mode].acc+=performance.now()-totals[mode].start;totals[mode].start=null;}
+    if(totals[mode]&&totals[mode].start&&mode!=='bt'){totals[mode].acc+=performance.now()-totals[mode].start;totals[mode].start=null;}
     document.getElementById(mode+'-pause').textContent='START';
   } else {
     paused=false;document.getElementById(mode+'-pause').textContent='STOP';getCtx();
@@ -688,69 +804,45 @@ function rlPhaseDur(ph){var m=RELAX_MODES[rlModeIdx];return[m.in,m.hold,m.ex][ph
 function rlPhaseLabel(ph){return['inhale','hold','exhale'][ph];}
 function rlNextPhase(ph){return rlModeIdx===3?(ph+1)%3:(ph===0?2:0);}
 function rlToneFreq(ph){return[T_HIGH,T_MID,T_LOW][ph];}
-
-// triangle side indices: inhale=0(left), hold=1(right), exhale=2(bottom)
-var RL_PHASE_TO_TRI=[0,1,2];
-
-function setRelaxMode(idx){rlModeIdx=idx;setActive('rl-btn-',4,idx);clearLoop();rlState={phase:0,phaseElapsed:0};rlCircPct=0;totals.rl={acc:0,start:null};setCircle('rl-bc-svg',0);triResetSides();rlShowVisual();totalStart('rl');startWatchdog('rl');runRelaxPhase(0);}
-function startRelax(){getCtx();show('s-relax');paused=false;rlModeIdx=0;rlState={phase:0,phaseElapsed:0};rlCircPct=0;totals.rl={acc:0,start:null};document.getElementById('rl-pause').textContent='STOP';setActive('rl-btn-',4,0);setCircle('rl-bc-svg',0);triResetSides();rlShowVisual();refreshAllNums();totalStart('rl');startWatchdog('rl');sessionBegin('relax');runRelaxPhase(0);}
-
+function setRelaxMode(idx){rlModeIdx=idx;setActive('rl-btn-',4,idx);clearLoop();rlState={phase:0,phaseElapsed:0};rlCircPct=0;totals.rl={acc:0,start:null};setCircle('rl-bc-svg',0);rlTriReset();rlShowVisual();totalStart('rl');startWatchdog('rl');runRelaxPhase(0);}
+function startRelax(){getCtx();show('s-relax');paused=false;rlModeIdx=0;rlState={phase:0,phaseElapsed:0};rlCircPct=0;totals.rl={acc:0,start:null};document.getElementById('rl-pause').textContent='STOP';setActive('rl-btn-',4,0);setCircle('rl-bc-svg',0);rlTriReset();rlShowVisual();refreshAllNums();totalStart('rl');startWatchdog('rl');sessionBegin('relax');runRelaxPhase(0);}
 function runRelaxPhase(startElapsed,pt){
   if(pt===undefined)pt=true;
   var ph=rlState.phase,dur=rlPhaseDur(ph);
   if(pt)tone(rlToneFreq(ph));
   document.getElementById('rl-phase').textContent=rlPhaseLabel(ph);
-  var disp=document.getElementById('rl-disp');
-  disp.classList.remove('pulse');void disp.offsetWidth;disp.classList.add('pulse');
+  var disp=document.getElementById('rl-disp');disp.classList.remove('pulse');void disp.offsetWidth;disp.classList.add('pulse');
   var dirs=['in','hold','ex'],dir=dirs[ph];
-  var initPct=dir==='in'?0:dir==='ex'?1:rlCircPct;
-  setCircle('rl-bc-svg',initPct);
+  var initPct=dir==='in'?0:dir==='ex'?1:rlCircPct;setCircle('rl-bc-svg',initPct);
   var fi=document.getElementById('rl-in-fill'),fe=document.getElementById('rl-ex-fill');
-  if(fi)fi.setAttribute('width','0');
-  if(fe){fe.setAttribute('width','0');fe.setAttribute('x','280');}
-  // triangle: activate current side
+  if(fi)fi.setAttribute('width','0');if(fe){fe.setAttribute('width','0');fe.setAttribute('x','280');}
   var is478=rlModeIdx===3;
-  if(is478){
-    triActivateSide(RL_PHASE_TO_TRI[ph]);
-    // reset current side progress
-    var ts=document.getElementById('tri-s'+RL_PHASE_TO_TRI[ph]);
-    ts.setAttribute('stroke-dashoffset',TRI_LEN[RL_PHASE_TO_TRI[ph]]);
-  }
+  if(is478){rlTriActivate(ph);}
   var tnum=document.getElementById('rl-tri-num');
   var ps=performance.now()-startElapsed;
-  function anim(ts2){
-    if(paused)return;
-    var e=ts2-ps;
-    rlState.phaseElapsed=e;
+  function anim(ts){
+    if(paused)return;var e=ts-ps;rlState.phaseElapsed=e;
     var raw=Math.min(1,e/dur),rem=fmtDec(dur-e);
-    // update number
-    if(is478){
-      if(tnum&&showNumbers)tnum.textContent=rem;
-      // also update circle num if in circle mode
-      var bcn=document.getElementById('rl-bc-num');
-      if(bcn)bcn.textContent=showNumbers?rem:'';
-    } else setNum('rl-disp','rl-bc-num',rem);
+    if(is478){if(tnum&&showNumbers)tnum.textContent=rem;var bcn=document.getElementById('rl-bc-num');if(bcn)bcn.textContent=showNumbers?rem:'';}
+    else setNum('rl-disp','rl-bc-num',rem);
     var pct;
     if(dir==='in'){pct=raw;if(fi)fi.setAttribute('width',(280*raw).toFixed(1));}
     else if(dir==='ex'){pct=1-raw;var w=280*raw;if(fe){fe.setAttribute('width',w.toFixed(1));fe.setAttribute('x',(280-w).toFixed(1));}}
     else pct=rlCircPct;
     setCircle('rl-bc-svg',pct);rlCircPct=pct;
-    // triangle progress
-    if(is478)triSetProgress(RL_PHASE_TO_TRI[ph],raw);
+    if(is478)rlTriProgress(ph,raw);
     if(e<dur)regRAF(requestAnimationFrame(anim));
   }
   regRAF(requestAnimationFrame(anim));
   regTimer(setTimeout(function(){
     if(paused)return;
-    if(is478)triMarkComplete(RL_PHASE_TO_TRI[ph]);
+    if(is478)rlTriComplete(ph);
     if(dir==='in')rlCircPct=1;else if(dir==='ex')rlCircPct=0;
     rlState.phase=rlNextPhase(ph);
-    // on new cycle start (back to inhale from exhale), reset triangle
-    if(is478&&rlState.phase===0)triResetSides();
+    if(is478&&rlState.phase===0)rlTriReset();
     runRelaxPhase(0);
   },dur-startElapsed));
 }
-
 function resumeRelax(){totalResume('rl');resumeWatchdog();runRelaxPhase(Math.min(rlState.phaseElapsed,rlPhaseDur(rlState.phase)-50),false);}
 
 // ── Box ────────────────────────────────────────
@@ -775,14 +867,110 @@ var co2HoldRunning=false,co2HoldElapsed=0,co2HoldStart=null,co2HoldRAF=null;
 var co2RestElapsed=0,co2RestStart=null,co2RestRAF=null;
 var co2ExhaleElapsed=0,co2ExhaleStart=null,co2ExhaleRAF=null;
 var co2Rounds=[],REST_DUR=60000,EXHALE_CD=2000;
-function startCO2(){getCtx();show('s-co2');paused=false;co2Running=true;co2Rounds=[];co2Phase='exhale-countdown';co2HoldElapsed=0;co2RestElapsed=0;co2ExhaleElapsed=0;totals.c={acc:0,start:null};document.getElementById('c-rounds').textContent='';document.getElementById('c-bar-wrap').style.opacity='0';document.getElementById('c-bar').style.width='0%';document.getElementById('c-pause').textContent='STOP';totalStart('c');startWatchdog('c');sessionBegin('co2');beginExhaleCountdown();}
-function beginExhaleCountdown(startElapsed){startElapsed=startElapsed||0;co2Phase='exhale-countdown';co2ExhaleElapsed=startElapsed;tone(T_LOW);document.getElementById('c-phase').textContent='exhale';document.getElementById('c-break').disabled=true;document.getElementById('c-bar-wrap').style.opacity='0';document.getElementById('c-bar').style.width='0%';co2ExhaleStart=performance.now();var sw=document.getElementById('c-stopwatch');function tick(ts){if(paused)return;var e=(ts-co2ExhaleStart)+co2ExhaleElapsed;sw.textContent=fmtDec(EXHALE_CD-e);if(e<EXHALE_CD){co2ExhaleRAF=regRAF(requestAnimationFrame(tick));}else beginHold();}co2ExhaleRAF=regRAF(requestAnimationFrame(tick));}
-function beginHold(){co2Phase='hold';co2HoldElapsed=0;tone(T_MID);document.getElementById('c-phase').textContent='hold';document.getElementById('c-stopwatch').textContent='0:00';document.getElementById('c-break').disabled=false;startHoldTick();}
-function startHoldTick(){co2HoldRunning=true;co2HoldStart=performance.now();var sw=document.getElementById('c-stopwatch');function tick(ts){if(paused||!co2HoldRunning)return;sw.textContent=fmtMSS((ts-co2HoldStart)+co2HoldElapsed);co2HoldRAF=regRAF(requestAnimationFrame(tick));}co2HoldRAF=regRAF(requestAnimationFrame(tick));}
-function co2Break(){if(!co2Running||!co2HoldRunning||paused)return;co2HoldRunning=false;cancelAnimationFrame(co2HoldRAF);var held=(performance.now()-co2HoldStart)+co2HoldElapsed;co2Rounds.push(held);updateRounds();tone(T_HIGH);document.getElementById('c-phase').textContent='breathing';document.getElementById('c-stopwatch').textContent=fmtMSS(held);document.getElementById('c-break').disabled=true;co2Phase='rest';co2RestElapsed=0;startRestTick();}
-function startRestTick(){document.getElementById('c-bar-wrap').style.opacity='1';co2RestStart=performance.now();function tick(ts){if(paused)return;var e=(ts-co2RestStart)+co2RestElapsed;document.getElementById('c-stopwatch').textContent=fmtDec(REST_DUR-e);document.getElementById('c-bar').style.width=Math.min(100,(e/REST_DUR)*100)+'%';if(e<REST_DUR){co2RestRAF=regRAF(requestAnimationFrame(tick));}else{document.getElementById('c-bar').style.width='0%';beginExhaleCountdown();}}co2RestRAF=regRAF(requestAnimationFrame(tick));}
-function co2PauseAll(){if(co2Phase==='exhale-countdown'){co2ExhaleElapsed+=performance.now()-co2ExhaleStart;cancelAnimationFrame(co2ExhaleRAF);}else if(co2Phase==='hold'&&co2HoldRunning){co2HoldRunning=false;co2HoldElapsed+=performance.now()-co2HoldStart;cancelAnimationFrame(co2HoldRAF);}else if(co2Phase==='rest'){co2RestElapsed+=performance.now()-co2RestStart;cancelAnimationFrame(co2RestRAF);}}
-function co2ResumeAll(){totalResume('c');resumeWatchdog();if(co2Phase==='exhale-countdown')beginExhaleCountdown(co2ExhaleElapsed);else if(co2Phase==='hold')startHoldTick();else if(co2Phase==='rest')startRestTick();}
+
+function startCO2(){
+  getCtx();show('s-co2');paused=false;co2Running=true;co2Rounds=[];co2Phase='exhale-countdown';
+  co2HoldElapsed=0;co2RestElapsed=0;co2ExhaleElapsed=0;
+  totals.c={acc:0,start:null};
+  document.getElementById('c-rounds').textContent='';
+  document.getElementById('c-bar-wrap').style.opacity='0';
+  document.getElementById('c-bar').style.width='0%';
+  document.getElementById('c-pause').textContent='STOP';
+  totalStart('c');startWatchdog('c');sessionBegin('co2');
+  beginExhaleCountdown();
+}
+
+function beginExhaleCountdown(startElapsed){
+  startElapsed=startElapsed||0;co2Phase='exhale-countdown';co2ExhaleElapsed=startElapsed;
+  tone(T_LOW);document.getElementById('c-phase').textContent='exhale';
+  document.getElementById('c-break').disabled=true;
+  document.getElementById('c-bar-wrap').style.opacity='0';document.getElementById('c-bar').style.width='0%';
+  co2ExhaleStart=performance.now();
+  var sw=document.getElementById('c-stopwatch');
+  function tick(ts){
+    if(paused)return;
+    var e=(ts-co2ExhaleStart)+co2ExhaleElapsed;
+    sw.textContent=fmtDec(EXHALE_CD-e);
+    if(e<EXHALE_CD){co2ExhaleRAF=regRAF(requestAnimationFrame(tick));}
+    else beginHold();
+  }
+  co2ExhaleRAF=regRAF(requestAnimationFrame(tick));
+}
+
+function beginHold(){
+  co2Phase='hold';co2HoldElapsed=0;tone(T_MID);
+  document.getElementById('c-phase').textContent='hold';
+  document.getElementById('c-stopwatch').textContent='0:00';
+  document.getElementById('c-break').disabled=false;
+  startHoldTick();
+}
+
+function startHoldTick(){
+  co2HoldRunning=true;co2HoldStart=performance.now();
+  var sw=document.getElementById('c-stopwatch');
+  function tick(ts){
+    if(paused||!co2HoldRunning)return;
+    sw.textContent=fmtMSS((ts-co2HoldStart)+co2HoldElapsed);
+    co2HoldRAF=regRAF(requestAnimationFrame(tick));
+  }
+  co2HoldRAF=regRAF(requestAnimationFrame(tick));
+}
+
+function co2Break(){
+  if(!co2Running||!co2HoldRunning||paused)return;
+  co2HoldRunning=false;cancelAnimationFrame(co2HoldRAF);
+  var held=(performance.now()-co2HoldStart)+co2HoldElapsed;
+  co2Rounds.push(held);
+  sessionCo2HoldMs+=held; // accumulate hold time for stats
+  updateRounds();
+  tone(T_HIGH);
+  document.getElementById('c-phase').textContent='breathing';
+  document.getElementById('c-stopwatch').textContent=fmtMSS(held);
+  document.getElementById('c-break').disabled=true;
+  co2Phase='rest';co2RestElapsed=0;
+  startRestTick();
+}
+
+function startRestTick(){
+  document.getElementById('c-bar-wrap').style.opacity='1';
+  var restStart=performance.now();
+  co2RestStart=restStart;
+  function tick(ts){
+    if(paused)return;
+    var e=(ts-co2RestStart)+co2RestElapsed;
+    document.getElementById('c-stopwatch').textContent=fmtDec(REST_DUR-e);
+    document.getElementById('c-bar').style.width=Math.min(100,(e/REST_DUR)*100)+'%';
+    if(e<REST_DUR){co2RestRAF=regRAF(requestAnimationFrame(tick));}
+    else{
+      // full rest completed — record it for density
+      sessionCo2RestMs+=REST_DUR;
+      document.getElementById('c-bar').style.width='0%';
+      beginExhaleCountdown();
+    }
+  }
+  co2RestRAF=regRAF(requestAnimationFrame(tick));
+}
+
+function co2PauseAll(){
+  if(co2Phase==='exhale-countdown'){
+    co2ExhaleElapsed+=performance.now()-co2ExhaleStart;cancelAnimationFrame(co2ExhaleRAF);
+  } else if(co2Phase==='hold'&&co2HoldRunning){
+    co2HoldRunning=false;co2HoldElapsed+=performance.now()-co2HoldStart;cancelAnimationFrame(co2HoldRAF);
+  } else if(co2Phase==='rest'){
+    // record partial rest time for density
+    var partialRest=performance.now()-co2RestStart+co2RestElapsed;
+    co2RestElapsed=partialRest; // keep for resume
+    cancelAnimationFrame(co2RestRAF);
+  }
+}
+
+function co2ResumeAll(){
+  totalResume('c');resumeWatchdog();
+  if(co2Phase==='exhale-countdown')beginExhaleCountdown(co2ExhaleElapsed);
+  else if(co2Phase==='hold')startHoldTick();
+  else if(co2Phase==='rest')startRestTick();
+}
+
 function updateRounds(){document.getElementById('c-rounds').textContent=co2Rounds.map(function(t,i){return 'round '+(i+1)+': '+fmtMSS(t);}).join('\n');}
 
 // ── Wim Hof ────────────────────────────────────
@@ -805,23 +993,143 @@ function whResume(){totalResume('wh');startTotalTimer('wh');if(whPhase==='breath
 
 // ── Buteyko ────────────────────────────────────
 var btRunning=false,btModeIdx=0,btBreathCount=0;
-var btPhase='inhale',btPhaseElapsed=0,btPhaseStart=null,btPhaseRAF=null;
+var btPhase='inhale',btPhaseElapsed=0;
 var btCpElapsed=0,btCpStart=null,btCpRunning=false,btCpRAF=null;
 var btCpResults=[],btNextCpTimer=null;
 var BT_IN=4000,BT_EX=6000;
+
 function btGetPause(){if(btBreathCount<10)return 2000;if(btBreathCount<20)return 3000;return 4000;}
+function btUpdateInfo(){var pause=btGetPause()/1000,ph,tip,display=btBreathCount+1;if(btBreathCount<10){ph='phase 1/3';tip='feel the rhythm';}else if(btBreathCount<20){ph='phase 2/3';tip='reduce volume';}else{ph='phase 3/3';tip='maintain air hunger';}document.getElementById('bt-info').textContent='breath '+display+' · '+ph+' · pause '+pause+'s\n'+tip;}
+
+function btRunPhase(phIdx,startElapsed,pt){
+  if(pt===undefined)pt=true;
+  var NAMES=['nasal inhale','nasal exhale','hold'];
+  var FREQS=[T_HIGH,T_LOW,T_MID];
+  var TDURS=[3.5,5.5,1.8];
+  var TVOLS=[0.22,0.18,0.15];
+  var DURS=[BT_IN,BT_EX,btGetPause()];
+  btPhase=['inhale','exhale','pause'][phIdx];
+  var dur=DURS[phIdx];var se=startElapsed||0;
+  document.getElementById('bt-phase').textContent=NAMES[phIdx];
+  if(pt)tone(FREQS[phIdx],TDURS[phIdx],TVOLS[phIdx]);
+  var tnum=document.getElementById('bt-tri-num');
+  btTriActivate(phIdx);
+  if(visMode==='circle'){setCircle('bt-bc-svg',phIdx===0?0:phIdx===1?1:0.5);}
+  var ps=performance.now()-se;
+  function anim(ts){
+    if(paused)return;var e=ts-ps;btPhaseElapsed=e;var raw=Math.min(1,e/dur);
+    btTriProgress(phIdx,raw);
+    if(visMode==='circle'){var pct=phIdx===0?raw:phIdx===1?(1-raw):0.5;setCircle('bt-bc-svg',pct);}
+    var rem=fmtDec(dur-e);
+    if(tnum)tnum.textContent=showNumbers?rem:'';
+    if(btModeIdx===0){document.getElementById('bt-bc-num').textContent=showNumbers?rem:'';}
+    if(e<dur)regRAF(requestAnimationFrame(anim));
+  }
+  regRAF(requestAnimationFrame(anim));
+  regTimer(setTimeout(function(){
+    if(paused)return;
+    btTriComplete(phIdx);
+    if(phIdx===0){btRunPhase(1,0);}
+    else if(phIdx===1){btBreathCount++;btUpdateInfo();btRunPhase(2,0);}
+    else{btTriReset();btRunPhase(0,0);}
+  },dur-se));
+}
+
+function startButeyko(){
+  getCtx();show('s-buteyko');paused=false;btRunning=true;
+  totals.bt={acc:0,start:null};btCpResults=[];btBreathCount=0;
+  btPhase='inhale';btPhaseElapsed=0;btCpElapsed=0;btCpStart=null;btCpRunning=false;
+  if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}
+  document.getElementById('bt-pause').textContent='STOP';
+  document.getElementById('bt-info').textContent='';
+  btTriReset();applyVisBt();
+  totalStart('bt');startWatchdog('bt');startTotalTimer('bt');sessionBegin('buteyko');
+  if(btModeIdx===0){btUpdateInfo();btRunPhase(0,0);}
+  else{btStartCpExhale();}
+}
+
+function setBtMode(idx){
+  btModeIdx=idx;
+  document.getElementById('bt-m-0').classList.toggle('active',idx===0);
+  document.getElementById('bt-m-1').classList.toggle('active',idx===1);
+  if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}
+  paused=false;clearLoop();btCpRunning=false;btCpResults=[];btBreathCount=0;
+  document.getElementById('bt-pause').textContent='STOP';
+  document.getElementById('bt-info').textContent='';
+  btTriReset();applyVisBt();
+  if(idx===0){btUpdateInfo();btRunPhase(0,0);}
+  else{btStartCpExhale();}
+}
+
+// CP TEST
 function btFillReset(){var fi=document.getElementById('bt-fill-in'),fe=document.getElementById('bt-fill-ex');fi.setAttribute('width','0');fe.setAttribute('width','0');fe.setAttribute('x','260');}
 function btFillSet(phase,pct){var fi=document.getElementById('bt-fill-in'),fe=document.getElementById('bt-fill-ex');fi.setAttribute('width','0');fe.setAttribute('width','0');fe.setAttribute('x','260');if(phase==='inhale'){fi.setAttribute('width',(260*pct).toFixed(1));}else if(phase==='exhale'){var w=(260*pct).toFixed(1);fe.setAttribute('width',w);fe.setAttribute('x',(260-parseFloat(w)).toFixed(1));}}
-function setBtMode(idx){btModeIdx=idx;document.getElementById('bt-m-0').classList.toggle('active',idx===0);document.getElementById('bt-m-1').classList.toggle('active',idx===1);if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}paused=false;clearLoop();cancelAnimationFrame(btPhaseRAF);cancelAnimationFrame(btCpRAF);btCpRunning=false;btCpResults=[];btBreathCount=0;document.getElementById('bt-pause').textContent='STOP';document.getElementById('bt-info').textContent='';btFillReset();if(idx===0)btStartReducedPhase('inhale',0);else btStartCpExhale();}
-function startButeyko(){getCtx();show('s-buteyko');paused=false;btRunning=true;totals.bt={acc:0,start:null};btCpResults=[];btBreathCount=0;btPhase='idle';btPhaseElapsed=0;btPhaseStart=null;btCpElapsed=0;btCpStart=null;btCpRunning=false;if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}document.getElementById('bt-pause').textContent='STOP';btFillReset();totalStart('bt');startWatchdog('bt');startTotalTimer('bt');sessionBegin('buteyko');if(btModeIdx===0){btUpdateInfo();btStartReducedPhase('inhale',0);}else btStartCpExhale();}
-function btStartReducedPhase(phase,startElapsed){btPhase=phase;btPhaseElapsed=startElapsed||0;var dur=phase==='inhale'?BT_IN:phase==='exhale'?BT_EX:btGetPause();var labels={'inhale':'nasal inhale','exhale':'nasal exhale','pause':'hold'};var freqs={'inhale':T_HIGH,'exhale':T_LOW,'pause':T_MID};var vols={'inhale':0.22,'exhale':0.18,'pause':0.15};var durs={'inhale':3.5,'exhale':5.5,'pause':1.8};document.getElementById('bt-phase').textContent=labels[phase];if(!btPhaseElapsed)tone(freqs[phase],durs[phase],vols[phase]);btFillReset();btPhaseStart=performance.now();function tick(ts){if(paused)return;var e=(ts-btPhaseStart)+btPhaseElapsed;var pct=Math.min(1,e/dur);document.getElementById('bt-timer').textContent=fmtDec(dur-e);if(phase==='inhale')btFillSet('inhale',pct);else if(phase==='exhale')btFillSet('exhale',pct);else btFillReset();if(e<dur){btPhaseRAF=regRAF(requestAnimationFrame(tick));}else btNextReducedPhase(phase);}btPhaseRAF=regRAF(requestAnimationFrame(tick));}
-function btNextReducedPhase(phase){btPhaseElapsed=0;if(phase==='inhale')btStartReducedPhase('exhale',0);else if(phase==='exhale'){btBreathCount++;btStartReducedPhase('pause',0);}else{btUpdateInfo();btStartReducedPhase('inhale',0);}}
-function btUpdateInfo(){var pause=btGetPause()/1000,ph,tip;var display=btBreathCount+1;if(btBreathCount<10){ph='phase 1/3';tip='feel the rhythm';}else if(btBreathCount<20){ph='phase 2/3';tip='reduce volume';}else{ph='phase 3/3';tip='maintain air hunger';}document.getElementById('bt-info').textContent='breath '+display+' · '+ph+' · pause '+pause+'s\n'+tip;}
-function btStartCpExhale(){if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}btPhase='exhale-prep';btPhaseElapsed=0;btCpElapsed=0;var CP_EXHALE_DUR=3000;document.getElementById('bt-phase').textContent='gentle exhale';document.getElementById('bt-timer').textContent=fmtDec(CP_EXHALE_DUR);btFillReset();document.getElementById('bt-info').textContent='breathe out gently\nthen hold — tap STOP to record';tone(T_LOW,2.5,0.18);btPhaseStart=performance.now();function tick(ts){if(paused)return;var e=(ts-btPhaseStart)+btPhaseElapsed;document.getElementById('bt-timer').textContent=fmtDec(Math.max(0,CP_EXHALE_DUR-e));document.getElementById('bt-fill-ex').style.width=(Math.max(0,1-e/CP_EXHALE_DUR)*100)+'%';if(e<CP_EXHALE_DUR){btPhaseRAF=regRAF(requestAnimationFrame(tick));}else btBeginCpHold();}btPhaseRAF=regRAF(requestAnimationFrame(tick));}
-function btBeginCpHold(){btPhase='hold';btCpElapsed=0;btCpRunning=true;tone(T_MID,4.5,0.22);document.getElementById('bt-phase').textContent='hold breath';document.getElementById('bt-info').textContent='stop at first urge to breathe\ntap STOP to record';btFillReset();document.getElementById('bt-pause').textContent='STOP';btCpStart=performance.now();var MAX=120000;function tick(ts){if(paused||!btCpRunning)return;var e=(ts-btCpStart)+btCpElapsed;document.getElementById('bt-timer').textContent=fmtMSS(e);btFillSet('inhale',Math.min(1,e/MAX));btCpRAF=regRAF(requestAnimationFrame(tick));}btCpRAF=regRAF(requestAnimationFrame(tick));}
-function btPause(){if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}if(btPhase==='exhale-prep'){btPhaseElapsed+=performance.now()-btPhaseStart;cancelAnimationFrame(btPhaseRAF);}else if(btModeIdx===0){btPhaseElapsed+=performance.now()-btPhaseStart;cancelAnimationFrame(btPhaseRAF);}if(totals.bt.start){totals.bt.acc+=performance.now()-totals.bt.start;totals.bt.start=null;}if(whBtInterval){clearInterval(whBtInterval);whBtInterval=null;}}
-function btShowCpResult(ms){var s=Math.round(ms/1000),grade;if(s<10)grade='very low';else if(s<20)grade='low';else if(s<40)grade='average';else if(s<60)grade='good';else grade='excellent';document.getElementById('bt-phase').textContent='result';document.getElementById('bt-timer').textContent=fmtMSS(ms);btFillReset();var prev=btCpResults.map(function(t,i){return 'CP '+(i+1)+': '+fmtMSS(t);}).join('\n');document.getElementById('bt-info').textContent=s+'s — '+grade+(prev?'\n\n'+prev:'')+'\n\nnext test in 3 min';btNextCpTimer=setTimeout(function(){if(!paused&&btRunning)btStartCpExhale();},180000);}
-function btResume(){totalResume('bt');resumeWatchdog();startTotalTimer('bt');if(btModeIdx===0){btStartReducedPhase(btPhase,btPhaseElapsed);}else{if(btPhase==='result'||btPhase==='idle'){btStartCpExhale();}else if(btPhase==='exhale-prep'){var CP_EXHALE_DUR=3000;btPhaseStart=performance.now();function tick(ts){if(paused)return;var e=(ts-btPhaseStart)+btPhaseElapsed;document.getElementById('bt-timer').textContent=fmtDec(Math.max(0,CP_EXHALE_DUR-e));btFillSet('exhale',Math.min(1,e/CP_EXHALE_DUR));if(e<CP_EXHALE_DUR){btPhaseRAF=regRAF(requestAnimationFrame(tick));}else btBeginCpHold();}btPhaseRAF=regRAF(requestAnimationFrame(tick));}else if(btPhase==='hold'){btCpRunning=true;btCpStart=performance.now();var MAX=120000;document.getElementById('bt-pause').textContent='STOP';function tick2(ts){if(paused||!btCpRunning)return;var e=(ts-btCpStart)+btCpElapsed;document.getElementById('bt-timer').textContent=fmtMSS(e);btFillSet('inhale',Math.min(1,e/MAX));btCpRAF=regRAF(requestAnimationFrame(tick2));}btCpRAF=regRAF(requestAnimationFrame(tick2));}}}
+var btCpPhaseStart=null,btCpPhaseRAF=null;
+
+function btStartCpExhale(){
+  if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}
+  btPhase='exhale-prep';btCpElapsed=0;
+  var DUR=3000;
+  document.getElementById('bt-phase').textContent='gentle exhale';
+  document.getElementById('bt-timer').textContent=fmtDec(DUR);
+  btFillReset();
+  document.getElementById('bt-info').textContent='breathe out gently\nthen hold — tap STOP to record';
+  tone(T_LOW,2.5,0.18);
+  btCpPhaseStart=performance.now();
+  function tick(ts){
+    if(paused)return;var e=(ts-btCpPhaseStart);var pct=Math.min(1,e/DUR);
+    document.getElementById('bt-timer').textContent=fmtDec(Math.max(0,DUR-e));
+    btFillSet('exhale',pct);if(visMode==='circle')setCircle('bt-bc-svg',1-pct);
+    if(e<DUR){btCpPhaseRAF=regRAF(requestAnimationFrame(tick));}else btBeginCpHold();
+  }
+  btCpPhaseRAF=regRAF(requestAnimationFrame(tick));
+}
+
+function btBeginCpHold(){
+  btPhase='hold';btCpElapsed=0;btCpRunning=true;
+  tone(T_MID,4.5,0.22);
+  document.getElementById('bt-phase').textContent='hold breath';
+  document.getElementById('bt-info').textContent='stop at first urge to breathe\ntap STOP to record';
+  btFillReset();document.getElementById('bt-pause').textContent='STOP';
+  btCpStart=performance.now();var MAX=120000;setCircle('bt-bc-svg',0);
+  function tick(ts){
+    if(paused||!btCpRunning)return;var e=(ts-btCpStart)+btCpElapsed;
+    document.getElementById('bt-timer').textContent=fmtMSS(e);
+    btFillSet('inhale',Math.min(1,e/MAX));
+    if(visMode==='circle')setCircle('bt-bc-svg',Math.min(1,e/MAX));
+    btCpRAF=regRAF(requestAnimationFrame(tick));
+  }
+  btCpRAF=regRAF(requestAnimationFrame(tick));
+}
+
+function btShowCpResult(ms){
+  var s=Math.round(ms/1000),grade;
+  if(s<10)grade='very low';else if(s<20)grade='low';else if(s<40)grade='average';else if(s<60)grade='good';else grade='excellent';
+  document.getElementById('bt-phase').textContent='result';
+  document.getElementById('bt-timer').textContent=fmtMSS(ms);
+  btFillReset();
+  var prev=btCpResults.map(function(t,i){return 'CP '+(i+1)+': '+fmtMSS(t);}).join('\n');
+  document.getElementById('bt-info').textContent=s+'s — '+grade+(prev?'\n\n'+prev:'')+'\n\nnext test in 3 min';
+  btNextCpTimer=setTimeout(function(){if(!paused&&btRunning)btStartCpExhale();},180000);
+}
+
+function btResume(){
+  totalResume('bt');resumeWatchdog();startTotalTimer('bt');
+  if(btModeIdx===0){
+    var idx=['inhale','exhale','pause'].indexOf(btPhase);
+    if(idx<0)idx=0;
+    btRunPhase(idx,btPhaseElapsed,false);
+  } else {
+    if(btPhase==='result'||btPhase==='idle'){btStartCpExhale();}
+    else if(btPhase==='exhale-prep'){btStartCpExhale();}
+    else if(btPhase==='hold'){
+      btCpRunning=true;btCpStart=performance.now();var MAX=120000;
+      document.getElementById('bt-pause').textContent='STOP';
+      function tick(ts){if(paused||!btCpRunning)return;var e=(ts-btCpStart)+btCpElapsed;document.getElementById('bt-timer').textContent=fmtMSS(e);btFillSet('inhale',Math.min(1,e/MAX));btCpRAF=regRAF(requestAnimationFrame(tick));}
+      btCpRAF=regRAF(requestAnimationFrame(tick));
+    }
+  }
+}
 
 buildFans();
 buildCuDds();
