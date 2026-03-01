@@ -575,9 +575,9 @@ function vibe(pattern){if(!hapticOn||!navigator.vibrate)return;navigator.vibrate
 // hold:   dvě krátké 30+30ms s mezerou 60ms
 // exhale: mírně delší 70ms
 function hapticPhase(ph){
-  if(ph==='inhale')vibe(40);
+  if(ph==='inhale')vibe(25);
   else if(ph==='hold')vibe([30,60,30]);
-  else if(ph==='exhale')vibe(70);
+  else if(ph==='exhale')vibe(90);
 }
 
 // ── Settings ───────────────────────────────────
