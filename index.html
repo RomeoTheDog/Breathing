@@ -132,14 +132,20 @@
   .stats-val{font-size:15px;letter-spacing:1px;text-shadow:0 0 12px rgba(232,255,0,0.3);font-variant-numeric:tabular-nums;display:inline-block;width:110px;text-align:right;}
   .stats-section-title{font-size:9px;letter-spacing:0.5em;color:rgba(232,255,0,0.18);text-transform:uppercase;margin:0;}
 
-  /* Unified column widths for both section grids */
   .stats-mode-grid{width:260px;display:flex;flex-direction:column;}
-  .stats-mode-row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0;border-bottom:1px solid rgba(232,255,0,0.05);}
+  .stats-mode-row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0 3px 10px;border-bottom:1px solid rgba(232,255,0,0.05);}
   .stats-mode-row:last-child{border-bottom:none;}
   .stats-mode-lbl{font-size:10px;letter-spacing:0.25em;color:rgba(232,255,0,0.28);text-transform:uppercase;width:94px;flex:none;}
   .stats-mode-val{font-size:14px;letter-spacing:1px;color:rgba(232,255,0,0.6);font-variant-numeric:tabular-nums;text-align:right;display:inline-block;width:80px;}
   .stats-mode-cnt{font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.45);white-space:nowrap;display:inline-block;width:46px;text-align:right;font-variant-numeric:tabular-nums;}
   .stats-mode-right{display:flex;align-items:baseline;width:126px;justify-content:flex-end;}
+
+  /* shared collapsible header row */
+  .stats-collapse-hdr{cursor:pointer;display:flex;align-items:baseline;position:relative;}
+  .stats-collapse-hdr .hdr-title{flex:1;}
+  .stats-collapse-hdr .hdr-col-time{font-size:9px;letter-spacing:0.3em;color:rgba(232,255,0,0.18);text-transform:uppercase;display:inline-block;width:80px;text-align:center;}
+  .stats-collapse-hdr .hdr-col-right{font-size:9px;letter-spacing:0.3em;display:inline-block;width:46px;text-align:right;}
+  .stats-collapse-hdr .hdr-arrow{font-size:9px;color:rgba(232,255,0,0.28);position:absolute;right:-14px;}
 
   .breath-circle-wrap{display:none;position:relative;width:220px;height:220px;align-items:center;justify-content:center;margin-top:-10px;}
   .breath-circle-wrap.visible{display:flex;}
@@ -178,7 +184,7 @@
   .streak-cell.s4{background:rgba(232,255,0,1);box-shadow:0 0 4px rgba(232,255,0,0.5);}
   .streak-cell.today{outline:1px solid rgba(232,255,0,0.6);outline-offset:1px;}
   .avg-section{width:260px;margin-top:6px;}
-  .avg-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;}
+  .avg-row{display:flex;justify-content:space-between;align-items:baseline;padding:2px 0;}
   .avg-lbl{font-size:10px;letter-spacing:0.35em;color:rgba(232,255,0,0.28);text-transform:uppercase;}
   .avg-val{font-size:14px;letter-spacing:1px;color:rgba(232,255,0,0.6);font-variant-numeric:tabular-nums;}
 </style>
@@ -462,11 +468,33 @@
 <!-- STATS -->
 <div class="screen" id="s-stats">
   <div class="mode-label" style="display:block;text-align:center;margin-bottom:4px;">STATISTICS</div>
+
   <div class="streak-section"><div class="streak-title">last 30 days</div><div class="streak-grid" id="streak-grid"></div></div>
+
+  <!-- AVG SESSION -->
   <div class="avg-section">
-    <div class="avg-row"><span class="avg-lbl">Avg session</span><span class="avg-val" id="st-avg">--:--</span></div>
+    <div class="avg-row stats-collapse-hdr" onclick="toggleAvgBreakdown()" style="padding:2px 0;">
+      <span class="avg-lbl hdr-title">Avg session</span>
+      <span class="avg-val" id="st-avg" style="display:inline-block;width:80px;text-align:right;">--:--</span>
+      <span id="avg-arrow" class="hdr-arrow">▶</span>
+    </div>
+    <div id="avg-breakdown" style="display:none;">
+      <div class="avg-row" style="padding-left:10px;">
+        <span class="avg-lbl" style="color:rgba(232,255,0,0.20);">relax</span>
+        <span class="avg-val" id="st-avg-relax" style="font-size:12px;color:rgba(232,255,0,0.5);">--:--</span>
+      </div>
+      <div class="avg-row" style="padding-left:10px;">
+        <span class="avg-lbl" style="color:rgba(232,255,0,0.20);">CO2</span>
+        <span class="avg-val" id="st-avg-co2" style="font-size:12px;color:rgba(232,255,0,0.5);">--:--</span>
+      </div>
+      <div class="avg-row" style="padding-left:10px;">
+        <span class="avg-lbl" style="color:rgba(232,255,0,0.20);">wim hof</span>
+        <span class="avg-val" id="st-avg-wh" style="font-size:12px;color:rgba(232,255,0,0.5);">--:--</span>
+      </div>
+    </div>
     <div class="avg-row"><span class="avg-lbl">Streak</span><span class="avg-val" id="st-streak">0 days</span></div>
   </div>
+
   <div class="stats-grid" style="margin:0 auto;">
     <div class="stats-row"><span class="stats-lbl">This week</span><span class="stats-val" id="st-week">00:00:00</span></div>
     <div class="stats-row"><span class="stats-lbl">This month</span><span class="stats-val" id="st-month">00:00:00</span></div>
@@ -475,11 +503,11 @@
 
   <!-- BY EXERCISE -->
   <div style="width:260px;margin:6px auto 0;">
-    <div onclick="toggleByExercise()" style="cursor:pointer;display:flex;align-items:baseline;position:relative;">
-      <div class="stats-section-title" style="margin:0;flex:1;">by exercise</div>
-      <span style="font-size:9px;letter-spacing:0.3em;color:rgba(232,255,0,0.18);text-transform:uppercase;display:inline-block;width:80px;text-align:center;">time</span>
-      <span id="st-sessions" style="font-size:9px;letter-spacing:0.3em;color:rgba(232,255,0,0.28);display:inline-block;width:46px;text-align:right;">0</span>
-      <span id="by-ex-arrow" style="font-size:9px;color:rgba(232,255,0,0.28);position:absolute;right:-14px;">▶</span>
+    <div class="stats-collapse-hdr" onclick="toggleByExercise()">
+      <div class="stats-section-title hdr-title">by exercise</div>
+      <span class="hdr-col-time">time</span>
+      <span class="hdr-col-right" id="st-sessions" style="color:rgba(232,255,0,0.28);">0</span>
+      <span id="by-ex-arrow" class="hdr-arrow">▶</span>
     </div>
     <div id="by-exercise-grid" style="display:none;">
       <div class="stats-mode-grid" style="margin-top:4px;">
@@ -495,12 +523,12 @@
   </div>
 
   <!-- CO2 METRICS -->
-  <div style="width:260px;margin:6px auto 2px;">
-    <div onclick="toggleCo2Metrics()" style="cursor:pointer;display:flex;align-items:baseline;position:relative;">
-      <div class="stats-section-title" style="margin:0;flex:1;">CO<sub style="font-size:0.7em">2</sub> metrics</div>
-      <span style="font-size:9px;letter-spacing:0.3em;color:rgba(232,255,0,0.18);text-transform:uppercase;display:inline-block;width:80px;text-align:center;">time</span>
-      <span style="font-size:9px;letter-spacing:0.3em;color:rgba(232,255,0,0.18);text-transform:uppercase;display:inline-block;width:46px;text-align:right;">dens</span>
-      <span id="co2-metrics-arrow" style="font-size:9px;color:rgba(232,255,0,0.28);position:absolute;right:-14px;">▶</span>
+  <div style="width:260px;margin:6px auto 0;">
+    <div class="stats-collapse-hdr" onclick="toggleCo2Metrics()">
+      <div class="stats-section-title hdr-title">CO<sub style="font-size:0.7em">2</sub> metrics</div>
+      <span class="hdr-col-time">time</span>
+      <span class="hdr-col-right" style="color:rgba(232,255,0,0.18);text-transform:uppercase;">dens</span>
+      <span id="co2-metrics-arrow" class="hdr-arrow">▶</span>
     </div>
     <div id="co2-metrics-grid" style="display:none;">
       <div class="stats-mode-grid" style="margin-top:4px;">
@@ -513,13 +541,15 @@
     </div>
   </div>
 
-  <div id="cp-trend-wrap" style="width:260px;margin:10px auto 0;display:none;">
-    <div class="stats-section-title" style="margin-bottom:6px;">CP trend</div>
+  <!-- CO2 TREND -->
+  <div id="cp-trend-wrap" style="width:260px;margin:6px auto 0;display:none;">
+    <div class="stats-section-title" style="margin-bottom:6px;">CO<sub style="font-size:0.7em">2</sub> trend</div>
     <svg id="cp-trend-svg" width="260" height="60" viewBox="0 0 260 60" style="overflow:visible;">
       <defs><filter id="cpGlow" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
       <rect x="0" y="0" width="260" height="60" fill="none"/>
     </svg>
   </div>
+
   <button class="menu-btn" style="display:block;margin:16px auto 0;width:160px;height:36px;border-color:rgba(232,255,0,0.12);color:rgba(232,255,0,0.35);" onclick="exportCSV()">EXPORT CSV</button>
   <button class="menu-btn" style="display:block;margin:8px auto 0;" onclick="goHome()">MAIN MENU</button>
 </div>
@@ -672,6 +702,7 @@ function saveSession(){
 }
 
 // ── Statistics ─────────────────────────────────
+function toggleAvgBreakdown(){var g=document.getElementById('avg-breakdown'),arr=document.getElementById('avg-arrow'),open=g.style.display==='block';g.style.display=open?'none':'block';arr.textContent=open?'▶':'▼';}
 function toggleByExercise(){var g=document.getElementById('by-exercise-grid'),arr=document.getElementById('by-ex-arrow'),open=g.style.display==='block';g.style.display=open?'none':'block';arr.textContent=open?'▶':'▼';}
 function toggleCo2Metrics(){var g=document.getElementById('co2-metrics-grid'),arr=document.getElementById('co2-metrics-arrow'),open=g.style.display==='block';g.style.display=open?'none':'block';arr.textContent=open?'▶':'▼';}
 function buildStreakGrid(sessions){var grid=document.getElementById('streak-grid');grid.innerHTML='';var today=new Date();today.setHours(0,0,0,0);var cells=30,actMap={};sessions.forEach(function(s){var d=new Date(s.ts);d.setHours(0,0,0,0);var diff=Math.round((today-d)/86400000);if(diff>=0&&diff<cells){actMap[diff]=(actMap[diff]||0)+s.ms;}});for(var i=cells-1;i>=0;i--){var cell=document.createElement('div');cell.className='streak-cell';if(i===0)cell.classList.add('today');var ms=actMap[i]||0;if(ms>0){if(ms<600000)cell.classList.add('s1');else if(ms<1200000)cell.classList.add('s2');else if(ms<2400000)cell.classList.add('s3');else cell.classList.add('s4');}grid.appendChild(cell);}}
@@ -702,6 +733,13 @@ function showStats(){
     document.getElementById('st-sessions').textContent=sessions.length;
     var avgMs=sessions.length?Math.round(al/sessions.length):0;
     document.getElementById('st-avg').textContent=avgMs?fmtMSS(avgMs):'--:--';
+    var relaxModes=['resonant','relax','box','custom'];
+    var co2Modes=['co2','buteyko'];
+    function avgForModes(modes){var s=sessions.filter(function(x){return modes.indexOf(x.mode)>=0;});var t=s.reduce(function(a,b){return a+b.ms;},0);return s.length?Math.round(t/s.length):0;}
+    var avgRelax=avgForModes(relaxModes),avgCo2g=avgForModes(co2Modes),avgWh=avgForModes(['wimhof']);
+    document.getElementById('st-avg-relax').textContent=avgRelax?fmtMSS(avgRelax):'--:--';
+    document.getElementById('st-avg-co2').textContent=avgCo2g?fmtMSS(avgCo2g):'--:--';
+    document.getElementById('st-avg-wh').textContent=avgWh?fmtMSS(avgWh):'--:--';
     document.getElementById('st-streak').textContent=calcStreak(sessions)+' days';
     Object.keys(byMode).forEach(function(k){var el=document.getElementById('st-m-'+k);if(el)el.textContent=fmtHMS(byMode[k]);var cn=document.getElementById('st-n-'+k);if(cn)cn.textContent=cntMode[k];});
     buildStreakGrid(sessions);
