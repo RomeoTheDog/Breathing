@@ -135,7 +135,6 @@
   .stats-lbl{font-size:10px;letter-spacing:0.35em;color:rgba(232,255,0,0.35);text-transform:uppercase;}
   .stats-val{font-size:15px;letter-spacing:1px;text-shadow:0 0 12px rgba(232,255,0,0.3);font-variant-numeric:tabular-nums;display:inline-block;width:110px;text-align:right;}
   .stats-section-title{font-size:9px;letter-spacing:0.5em;color:rgba(232,255,0,0.18);text-transform:uppercase;margin:0;}
-
   .stats-mode-grid{width:260px;display:flex;flex-direction:column;}
   .stats-mode-row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0 3px 10px;border-bottom:1px solid rgba(232,255,0,0.05);}
   .stats-mode-row:last-child{border-bottom:none;}
@@ -143,14 +142,11 @@
   .stats-mode-val{font-size:14px;letter-spacing:1px;color:rgba(232,255,0,0.6);font-variant-numeric:tabular-nums;text-align:right;display:inline-block;width:80px;}
   .stats-mode-cnt{font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.45);white-space:nowrap;display:inline-block;width:46px;text-align:right;font-variant-numeric:tabular-nums;}
   .stats-mode-right{display:flex;align-items:baseline;width:126px;justify-content:flex-end;}
-
-  /* shared collapsible header row */
   .stats-collapse-hdr{cursor:pointer;display:flex;align-items:baseline;position:relative;}
   .stats-collapse-hdr .hdr-title{flex:1;}
   .stats-collapse-hdr .hdr-col-time{font-size:9px;letter-spacing:0.3em;color:rgba(232,255,0,0.18);text-transform:uppercase;display:inline-block;width:80px;text-align:center;}
   .stats-collapse-hdr .hdr-col-right{font-size:9px;letter-spacing:0.3em;display:inline-block;width:46px;text-align:right;}
   .stats-collapse-hdr .hdr-arrow{font-size:9px;color:rgba(232,255,0,0.28);position:absolute;right:-14px;}
-
   .breath-circle-wrap{display:none;position:relative;width:220px;height:220px;align-items:center;justify-content:center;margin-top:-10px;}
   .breath-circle-wrap.visible{display:flex;}
   .breath-circle-wrap .bc-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
@@ -479,10 +475,7 @@
 <!-- STATS -->
 <div class="screen" id="s-stats">
   <div class="mode-label" style="display:block;text-align:center;margin-bottom:4px;">STATISTICS</div>
-
   <div class="streak-section"><div class="streak-title">last 30 days</div><div class="streak-grid" id="streak-grid"></div></div>
-
-  <!-- AVG SESSION -->
   <div class="avg-section">
     <div class="avg-row stats-collapse-hdr" onclick="toggleAvgBreakdown()" style="padding:2px 0;">
       <span class="avg-lbl hdr-title">Avg session</span>
@@ -490,29 +483,17 @@
       <span id="avg-arrow" class="hdr-arrow">▶</span>
     </div>
     <div id="avg-breakdown" style="display:none;">
-      <div class="avg-row" style="padding-left:10px;">
-        <span class="avg-lbl" style="color:rgba(232,255,0,0.20);">relax</span>
-        <span class="avg-val" id="st-avg-relax" style="font-size:12px;color:rgba(232,255,0,0.5);">--:--</span>
-      </div>
-      <div class="avg-row" style="padding-left:10px;">
-        <span class="avg-lbl" style="color:rgba(232,255,0,0.20);">CO2</span>
-        <span class="avg-val" id="st-avg-co2" style="font-size:12px;color:rgba(232,255,0,0.5);">--:--</span>
-      </div>
-      <div class="avg-row" style="padding-left:10px;">
-        <span class="avg-lbl" style="color:rgba(232,255,0,0.20);">wim hof</span>
-        <span class="avg-val" id="st-avg-wh" style="font-size:12px;color:rgba(232,255,0,0.5);">--:--</span>
-      </div>
+      <div class="avg-row" style="padding-left:10px;"><span class="avg-lbl" style="color:rgba(232,255,0,0.20);">relax</span><span class="avg-val" id="st-avg-relax" style="font-size:12px;color:rgba(232,255,0,0.5);">--:--</span></div>
+      <div class="avg-row" style="padding-left:10px;"><span class="avg-lbl" style="color:rgba(232,255,0,0.20);">CO2</span><span class="avg-val" id="st-avg-co2" style="font-size:12px;color:rgba(232,255,0,0.5);">--:--</span></div>
+      <div class="avg-row" style="padding-left:10px;"><span class="avg-lbl" style="color:rgba(232,255,0,0.20);">wim hof</span><span class="avg-val" id="st-avg-wh" style="font-size:12px;color:rgba(232,255,0,0.5);">--:--</span></div>
     </div>
     <div class="avg-row"><span class="avg-lbl">Streak</span><span class="avg-val" id="st-streak">0 days</span></div>
   </div>
-
   <div class="stats-grid" style="margin:0 auto;">
     <div class="stats-row"><span class="stats-lbl">This week</span><span class="stats-val" id="st-week">00:00:00</span></div>
     <div class="stats-row"><span class="stats-lbl">This month</span><span class="stats-val" id="st-month">00:00:00</span></div>
     <div class="stats-row"><span class="stats-lbl">All time</span><span class="stats-val" id="st-all">00:00:00</span></div>
   </div>
-
-  <!-- BY EXERCISE -->
   <div style="width:260px;margin:6px auto 0;">
     <div class="stats-collapse-hdr" onclick="toggleByExercise()">
       <div class="stats-section-title hdr-title">by exercise</div>
@@ -532,8 +513,6 @@
       </div>
     </div>
   </div>
-
-  <!-- CO2 METRICS -->
   <div style="width:260px;margin:6px auto 0;">
     <div class="stats-collapse-hdr" onclick="toggleCo2Metrics()">
       <div class="stats-section-title hdr-title">CO<sub style="font-size:0.7em">2</sub> metrics</div>
@@ -551,55 +530,104 @@
       </div>
     </div>
   </div>
-
-  <!-- CO2 TREND -->
   <div id="cp-trend-wrap" style="width:260px;margin:6px auto 0;display:none;">
     <div class="stats-section-title" style="margin-bottom:6px;">CO<sub style="font-size:0.7em">2</sub> trend</div>
-    <svg id="cp-trend-svg" width="260" height="60" viewBox="0 0 260 60" style="overflow:visible;">
-      <defs><filter id="cpGlow" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-      <rect x="0" y="0" width="260" height="60" fill="none"/>
-    </svg>
+    <svg id="cp-trend-svg" width="260" height="60" viewBox="0 0 260 60" style="overflow:visible;"></svg>
   </div>
-
   <button class="menu-btn" style="display:block;margin:16px auto 0;width:160px;height:36px;border-color:rgba(232,255,0,0.12);color:rgba(232,255,0,0.35);" onclick="exportCSV()">EXPORT CSV</button>
   <button class="menu-btn" style="display:block;margin:8px auto 0;" onclick="goHome()">MAIN MENU</button>
 </div>
 
 <script>
-// ── Haptic ─────────────────────────────────────
-var hapticOn=false;
-function toggleHaptic(btn){hapticOn=!hapticOn;btn.classList.toggle('active',hapticOn);try{localStorage.setItem('breath_hap',hapticOn?'1':'0');}catch(e){}}
-try{var sh=localStorage.getItem('breath_hap');if(sh==='1'){hapticOn=true;document.getElementById('hap-main').classList.add('active');}}catch(e){}
-function vibe(pattern){if(!hapticOn||!navigator.vibrate)return;navigator.vibrate(pattern);}
-// inhale: jedna krátká 40ms
-// hold:   dvě krátké 30+30ms s mezerou 60ms
-// exhale: mírně delší 70ms
-function hapticPhase(ph){
-  if(ph==='inhale')vibe(20);
-  else if(ph==='hold')vibe([30,60,30]);
-  else if(ph==='exhale')vibe(100);
+// ══════════════════════════════════════════════════════
+// BACKGROUND AUDIO ENGINE
+// Udržuje AudioContext živý přes uzamčení obrazovky.
+// Přehrává nekonečný tichý tone (gain=0.001) přes
+// ScriptProcessorNode, který drží audio thread aktivní
+// i když prohlížeč throttluje requestAnimationFrame.
+// ══════════════════════════════════════════════════════
+var audioCtx = null;
+var keepAliveNode = null;
+var keepAliveGain = null;
+var soundMuted = false;
+
+function getCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
 }
 
-// ── Settings ───────────────────────────────────
-var visMode='line',showNumbers=true;
-function setVis(v){visMode=v;try{localStorage.setItem('breath_vis',v);}catch(e){}document.getElementById('vis-opt-line').classList.toggle('active',v==='line');document.getElementById('vis-opt-circle').classList.toggle('active',v==='circle');}
-function setNumbers(on){showNumbers=on;try{localStorage.setItem('breath_nums',on?'1':'0');}catch(e){}document.getElementById('num-opt-on').classList.toggle('active',on);document.getElementById('num-opt-off').classList.toggle('active',!on);}
+// Spustí nekonečný tichý ScriptProcessor — drží audio thread
+// aktivní i při zamčené obrazovce (funguje v Median/WebView).
+function startKeepAlive() {
+  if (keepAliveNode) return;
+  var c = getCtx();
+  // ScriptProcessorNode s bufferem 4096 — výstup je ticho
+  keepAliveNode = c.createScriptProcessor(4096, 1, 1);
+  keepAliveNode.onaudioprocess = function(e) {
+    var out = e.outputBuffer.getChannelData(0);
+    for (var i = 0; i < out.length; i++) out[i] = 0;
+  };
+  keepAliveGain = c.createGain();
+  keepAliveGain.gain.value = 0.001; // prakticky neslyšitelné
+  keepAliveNode.connect(keepAliveGain);
+  keepAliveGain.connect(c.destination);
+}
+
+function stopKeepAlive() {
+  if (keepAliveNode) {
+    try { keepAliveNode.disconnect(); } catch(e) {}
+    try { keepAliveGain.disconnect(); } catch(e) {}
+    keepAliveNode = null;
+    keepAliveGain = null;
+  }
+}
+
+// Obnovení AudioContext po návratu z pozadí
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible') {
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    // Restart keep-alive pokud byl zastaven
+    if (!paused && sessionActive && !keepAliveNode) startKeepAlive();
+  }
+});
+
+// ══════════════════════════════════════════════════════
+// HAPTIC — opraveno na 80ms
+// ══════════════════════════════════════════════════════
+var hapticOn = false;
+function toggleHaptic(btn) {
+  hapticOn = !hapticOn;
+  btn.classList.toggle('active', hapticOn);
+  try { localStorage.setItem('breath_hap', hapticOn ? '1' : '0'); } catch(e) {}
+}
+try { var sh = localStorage.getItem('breath_hap'); if (sh==='1'){hapticOn=true;document.getElementById('hap-main').classList.add('active');} } catch(e) {}
+
+function vibe(pattern) {
+  if (!hapticOn || !navigator.vibrate) return;
+  navigator.vibrate(pattern);
+}
+
+// Každá fáze: jedna vibrace 80ms (bylo 20/30/100 — sjednoceno na 80)
+function hapticPhase(ph) {
+  vibe(80);
+}
+
+// ══════════════════════════════════════════════════════
+// SETTINGS
+// ══════════════════════════════════════════════════════
+var visMode = 'line', showNumbers = true;
+function setVis(v) { visMode=v; try{localStorage.setItem('breath_vis',v);}catch(e){} document.getElementById('vis-opt-line').classList.toggle('active',v==='line'); document.getElementById('vis-opt-circle').classList.toggle('active',v==='circle'); }
+function setNumbers(on) { showNumbers=on; try{localStorage.setItem('breath_nums',on?'1':'0');}catch(e){} document.getElementById('num-opt-on').classList.toggle('active',on); document.getElementById('num-opt-off').classList.toggle('active',!on); }
 try{var sv=localStorage.getItem('breath_vis');if(sv)setVis(sv);}catch(e){}
 try{var sn=localStorage.getItem('breath_nums');if(sn==='0')setNumbers(false);}catch(e){}
 function showSettings(){show('s-settings');}
 function applyVis(prefix){var bar=document.getElementById(prefix+'-bar-svg'),circ=document.getElementById(prefix+'-circ-wrap'),disp=document.getElementById(prefix+'-disp'),useCirc=visMode==='circle';if(bar)bar.style.display=useCirc?'none':'block';if(circ)circ.classList.toggle('visible',useCirc);if(disp)disp.style.display=useCirc?'none':'flex';applyNumsToCircle(prefix);}
 function rlShowVisual(){var is478=rlModeIdx===3,useCirc=visMode==='circle';document.getElementById('rl-bar-svg').style.display=(useCirc||is478)?'none':'block';document.getElementById('rl-disp').style.display=(useCirc||is478)?'none':'flex';document.getElementById('rl-circ-wrap').classList.toggle('visible',useCirc);document.getElementById('rl-tri-wrap').classList.toggle('visible',is478&&!useCirc);applyNumsToCircle('rl');var tnum=document.getElementById('rl-tri-num');if(tnum)tnum.style.opacity=(showNumbers&&is478&&!useCirc)?'1':'0';}
 function applyVisBox(){var useCirc=visMode==='circle';document.getElementById('b-box-svg').style.display=useCirc?'none':'block';document.getElementById('b-circ-wrap').classList.toggle('visible',useCirc);applyNumsToCircle('b');var bnum=document.getElementById('b-num');if(bnum)bnum.style.display=(!useCirc&&showNumbers)?'block':'none';}
-function applyVisBt(){
-  var useCirc=visMode==='circle',isCp=btModeIdx===1;
-  document.getElementById('bt-tri-wrap').classList.toggle('visible',!useCirc&&!isCp);
-  document.getElementById('bt-circ-wrap').classList.toggle('visible',useCirc);
-  var bcNum=document.getElementById('bt-bc-num');
-  if(bcNum)bcNum.style.opacity=(useCirc&&!isCp&&showNumbers)?'1':'0';
-  document.getElementById('bt-bar-wrap').style.display=(!useCirc&&isCp)?'block':'none';
-  document.getElementById('bt-timer').style.display=isCp?'flex':'none';
-  document.getElementById('bt-sa-wrap').style.display=isCp?'none':'flex';
-}
+function applyVisBt(){var useCirc=visMode==='circle',isCp=btModeIdx===1;document.getElementById('bt-tri-wrap').classList.toggle('visible',!useCirc&&!isCp);document.getElementById('bt-circ-wrap').classList.toggle('visible',useCirc);var bcNum=document.getElementById('bt-bc-num');if(bcNum)bcNum.style.opacity=(useCirc&&!isCp&&showNumbers)?'1':'0';document.getElementById('bt-bar-wrap').style.display=(!useCirc&&isCp)?'block':'none';document.getElementById('bt-timer').style.display=isCp?'flex':'none';document.getElementById('bt-sa-wrap').style.display=isCp?'none':'flex';}
 function applyNumsToCircle(prefix){var numEl=document.getElementById(prefix+'-bc-num');if(numEl)numEl.style.opacity=(showNumbers&&visMode==='circle')?'1':'0';}
 function refreshAllNums(){['r','rl','b','cu'].forEach(function(p){applyNumsToCircle(p);});var bnum=document.getElementById('b-num');if(bnum)bnum.style.display=(visMode==='line'&&showNumbers)?'block':'none';['r','rl','cu'].forEach(function(p){var d=document.getElementById(p+'-disp');if(d&&d.style.display!=='none')d.style.visibility=showNumbers?'visible':'hidden';});}
 
@@ -625,17 +653,42 @@ function setCircle(svgId,pct){var el=document.getElementById(svgId+'_bc');if(!el
 function setCirclePulse(svgId,on){var el=document.getElementById(svgId+'_bc');if(!el)return;el.classList.toggle('bc-pulse',on);}
 function setWhPulse(on){var el=document.getElementById('wh-bc');if(!el)return;el.classList.toggle('bc-pulse',on);}
 
-// ── Audio ──────────────────────────────────────
-var audioCtx=null,soundMuted=false;
+// ══════════════════════════════════════════════════════
+// AUDIO TONES
+// ══════════════════════════════════════════════════════
 function toggleSound(btn){soundMuted=!soundMuted;btn.classList.toggle('muted',soundMuted);}
-function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
-function tone(freq,dur,vol){dur=dur||9.0;vol=vol||0.22;if(soundMuted)return;var c=getCtx(),now=c.currentTime;var flt=c.createBiquadFilter();flt.type='lowpass';flt.frequency.value=freq*2.2;flt.Q.value=0.3;flt.connect(c.destination);var m=c.createGain();m.connect(flt);m.gain.setValueAtTime(0,now);m.gain.linearRampToValueAtTime(vol,now+0.003);m.gain.exponentialRampToValueAtTime(vol*0.6,now+0.08);m.gain.exponentialRampToValueAtTime(0.001,now+dur);[{mult:1,amp:1,dec:dur},{mult:2.756,amp:0.18,dec:dur*0.3},{mult:5.131,amp:0.07,dec:dur*0.15},{mult:8.917,amp:0.02,dec:dur*0.08}].forEach(function(p){var o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(m);o.type='sine';o.frequency.value=freq*p.mult;g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(p.amp,now+0.003);g.gain.exponentialRampToValueAtTime(0.0001,now+p.dec);o.start(now);o.stop(now+p.dec+0.1);});}
+
+function tone(freq,dur,vol){
+  dur=dur||9.0; vol=vol||0.22;
+  if(soundMuted)return;
+  var c=getCtx(),now=c.currentTime;
+  var flt=c.createBiquadFilter();flt.type='lowpass';flt.frequency.value=freq*2.2;flt.Q.value=0.3;flt.connect(c.destination);
+  var m=c.createGain();m.connect(flt);
+  m.gain.setValueAtTime(0,now);m.gain.linearRampToValueAtTime(vol,now+0.003);
+  m.gain.exponentialRampToValueAtTime(vol*0.6,now+0.08);m.gain.exponentialRampToValueAtTime(0.001,now+dur);
+  [{mult:1,amp:1,dec:dur},{mult:2.756,amp:0.18,dec:dur*0.3},{mult:5.131,amp:0.07,dec:dur*0.15},{mult:8.917,amp:0.02,dec:dur*0.08}].forEach(function(p){
+    var o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(m);o.type='sine';o.frequency.value=freq*p.mult;
+    g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(p.amp,now+0.003);g.gain.exponentialRampToValueAtTime(0.0001,now+p.dec);
+    o.start(now);o.stop(now+p.dec+0.1);
+  });
+}
 var T_HIGH=490,T_MID=415,T_LOW=349;
 function bowlAt(c,flt,freq,t,vol){var dur=4.5;[[freq,vol],[freq*1.0015,vol*0.6],[freq*2.756,vol*0.15]].forEach(function(fv,i){var o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=fv[0];g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(fv[1],t+0.03);g.gain.exponentialRampToValueAtTime(0.001,t+(i===2?dur*0.4:i===1?dur*0.8:dur));o.connect(g);g.connect(flt);o.start(t);o.stop(t+dur+0.2);});}
 function playDoneMelody(){if(soundMuted)return;var c=getCtx();var rev=c.createConvolver(),len=c.sampleRate*5,buf=c.createBuffer(2,len,c.sampleRate);for(var ch=0;ch<2;ch++){var d=buf.getChannelData(ch);for(var i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,1.4);}rev.buffer=buf;var revG=c.createGain();revG.gain.value=0.55;rev.connect(revG);revG.connect(c.destination);var flt=c.createBiquadFilter();flt.type='lowpass';flt.frequency.value=800;flt.Q.value=0.3;flt.connect(c.destination);flt.connect(rev);var now=c.currentTime;[220,293.66,440].forEach(function(f,i){bowlAt(c,flt,f,now+i*0.6,i===2?0.42:0.3);});}
-var bgAudio=null;
-function startBgAudio(){if(bgAudio&&!bgAudio.paused)return;if(!bgAudio){var silence='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';bgAudio=new Audio(silence);bgAudio.loop=true;bgAudio.volume=0.001;}bgAudio.play().catch(function(){});}
-function stopBgAudio(){if(bgAudio){bgAudio.pause();bgAudio.currentTime=0;}}
+
+// bgAudio + keep-alive — náhrada za původní tiché WAV
+function startBgAudio(){
+  startKeepAlive();
+}
+function stopBgAudio(){
+  stopKeepAlive();
+}
+
+// ══════════════════════════════════════════════════════
+// SCHEDULER — náhrada za rAF při pozadí
+// Kombinace rAF + setInterval(16ms) pro případ throttlingu
+// ══════════════════════════════════════════════════════
+// (rAF zůstává pro vizuál, setInterval v clearLoop spravujeme níže)
 
 // ── Stop after ─────────────────────────────────
 var SA_OPTIONS=[{label:'20 min',ms:1200000},{label:'15 min',ms:900000},{label:'10 min',ms:600000},{label:'5 min',ms:300000}];
@@ -663,11 +716,7 @@ function applyCuParams(){calcCuDurs();updateCuLabels();clearLoop();cuState={phas
 function calcCuDurs(){var cycle=60/cuBpm,r=CU_RATIO_OPTS[cuRatioIdx];cuInDur=Math.round(cycle*r.in/100*1000);cuExDur=Math.round(cycle*r.ex/100*1000);}
 
 // ── Screen / nav ───────────────────────────────
-function show(id){
-  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
-  document.getElementById(id).classList.add('active');
-  if(id!=='s-home'){history.pushState({screen:id},'');}
-}
+function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');if(id!=='s-home'){history.pushState({screen:id},'');}}
 window.addEventListener('popstate',function(){goHome();});
 
 function _cleanupSession(){
@@ -680,7 +729,6 @@ function _cleanupSession(){
   if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}
   document.getElementById('done-overlay').classList.remove('active');
 }
-
 function endSession(){_cleanupSession();playDoneMelody();document.getElementById('done-overlay').classList.add('active');}
 function goHome(){_cleanupSession();show('s-home');}
 
@@ -766,10 +814,9 @@ function showStats(){
     var relaxModes=['resonant','relax','box','custom'];
     var co2Modes=['co2','buteyko'];
     function avgForModes(modes){var s=sessions.filter(function(x){return modes.indexOf(x.mode)>=0;});var t=s.reduce(function(a,b){return a+b.ms;},0);return s.length?Math.round(t/s.length):0;}
-    var avgRelax=avgForModes(relaxModes),avgCo2g=avgForModes(co2Modes),avgWh=avgForModes(['wimhof']);
-    document.getElementById('st-avg-relax').textContent=avgRelax?fmtMSS(avgRelax):'--:--';
-    document.getElementById('st-avg-co2').textContent=avgCo2g?fmtMSS(avgCo2g):'--:--';
-    document.getElementById('st-avg-wh').textContent=avgWh?fmtMSS(avgWh):'--:--';
+    document.getElementById('st-avg-relax').textContent=avgForModes(relaxModes)?fmtMSS(avgForModes(relaxModes)):'--:--';
+    document.getElementById('st-avg-co2').textContent=avgForModes(co2Modes)?fmtMSS(avgForModes(co2Modes)):'--:--';
+    document.getElementById('st-avg-wh').textContent=avgForModes(['wimhof'])?fmtMSS(avgForModes(['wimhof'])):'--:--';
     document.getElementById('st-streak').textContent=calcStreak(sessions)+' days';
     Object.keys(byMode).forEach(function(k){var el=document.getElementById('st-m-'+k);if(el)el.textContent=fmtHMS(byMode[k]);var cn=document.getElementById('st-n-'+k);if(cn)cn.textContent=cntMode[k];});
     buildStreakGrid(sessions);
@@ -787,41 +834,22 @@ function showStats(){
     var avgCp=allCpHolds.length?Math.round(allCpHolds.reduce(function(a,b){return a+b;},0)/allCpHolds.length):0;
     document.getElementById('co2-avg-cp').textContent=avgCp?fmtMSS(avgCp):'—';
     document.getElementById('co2-avg-cp-cnt').textContent='';
-    var trendData=allCpHolds.concat(allCo2Holds);
-    buildCpTrend(trendData);
+    buildCpTrend(allCpHolds.concat(allCo2Holds));
   }catch(e){}
 }
-
 function buildCpTrend(holds){
-  var wrap=document.getElementById('cp-trend-wrap');
-  var svg=document.getElementById('cp-trend-svg');
+  var wrap=document.getElementById('cp-trend-wrap'),svg=document.getElementById('cp-trend-svg');
   if(!holds||holds.length<2){wrap.style.display='none';return;}
   wrap.style.display='block';
-  var W=260,H=60,PAD=4;
-  var vals=holds.slice(-30).map(function(ms){return ms/1000;});
-  var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);
-  if(mx===mn)mx=mn+1;
+  var W=260,H=60,PAD=4,vals=holds.slice(-30).map(function(ms){return ms/1000;});
+  var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);if(mx===mn)mx=mn+1;
   var n=vals.length;
-  function px(i){return PAD+(i/(n-1))*(W-PAD*2);}
-  function py(v){return H-PAD-(v-mn)/(mx-mn)*(H-PAD*2);}
+  function px(i){return PAD+(i/(n-1))*(W-PAD*2);}function py(v){return H-PAD-(v-mn)/(mx-mn)*(H-PAD*2);}
   var pts=vals.map(function(v,i){return px(i).toFixed(1)+','+py(v).toFixed(1);}).join(' ');
-  var grades=[{s:10,label:'low'},{s:20,label:'avg'},{s:40,label:'good'},{s:60,label:'excel'}];
   var lines='';
-  grades.forEach(function(g){
-    if(g.s>mn&&g.s<mx){
-      var y=py(g.s).toFixed(1);
-      lines+='<line x1="'+PAD+'" y1="'+y+'" x2="'+(W-PAD)+'" y2="'+y+'" stroke="rgba(232,255,0,0.08)" stroke-width="1" stroke-dasharray="3,3"/>';
-      lines+='<text x="'+(W-PAD+2)+'" y="'+(parseFloat(y)+3)+'" font-family="Share Tech Mono,monospace" font-size="7" fill="rgba(232,255,0,0.22)">'+g.s+'</text>';
-    }
-  });
-  var dots=vals.map(function(v,i){
-    return '<circle cx="'+px(i).toFixed(1)+'" cy="'+py(v).toFixed(1)+'" r="2.5" fill="#e8ff00" opacity="0.7"/>';
-  }).join('');
-  svg.innerHTML='<defs><filter id="cpGlow" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
-    +lines
-    +'<polyline points="'+pts+'" fill="none" stroke="rgba(232,255,0,0.5)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>'
-    +'<polyline points="'+pts+'" fill="none" stroke="#e8ff00" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" filter="url(#cpGlow)"/>'
-    +dots;
+  [{s:10},{s:20},{s:40},{s:60}].forEach(function(g){if(g.s>mn&&g.s<mx){var y=py(g.s).toFixed(1);lines+='<line x1="'+PAD+'" y1="'+y+'" x2="'+(W-PAD)+'" y2="'+y+'" stroke="rgba(232,255,0,0.08)" stroke-width="1" stroke-dasharray="3,3"/><text x="'+(W-PAD+2)+'" y="'+(parseFloat(y)+3)+'" font-family="Share Tech Mono,monospace" font-size="7" fill="rgba(232,255,0,0.22)">'+g.s+'</text>';}});
+  var dots=vals.map(function(v,i){return'<circle cx="'+px(i).toFixed(1)+'" cy="'+py(v).toFixed(1)+'" r="2.5" fill="#e8ff00" opacity="0.7"/>';}).join('');
+  svg.innerHTML='<defs><filter id="cpGlow2"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'+lines+'<polyline points="'+pts+'" fill="none" stroke="rgba(232,255,0,0.5)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/><polyline points="'+pts+'" fill="none" stroke="#e8ff00" stroke-width="1.5" filter="url(#cpGlow2)"/>'+dots;
 }
 function exportCSV(){try{var sessions=JSON.parse(localStorage.getItem('breath_sessions')||'[]');if(sessions.length===0){alert('No sessions to export.');return;}var rows=['date,time,duration_seconds,mode,co2_hold_seconds,co2_rest_seconds,cp_hold_seconds'];sessions.forEach(function(s){var d=new Date(s.ts);var date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');var time=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0');rows.push(date+','+time+','+Math.round(s.ms/1000)+','+(s.mode||'')+','+(s.co2HoldMs?Math.round(s.co2HoldMs/1000):'')+','+(s.co2RestMs?Math.round(s.co2RestMs/1000):'')+','+(s.cpHoldMs?Math.round(s.cpHoldMs/1000):''));});var blob=new Blob([rows.join('\n')],{type:'text/csv'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='breath_sessions.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}catch(e){alert('Export failed.');}}
 
@@ -867,8 +895,7 @@ function rlToneFreq(ph){return[T_HIGH,T_MID,T_LOW][ph];}
 function setRelaxMode(idx){rlModeIdx=idx;setActive('rl-btn-',4,idx);clearLoop();saveSession();sessionBegin('relax');rlState={phase:0,phaseElapsed:0};rlCircPct=0;totals.rl={acc:0,start:null};setCircle('rl-bc-svg',0);rlTriReset();rlShowVisual();totalStart('rl');startWatchdog('rl');runRelaxPhase(0);}
 function startRelax(){getCtx();show('s-relax');paused=false;rlModeIdx=0;rlState={phase:0,phaseElapsed:0};rlCircPct=0;totals.rl={acc:0,start:null};document.getElementById('rl-pause').textContent='PAUSE';setActive('rl-btn-',4,0);setCircle('rl-bc-svg',0);rlTriReset();rlShowVisual();refreshAllNums();totalStart('rl');startWatchdog('rl');sessionBegin('relax');runRelaxPhase(0);}
 function runRelaxPhase(startElapsed,pt){
-  if(pt===undefined)pt=true;
-  var ph=rlState.phase,dur=rlPhaseDur(ph);
+  if(pt===undefined)pt=true;var ph=rlState.phase,dur=rlPhaseDur(ph);
   if(pt){tone(rlToneFreq(ph));hapticPhase(['inhale','hold','exhale'][ph]);}
   document.getElementById('rl-phase').textContent=rlPhaseLabel(ph);
   var disp=document.getElementById('rl-disp');disp.classList.remove('pulse');void disp.offsetWidth;disp.classList.add('pulse');
@@ -877,8 +904,7 @@ function runRelaxPhase(startElapsed,pt){
   setCirclePulse('rl-bc-svg',dir==='hold');
   var fi=document.getElementById('rl-in-fill'),fe=document.getElementById('rl-ex-fill');
   if(fi)fi.setAttribute('width','0');if(fe){fe.setAttribute('width','0');fe.setAttribute('x','280');}
-  var is478=rlModeIdx===3;
-  if(is478){rlTriActivate(ph);}
+  var is478=rlModeIdx===3;if(is478)rlTriActivate(ph);
   var tnum=document.getElementById('rl-tri-num');
   var ps=performance.now()-startElapsed;
   function anim(ts){
@@ -928,11 +954,7 @@ var co2HoldRunning=false,co2HoldElapsed=0,co2HoldStart=null,co2HoldRAF=null;
 var co2RestElapsed=0,co2RestStart=null,co2RestRAF=null;
 var co2ExhaleElapsed=0,co2ExhaleStart=null,co2ExhaleRAF=null;
 var co2Rounds=[],REST_DUR=60000,EXHALE_CD=2000;
-function updateRounds(){
-  document.getElementById('c-rounds').textContent=co2Rounds.map(function(t,i){return 'round '+(i+1)+': '+fmtMSS(t)+'  '+co2Grade(t);}).join('\n');
-  var avg=co2Rounds.length?Math.round(co2Rounds.reduce(function(a,b){return a+b;},0)/co2Rounds.length):0;
-  document.getElementById('c-avg').textContent=co2Rounds.length>1?'avg: '+fmtMSS(avg)+'  '+co2Grade(avg):'';
-}
+function updateRounds(){document.getElementById('c-rounds').textContent=co2Rounds.map(function(t,i){return 'round '+(i+1)+': '+fmtMSS(t)+'  '+co2Grade(t);}).join('\n');var avg=co2Rounds.length?Math.round(co2Rounds.reduce(function(a,b){return a+b;},0)/co2Rounds.length):0;document.getElementById('c-avg').textContent=co2Rounds.length>1?'avg: '+fmtMSS(avg)+'  '+co2Grade(avg):'';}
 function startCO2(){getCtx();show('s-co2');paused=false;co2Running=true;co2Rounds=[];co2Phase='exhale-countdown';co2HoldElapsed=0;co2RestElapsed=0;co2ExhaleElapsed=0;totals.c={acc:0,start:null};document.getElementById('c-rounds').textContent='';document.getElementById('c-avg').textContent='';document.getElementById('c-bar-wrap').style.opacity='0';document.getElementById('c-bar').style.width='0%';document.getElementById('c-pause').textContent='PAUSE';totalStart('c');startWatchdog('c');sessionBegin('co2');sessionCo2RestMs+=REST_DUR;beginExhaleCountdown();}
 function beginExhaleCountdown(startElapsed){startElapsed=startElapsed||0;co2Phase='exhale-countdown';co2ExhaleElapsed=startElapsed;tone(T_LOW);document.getElementById('c-phase').textContent='exhale';document.getElementById('c-break').disabled=true;document.getElementById('c-bar-wrap').style.opacity='0';document.getElementById('c-bar').style.width='0%';co2ExhaleStart=performance.now();var sw=document.getElementById('c-stopwatch');function tick(ts){if(paused)return;var e=(ts-co2ExhaleStart)+co2ExhaleElapsed;sw.textContent=fmtDec(EXHALE_CD-e);if(e<EXHALE_CD){co2ExhaleRAF=regRAF(requestAnimationFrame(tick));}else beginHold();}co2ExhaleRAF=regRAF(requestAnimationFrame(tick));}
 function beginHold(){co2Phase='hold';co2HoldElapsed=0;tone(T_MID);hapticPhase('hold');document.getElementById('c-phase').textContent='hold';document.getElementById('c-stopwatch').textContent='00:00';document.getElementById('c-break').disabled=false;startHoldTick();}
@@ -957,11 +979,7 @@ function whRunBreath(){if(paused||!whRunning||whPhase!=='breathing')return;var i
 function whStartHold(){whPhase='hold';whHoldElapsed=0;whHoldRunning=true;tone(T_MID,0.4,0.18);hapticPhase('hold');whSetCircle(0);setWhPulse(true);document.getElementById('wh-bc-svg').style.display='none';document.getElementById('wh-phase').textContent='hold';document.getElementById('wh-sub').textContent='breath retention';document.getElementById('wh-big').textContent='00:00';document.getElementById('wh-hold-bar').style.opacity='1';document.getElementById('wh-hold-fill').style.width='0%';document.getElementById('wh-breathe-btn').disabled=false;document.getElementById('wh-breathe-btn').textContent='INHALE';whHoldStart=performance.now();var fill=document.getElementById('wh-hold-fill'),MAX_HOLD=300000;function tick(ts){if(paused||!whHoldRunning)return;var e=(ts-whHoldStart)+whHoldElapsed;document.getElementById('wh-big').textContent=fmtMSS(e);fill.style.width=Math.min(100,e/MAX_HOLD*100)+'%';whHoldRAF=regRAF(requestAnimationFrame(tick));}whHoldRAF=regRAF(requestAnimationFrame(tick));}
 function whBreathIn(){if(!whRunning||whPhase!=='hold'||paused)return;whHoldRunning=false;cancelAnimationFrame(whHoldRAF);setWhPulse(false);var held=(performance.now()-whHoldStart)+whHoldElapsed;whCycles.push(held);whCycle++;document.getElementById('wh-breathe-btn').disabled=true;tone(T_HIGH,0.3,0.2);whPhase='recovery';whRecovElapsed=0;document.getElementById('wh-phase').textContent='recovery';document.getElementById('wh-sub').textContent='breathe normally';document.getElementById('wh-hold-fill').style.width='0%';updateWhCycles();whRecovStart=performance.now();var fill=document.getElementById('wh-hold-fill');function tick(ts){if(paused)return;var e=(ts-whRecovStart)+whRecovElapsed,rem=Math.max(0,WH_RECOV_DUR-e);document.getElementById('wh-big').textContent=fmtDec(rem);fill.style.width=Math.min(100,e/WH_RECOV_DUR*100)+'%';if(e<WH_RECOV_DUR){whRecovRAF=regRAF(requestAnimationFrame(tick));}else whNextCycle();}whRecovRAF=regRAF(requestAnimationFrame(tick));}
 function whNextCycle(){updateWhCycles();tone(T_HIGH,0.3,0.15);document.getElementById('wh-sub').textContent='new cycle starting';regTimer(setTimeout(function(){document.getElementById('wh-sub').textContent='';whStartBreathing();},1200));}
-function updateWhCycles(){
-  document.getElementById('wh-cycle-info').textContent=whCycles.map(function(t,i){return 'cycle '+(i+1)+': '+fmtMSS(t);}).join('\n');
-  var avg=whCycles.length?Math.round(whCycles.reduce(function(a,b){return a+b;},0)/whCycles.length):0;
-  document.getElementById('wh-avg-info').textContent=whCycles.length>1?'avg: '+fmtMSS(avg)+'  ·  '+whCycles.length+' cycles':'';
-}
+function updateWhCycles(){document.getElementById('wh-cycle-info').textContent=whCycles.map(function(t,i){return 'cycle '+(i+1)+': '+fmtMSS(t);}).join('\n');var avg=whCycles.length?Math.round(whCycles.reduce(function(a,b){return a+b;},0)/whCycles.length):0;document.getElementById('wh-avg-info').textContent=whCycles.length>1?'avg: '+fmtMSS(avg)+'  ·  '+whCycles.length+' cycles':'';}
 function whPause(){if(whPhase==='hold'&&whHoldRunning){whHoldRunning=false;whHoldElapsed+=performance.now()-whHoldStart;cancelAnimationFrame(whHoldRAF);}if(whPhase==='recovery'){whRecovElapsed+=performance.now()-whRecovStart;cancelAnimationFrame(whRecovRAF);}if(whBreathTimer){clearTimeout(whBreathTimer);whBreathTimer=null;}if(totals.wh.start){totals.wh.acc+=performance.now()-totals.wh.start;totals.wh.start=null;}if(whBtInterval){clearInterval(whBtInterval);whBtInterval=null;}}
 function whResume(){totalResume('wh');startTotalTimer('wh');if(whPhase==='breathing')whRunBreath();else if(whPhase==='hold'){whHoldRunning=true;whHoldStart=performance.now();var fill=document.getElementById('wh-hold-fill'),MAX=300000;function tick(ts){if(paused||!whHoldRunning)return;var e=(ts-whHoldStart)+whHoldElapsed;document.getElementById('wh-big').textContent=fmtMSS(e);fill.style.width=Math.min(100,e/MAX*100)+'%';whHoldRAF=regRAF(requestAnimationFrame(tick));}whHoldRAF=regRAF(requestAnimationFrame(tick));}else if(whPhase==='recovery'){document.getElementById('wh-phase').textContent='recovery';document.getElementById('wh-sub').textContent='breathe normally';whRecovStart=performance.now();var fill2=document.getElementById('wh-hold-fill');function tick2(ts){if(paused)return;var e=(ts-whRecovStart)+whRecovElapsed,rem=Math.max(0,WH_RECOV_DUR-e);document.getElementById('wh-big').textContent=fmtDec(rem);fill2.style.width=Math.min(100,e/WH_RECOV_DUR*100)+'%';if(e<WH_RECOV_DUR){whRecovRAF=regRAF(requestAnimationFrame(tick2));}else whNextCycle();}whRecovRAF=regRAF(requestAnimationFrame(tick2));}}
 
@@ -971,13 +989,10 @@ var btPhase='inhale',btPhaseElapsed=0;
 var btCpElapsed=0,btCpStart=null,btCpRunning=false,btCpRAF=null;
 var btCpResults=[],btNextCpTimer=null;
 var BT_IN=4000,BT_EX=6000;
-
 function btGetPause(){if(btBreathCount<10)return 2000;if(btBreathCount<20)return 3000;return 4000;}
-function btUpdateInfo(){var pause=btGetPause()/1000,ph,tip,display=btBreathCount+1;if(btBreathCount<10){ph='phase 1/3';tip='feel the rhythm';}else if(btBreathCount<20){ph='phase 2/3';tip='reduce volume';}else{ph='phase 3/3';tip='maintain air hunger';}document.getElementById('bt-info').textContent='breath '+display+' · '+ph+' · pause '+pause+'s\n'+tip;}
-
+function btUpdateInfo(){var pause=btGetPause()/1000,display=btBreathCount+1,ph,tip;if(btBreathCount<10){ph='phase 1/3';tip='feel the rhythm';}else if(btBreathCount<20){ph='phase 2/3';tip='reduce volume';}else{ph='phase 3/3';tip='maintain air hunger';}document.getElementById('bt-info').textContent='breath '+display+' · '+ph+' · pause '+pause+'s\n'+tip;}
 function btCircPctForPhase(phIdx,raw){if(phIdx===0)return raw;if(phIdx===1)return 1-raw;return 0;}
 function btCircStartForPhase(phIdx){if(phIdx===0)return 0;if(phIdx===1)return 1;return 0;}
-
 function btRunPhase(phIdx,startElapsed,pt){
   if(pt===undefined)pt=true;
   var NAMES=['nasal inhale','nasal exhale','hold'];
@@ -993,141 +1008,21 @@ function btRunPhase(phIdx,startElapsed,pt){
   btTriActivate(phIdx);
   if(visMode==='circle'){setCircle('bt-bc-svg',btCircStartForPhase(phIdx));setCirclePulse('bt-bc-svg',phIdx===2);}
   var ps=performance.now()-se;
-  function anim(ts){
-    if(paused)return;var e=ts-ps;btPhaseElapsed=e;var raw=Math.min(1,e/dur);
-    btTriProgress(phIdx,raw);
-    if(visMode==='circle')setCircle('bt-bc-svg',btCircPctForPhase(phIdx,raw));
-    var rem=fmtDec(dur-e);
-    if(tnum)tnum.textContent=showNumbers?rem:'';
-    if(btModeIdx===0)document.getElementById('bt-bc-num').textContent=showNumbers?rem:'';
-    if(e<dur)regRAF(requestAnimationFrame(anim));
-  }
+  function anim(ts){if(paused)return;var e=ts-ps;btPhaseElapsed=e;var raw=Math.min(1,e/dur);btTriProgress(phIdx,raw);if(visMode==='circle')setCircle('bt-bc-svg',btCircPctForPhase(phIdx,raw));var rem=fmtDec(dur-e);if(tnum)tnum.textContent=showNumbers?rem:'';if(btModeIdx===0)document.getElementById('bt-bc-num').textContent=showNumbers?rem:'';if(e<dur)regRAF(requestAnimationFrame(anim));}
   regRAF(requestAnimationFrame(anim));
-  regTimer(setTimeout(function(){
-    if(paused)return;
-    btTriComplete(phIdx);
-    if(phIdx===0)btRunPhase(1,0);
-    else if(phIdx===1){btBreathCount++;btUpdateInfo();btRunPhase(2,0);}
-    else{btTriReset();btRunPhase(0,0);}
-  },dur-se));
+  regTimer(setTimeout(function(){if(paused)return;btTriComplete(phIdx);if(phIdx===0)btRunPhase(1,0);else if(phIdx===1){btBreathCount++;btUpdateInfo();btRunPhase(2,0);}else{btTriReset();btRunPhase(0,0);}},dur-se));
 }
-
-function startButeyko(){
-  getCtx();show('s-buteyko');paused=false;btRunning=true;
-  totals.bt={acc:0,start:null};btCpResults=[];btBreathCount=0;
-  btPhase='inhale';btPhaseElapsed=0;btCpElapsed=0;btCpStart=null;btCpRunning=false;
-  if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}
-  document.getElementById('bt-pause').textContent='PAUSE';
-  document.getElementById('bt-info').textContent='';
-  btTriReset();applyVisBt();
-  totalStart('bt');startWatchdog('bt');startTotalTimer('bt');sessionBegin('buteyko');
-  if(btModeIdx===0){btUpdateInfo();btRunPhase(0,0);}
-  else btStartCpExhale();
-}
-
-function setBtMode(idx){
-  btModeIdx=idx;
-  document.getElementById('bt-m-0').classList.toggle('active',idx===0);
-  document.getElementById('bt-m-1').classList.toggle('active',idx===1);
-  if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}
-  paused=false;clearLoop();btCpRunning=false;btCpResults=[];btBreathCount=0;
-  saveSession();sessionBegin('buteyko');
-  document.getElementById('bt-pause').textContent='PAUSE';
-  document.getElementById('bt-info').textContent='';
-  btTriReset();applyVisBt();
-  if(idx===0){btUpdateInfo();btRunPhase(0,0);}
-  else btStartCpExhale();
-}
-
+function startButeyko(){getCtx();show('s-buteyko');paused=false;btRunning=true;totals.bt={acc:0,start:null};btCpResults=[];btBreathCount=0;btPhase='inhale';btPhaseElapsed=0;btCpElapsed=0;btCpStart=null;btCpRunning=false;if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}document.getElementById('bt-pause').textContent='PAUSE';document.getElementById('bt-info').textContent='';btTriReset();applyVisBt();totalStart('bt');startWatchdog('bt');startTotalTimer('bt');sessionBegin('buteyko');if(btModeIdx===0){btUpdateInfo();btRunPhase(0,0);}else btStartCpExhale();}
+function setBtMode(idx){btModeIdx=idx;document.getElementById('bt-m-0').classList.toggle('active',idx===0);document.getElementById('bt-m-1').classList.toggle('active',idx===1);if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}paused=false;clearLoop();btCpRunning=false;btCpResults=[];btBreathCount=0;saveSession();sessionBegin('buteyko');document.getElementById('bt-pause').textContent='PAUSE';document.getElementById('bt-info').textContent='';btTriReset();applyVisBt();if(idx===0){btUpdateInfo();btRunPhase(0,0);}else btStartCpExhale();}
 function btFillReset(){var fi=document.getElementById('bt-fill-in'),fe=document.getElementById('bt-fill-ex');fi.setAttribute('width','0');fe.setAttribute('width','0');fe.setAttribute('x','260');}
 function btFillSet(phase,pct){var fi=document.getElementById('bt-fill-in'),fe=document.getElementById('bt-fill-ex');fi.setAttribute('width','0');fe.setAttribute('width','0');fe.setAttribute('x','260');if(phase==='inhale')fi.setAttribute('width',(260*pct).toFixed(1));else if(phase==='exhale'){var w=(260*pct).toFixed(1);fe.setAttribute('width',w);fe.setAttribute('x',(260-parseFloat(w)).toFixed(1));}}
 var btCpPhaseStart=null,btCpPhaseRAF=null;
-
-function btStartCpExhale(){
-  if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}
-  applyVisBt();
-  btPhase='exhale-prep';btCpElapsed=0;
-  var DUR=3000;
-  document.getElementById('bt-phase').textContent='gentle exhale';
-  document.getElementById('bt-timer').textContent=fmtDec(DUR);
-  btFillReset();
-  document.getElementById('bt-info').textContent='breathe out gently\nthen hold — tap BREAK to record';
-  tone(T_LOW,2.5,0.18);
-  btCpPhaseStart=performance.now();
-  function tick(ts){
-    if(paused)return;var e=(ts-btCpPhaseStart);var pct=Math.min(1,e/DUR);
-    document.getElementById('bt-timer').textContent=fmtDec(Math.max(0,DUR-e));
-    btFillSet('exhale',pct);if(visMode==='circle')setCircle('bt-bc-svg',1-pct);
-    if(e<DUR)btCpPhaseRAF=regRAF(requestAnimationFrame(tick));else btBeginCpHold();
-  }
-  btCpPhaseRAF=regRAF(requestAnimationFrame(tick));
-}
-
-function btPauseOrBreak(){
-  if(btModeIdx===1&&btPhase==='hold'&&btCpRunning){btCpBreak();}
-  else{togglePause('bt');}
-}
-
-function btBeginCpHold(){
-  btPhase='hold';btCpElapsed=0;btCpRunning=true;
-  tone(T_MID,4.5,0.22);
-  document.getElementById('bt-phase').textContent='hold breath';
-  document.getElementById('bt-info').textContent='stop at first urge to breathe\ntap BREAK to record';
-  document.getElementById('bt-pause').textContent='BREAK';
-  btFillReset();
-  btCpStart=performance.now();var MAX=120000;setCircle('bt-bc-svg',0);setCirclePulse('bt-bc-svg',true);
-  function tick(ts){
-    if(paused||!btCpRunning)return;var e=(ts-btCpStart)+btCpElapsed;
-    document.getElementById('bt-timer').textContent=fmtMSS(e);
-    btFillSet('inhale',Math.min(1,e/MAX));
-    if(visMode==='circle')setCircle('bt-bc-svg',Math.min(1,e/MAX));
-    btCpRAF=regRAF(requestAnimationFrame(tick));
-  }
-  btCpRAF=regRAF(requestAnimationFrame(tick));
-}
-
-function btCpBreak(){
-  if(!btCpRunning||paused)return;
-  btCpRunning=false;cancelAnimationFrame(btCpRAF);clearLoop();setCirclePulse('bt-bc-svg',false);
-  var held=(performance.now()-btCpStart)+btCpElapsed;
-  btCpResults.push(held);sessionCpHoldMs+=held;
-  btPhase='result';btShowCpResult(held);
-  if(totals.bt.start){totals.bt.acc+=performance.now()-totals.bt.start;totals.bt.start=null;}
-  if(whBtInterval){clearInterval(whBtInterval);whBtInterval=null;}
-  pauseWatchdog();
-  document.getElementById('bt-pause').textContent='RESUME';
-  paused=true;
-}
-
-function btShowCpResult(ms){
-  var s=Math.round(ms/1000),grade;
-  if(s<10)grade='very low';else if(s<20)grade='low';else if(s<40)grade='average';else if(s<60)grade='good';else grade='excellent';
-  document.getElementById('bt-phase').textContent='result';
-  document.getElementById('bt-timer').textContent=fmtMSS(ms);
-  document.getElementById('bt-circ-wrap').classList.remove('visible');
-  btFillReset();
-  var prev=btCpResults.map(function(t,i){return 'CP '+(i+1)+': '+fmtMSS(t);}).join('\n');
-  document.getElementById('bt-info').textContent=s+'s — '+grade+(prev?'\n\n'+prev:'')+'\n\nnext test in 3 min';
-  btNextCpTimer=setTimeout(function(){if(!paused&&btRunning)btStartCpExhale();},180000);
-}
-
-function btResume(){
-  totalResume('bt');resumeWatchdog();startTotalTimer('bt');
-  if(btModeIdx===0){
-    var idx=['inhale','exhale','pause'].indexOf(btPhase);
-    if(idx<0)idx=0;
-    btRunPhase(idx,btPhaseElapsed,false);
-  } else {
-    if(btPhase==='result'||btPhase==='idle')btStartCpExhale();
-    else if(btPhase==='exhale-prep')btStartCpExhale();
-    else if(btPhase==='hold'){
-      btCpRunning=true;btCpStart=performance.now();var MAX=120000;
-      document.getElementById('bt-pause').textContent='BREAK';
-      function tick(ts){if(paused||!btCpRunning)return;var e=(ts-btCpStart)+btCpElapsed;document.getElementById('bt-timer').textContent=fmtMSS(e);btFillSet('inhale',Math.min(1,e/MAX));if(visMode==='circle')setCircle('bt-bc-svg',Math.min(1,e/MAX));btCpRAF=regRAF(requestAnimationFrame(tick));}
-      btCpRAF=regRAF(requestAnimationFrame(tick));
-    }
-  }
-}
+function btStartCpExhale(){if(btNextCpTimer){clearTimeout(btNextCpTimer);btNextCpTimer=null;}applyVisBt();btPhase='exhale-prep';btCpElapsed=0;var DUR=3000;document.getElementById('bt-phase').textContent='gentle exhale';document.getElementById('bt-timer').textContent=fmtDec(DUR);btFillReset();document.getElementById('bt-info').textContent='breathe out gently\nthen hold — tap BREAK to record';tone(T_LOW,2.5,0.18);btCpPhaseStart=performance.now();function tick(ts){if(paused)return;var e=(ts-btCpPhaseStart);var pct=Math.min(1,e/DUR);document.getElementById('bt-timer').textContent=fmtDec(Math.max(0,DUR-e));btFillSet('exhale',pct);if(visMode==='circle')setCircle('bt-bc-svg',1-pct);if(e<DUR)btCpPhaseRAF=regRAF(requestAnimationFrame(tick));else btBeginCpHold();}btCpPhaseRAF=regRAF(requestAnimationFrame(tick));}
+function btPauseOrBreak(){if(btModeIdx===1&&btPhase==='hold'&&btCpRunning){btCpBreak();}else{togglePause('bt');}}
+function btBeginCpHold(){btPhase='hold';btCpElapsed=0;btCpRunning=true;tone(T_MID,4.5,0.22);document.getElementById('bt-phase').textContent='hold breath';document.getElementById('bt-info').textContent='stop at first urge to breathe\ntap BREAK to record';document.getElementById('bt-pause').textContent='BREAK';btFillReset();btCpStart=performance.now();var MAX=120000;setCircle('bt-bc-svg',0);setCirclePulse('bt-bc-svg',true);function tick(ts){if(paused||!btCpRunning)return;var e=(ts-btCpStart)+btCpElapsed;document.getElementById('bt-timer').textContent=fmtMSS(e);btFillSet('inhale',Math.min(1,e/MAX));if(visMode==='circle')setCircle('bt-bc-svg',Math.min(1,e/MAX));btCpRAF=regRAF(requestAnimationFrame(tick));}btCpRAF=regRAF(requestAnimationFrame(tick));}
+function btCpBreak(){if(!btCpRunning||paused)return;btCpRunning=false;cancelAnimationFrame(btCpRAF);clearLoop();setCirclePulse('bt-bc-svg',false);var held=(performance.now()-btCpStart)+btCpElapsed;btCpResults.push(held);sessionCpHoldMs+=held;btPhase='result';btShowCpResult(held);if(totals.bt.start){totals.bt.acc+=performance.now()-totals.bt.start;totals.bt.start=null;}if(whBtInterval){clearInterval(whBtInterval);whBtInterval=null;}pauseWatchdog();document.getElementById('bt-pause').textContent='RESUME';paused=true;}
+function btShowCpResult(ms){var s=Math.round(ms/1000),grade;if(s<10)grade='very low';else if(s<20)grade='low';else if(s<40)grade='average';else if(s<60)grade='good';else grade='excellent';document.getElementById('bt-phase').textContent='result';document.getElementById('bt-timer').textContent=fmtMSS(ms);document.getElementById('bt-circ-wrap').classList.remove('visible');btFillReset();var prev=btCpResults.map(function(t,i){return 'CP '+(i+1)+': '+fmtMSS(t);}).join('\n');document.getElementById('bt-info').textContent=s+'s — '+grade+(prev?'\n\n'+prev:'')+'\n\nnext test in 3 min';btNextCpTimer=setTimeout(function(){if(!paused&&btRunning)btStartCpExhale();},180000);}
+function btResume(){totalResume('bt');resumeWatchdog();startTotalTimer('bt');if(btModeIdx===0){var idx=['inhale','exhale','pause'].indexOf(btPhase);if(idx<0)idx=0;btRunPhase(idx,btPhaseElapsed,false);}else{if(btPhase==='result'||btPhase==='idle')btStartCpExhale();else if(btPhase==='exhale-prep')btStartCpExhale();else if(btPhase==='hold'){btCpRunning=true;btCpStart=performance.now();var MAX=120000;document.getElementById('bt-pause').textContent='BREAK';function tick(ts){if(paused||!btCpRunning)return;var e=(ts-btCpStart)+btCpElapsed;document.getElementById('bt-timer').textContent=fmtMSS(e);btFillSet('inhale',Math.min(1,e/MAX));if(visMode==='circle')setCircle('bt-bc-svg',Math.min(1,e/MAX));btCpRAF=regRAF(requestAnimationFrame(tick));}btCpRAF=regRAF(requestAnimationFrame(tick));}}}
 
 buildFans();
 buildCuDds();
