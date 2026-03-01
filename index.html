@@ -575,9 +575,9 @@ function vibe(pattern){if(!hapticOn||!navigator.vibrate)return;navigator.vibrate
 // hold:   dvě krátké 30+30ms s mezerou 60ms
 // exhale: mírně delší 70ms
 function hapticPhase(ph){
-  if(ph==='inhale')vibe(25);
+  if(ph==='inhale')vibe(20);
   else if(ph==='hold')vibe([30,60,30]);
-  else if(ph==='exhale')vibe(90);
+  else if(ph==='exhale')vibe(100);
 }
 
 // ── Settings ───────────────────────────────────
@@ -663,7 +663,12 @@ function applyCuParams(){calcCuDurs();updateCuLabels();clearLoop();cuState={phas
 function calcCuDurs(){var cycle=60/cuBpm,r=CU_RATIO_OPTS[cuRatioIdx];cuInDur=Math.round(cycle*r.in/100*1000);cuExDur=Math.round(cycle*r.ex/100*1000);}
 
 // ── Screen / nav ───────────────────────────────
-function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');}
+function show(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  if(id!=='s-home'){history.pushState({screen:id},'');}
+}
+window.addEventListener('popstate',function(){goHome();});
 
 function _cleanupSession(){
   if(co2Running&&co2Phase==='hold'&&co2HoldRunning){co2HoldRunning=false;var held=(performance.now()-co2HoldStart)+co2HoldElapsed;co2Rounds.push(held);sessionCo2HoldMs+=held;}
